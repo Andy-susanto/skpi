@@ -26,8 +26,7 @@ pipelines:
         deployment: staging
         script:
           - echo "Your deployment to staging script goes here..."
-          - echo "pipeline is disabled, repo is archived"
-#          - ssh -p54321 skpiunja@skpi.unja.ac.id "mkdir -p skpi.unja.ac.id; cd ~/skpi.unja.ac.id; git fetch --all; git reset --hard origin/master; git pull origin master"
+          - ssh -p54321 skpiunja@skpi.unja.ac.id "mkdir -p skpi.unja.ac.id; cd ~/skpi.unja.ac.id; git fetch --all; git reset --hard origin/master; git pull origin master"
     - step:
         name: 'Deployment to Production'
         deployment: production
