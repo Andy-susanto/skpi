@@ -37,30 +37,40 @@ class AppServiceProvider extends ServiceProvider
                 $menus = Menu::where('parent_id', 0)->whereHas('roles', function ($q) use ($role_ids) {
                     $q->whereIn('id_role', $role_ids);
                 })->orderBy('urutan', 'asc')->get();
+
                 foreach ($menus as $menu) {
                     if (count($menu->submenus) == 0) {
                         $event->menu->add($menu->nama_menu);
                     } else {
+
                         $event->menu->add($menu->nama_menu);
                         $submenus = Menu::where('parent_id', $menu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
                             $q->whereIn('id_role', $role_ids);
                         })->orderBy('urutan', 'asc')->get();
+
                         foreach ($submenus as $submenu) {
                             if (count($submenu->submenus) == 0) {
+
                                 $event->menu->add(['text' => $submenu->nama_menu, 'url' => $submenu->url, 'icon' => $submenu->icon]);
+
                             } else {
+
                                 $anothermenu = [];
                                 $subsubmenus = Menu::where('parent_id', $submenu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
                                     $q->whereIn('id_role', $role_ids);
                                 })->orderBy('urutan', 'asc')->get();
-                                foreach ($submenu->submenus  as $subsubmenu) {
+
+                                foreach ($subsubmenus as $subsubmenu) {
                                     $subsubmenu2['text'] = $subsubmenu->nama_menu;
                                     $subsubmenu2['url'] = $subsubmenu->url;
                                     $anothermenu[] = $subsubmenu2;
                                 }
+
                                 $event->menu->add(['text' => $submenu->nama_menu, 'url' => $submenu->url, 'icon' => $submenu->icon, 'submenu' => $anothermenu]);
                             }
                         }
+
+
                     }
                 }
             }
