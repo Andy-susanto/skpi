@@ -60,7 +60,7 @@ class LoginController extends Controller
                     'username'    => $request->username,
                     'nip'         => $cekUserSimpeg->nip ?? $cekUserSiakad->no_mhs,
                     'level_admin' => '0',
-                    'usertype'    => $cekUserSiakad->id_mhs_pt ? '1' : '2'
+                    'usertype'    => (isset($cekUserSiakad->id_mhs_pt)) ? '1' : '2'
                 ]);
 
                 if ($cekUserSiakad->id_mhs_pt) {

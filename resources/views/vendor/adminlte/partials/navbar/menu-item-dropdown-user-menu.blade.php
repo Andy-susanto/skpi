@@ -20,10 +20,11 @@
         @if(config('adminlte.usermenu_image'))
             <img src="{{ Auth::user()->adminlte_image() }}"
                  class="user-image img-circle elevation-2"
-                 alt=" @if (Auth::user()->usertype == '1')
+                 alt="
+             @if (Auth::user()->usertype == '1')
                  {{Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
              @else
-             {{Helper::nama_gelar(Auth::user()->kepeg_pegawai)}}
+                {{Helper::nama_gelar(Auth::user()->kepeg_pegawai)}}
              @endif">
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
