@@ -3,7 +3,33 @@
 @section('title', 'Seminar Pelatihan')
 
 @section('content_header')
-    <h1 class="m-0 font-bold text-dark">Seminar Pelatihan</h1>
+<div class="row">
+    <div class="mb-3 col-12">
+        <h1 class="m-0 font-bold text-dark">Seminar Pelatihan</h1>
+    </div>
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <table class="table table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>Capaian Bobot</th>
+                            <th>Bobot saat ini</th>
+                            <th>Kekurangn Bobot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>100</td>
+                            <td>100</td>
+                            <td>0</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
 @stop
 @section('content')
     <div class="row">
@@ -22,7 +48,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <form action="{{ route('seminar-pelatihan.store') }}" method="post"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="form-seminar">
                                     <div class="card-header">
                                         @if ($errors->any())
                                             <div class="alert alert-danger">
@@ -36,79 +62,82 @@
                                     </div>
                                     <div class="card-body">
                                         @csrf
-                                        <div class="form-group col-4">
-                                            <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
-                                            <input type="text"
-                                                class="form-control @error('nama_kegiatan') is-invalid @enderror"
-                                                name="nama_kegiatan" id="" aria-describedby="helpId"
-                                                placeholder="Nama Kegiatan">
-                                            @error('nama_kegiatan')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Penyelenggara Kegiatan</label><span
-                                                class="text-danger">*</span>
-                                            <select
-                                                class="form-control @error('penyelenggara_kegiatan') is-invalid @enderror"
-                                                name="penyelenggara_kegiatan" id="penyelenggara" onchange="load_bobot();">
-                                                @forelse(Helper::penyelenggara('2') as $penyelenggara)
-                                                    <option value="{{ $penyelenggara->id_penyelenggara }}">
-                                                        {{ $penyelenggara->nama_penyelenggara }}</option>
-                                                @empty
-                                                @endforelse
-                                            </select>
-                                            @error('penyelenggara_kegiatan')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                            <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
-                                                name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
-                                                @forelse(Helper::tingkat('1') as $tingkat)
-                                                    <option value="{{ $tingkat->id_tingkat }}">
-                                                        {{ $tingkat->nama_tingkat }}</option>
-                                                @empty
-                                                @endforelse
-                                            </select>
-                                            @error('tingkat_kegiatan')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Tanggal Mulai Kegiatan</label><span
-                                                class="text-danger">*</span>
-                                            <input type="date"
-                                                class="form-control @error('tanggal_mulai_kegiatan') is-invalid @enderror"
-                                                name="tanggal_mulai_kegiatan" id="" aria-describedby="helpId"
-                                                placeholder="">
-                                            @error('tanggal_mulai_kegiatan')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Tanggal Selesai Kegiatan</label><span
-                                                class="text-danger">*</span>
-                                            <input type="date"
-                                                class="form-control @error('tanggal_selesai_kegiatan') is-invalid @enderror"
-                                                name="tanggal_selesai_kegiatan" id="" aria-describedby="helpId"
-                                                placeholder="">
-                                            @error('tanggal_selesai_kegiatan')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                        <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
+                                                <input type="text"
+                                                    class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                                    name="nama_kegiatan" id="" aria-describedby="helpId"
+                                                    placeholder="Nama Kegiatan">
+                                                @error('nama_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Penyelenggara Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <select
+                                                    class="form-control @error('penyelenggara_kegiatan') is-invalid @enderror"
+                                                    name="penyelenggara_kegiatan" id="penyelenggara"
+                                                    onchange="load_bobot();">
+                                                    @forelse(Helper::penyelenggara('2') as $penyelenggara)
+                                                        <option value="{{ $penyelenggara->id_penyelenggara }}">
+                                                            {{ $penyelenggara->nama_penyelenggara }}</option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                                @error('penyelenggara_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
+                                                <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
+                                                    name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
+                                                    @forelse(Helper::tingkat('1') as $tingkat)
+                                                        <option value="{{ $tingkat->id_tingkat }}">
+                                                            {{ $tingkat->nama_tingkat }}</option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                                @error('tingkat_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
                                         </div>
                                         <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Tanggal Mulai Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <input type="date"
+                                                    class="form-control @error('tanggal_mulai_kegiatan') is-invalid @enderror"
+                                                    name="tanggal_mulai_kegiatan" id="" aria-describedby="helpId"
+                                                    placeholder="">
+                                                @error('tanggal_mulai_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Tanggal Selesai Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <input type="date"
+                                                    class="form-control @error('tanggal_selesai_kegiatan') is-invalid @enderror"
+                                                    name="tanggal_selesai_kegiatan" id="" aria-describedby="helpId"
+                                                    placeholder="">
+                                                @error('tanggal_selesai_kegiatan')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
                                             <div class="form-group col-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('peran') is-invalid @enderror"
@@ -125,36 +154,41 @@
                                                     </span>
                                                 @enderror
                                             </div>
-                                            <div class="form-group col-4 offset-1">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Dosen Pembimbing</label>
+                                                <select class="form-control @error('dosen_pembimbing') is-invalid @enderror"
+                                                    name="dosen_pembimbing" id="dosen_pembimbing">
+                                                </select>
+                                                @error('dosen_pembimbing')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
+                                                <input type="file"
+                                                    class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
+                                                    name="bukti_kegiatan" id="" placeholder=""
+                                                    aria-describedby="fileHelpId">
+                                                @error('dosen_pembimbing')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
+                                            </div>
+                                            <div class="form-group col-4">
                                                 <label for="">Bobot Nilai Kegiatan</label>
                                                 <div id="bobot">0</div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Dosen Pembimbing</label>
-                                            <select class="form-control @error('dosen_pembimbing') is-invalid @enderror"
-                                                name="dosen_pembimbing" id="dosen_pembimbing">
-                                            </select>
-                                            @error('dosen_pembimbing')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
-                                            <input type="file"
-                                                class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
-                                                name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
-                                            @error('dosen_pembimbing')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
-                                        </div>
                                     </div>
                                     <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary btn-sm">Kirim Data</button>
+                                        <div class="text-center card-footer">
+                                            <button type="button" onclick="confirmation('form-seminar')"  class="btn btn-primary btn-md">Kirim Data</button>
+                                        </div>
                                     </div>
                                 </form>
                             </div>
@@ -233,6 +267,7 @@
 @endsection
 @include('plugins.select2')
 @section('plugins.Datatables', true)
+@include('plugins.alertify')
 @section('js')
     <script>
         $('#table').DataTable();
@@ -274,6 +309,13 @@
                 success: function(data) {
                     $('#bobot').text(data);
                 }
+            })
+        }
+        function confirmation(id) {
+            alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
+                $('#' + id).submit();
+            }, function() {
+
             })
         }
     </script>
