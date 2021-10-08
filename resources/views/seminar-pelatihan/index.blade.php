@@ -38,55 +38,92 @@
                                         @csrf
                                         <div class="form-group col-4">
                                             <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control" name="nama_kegiatan" id=""
-                                                aria-describedby="helpId" placeholder="Nama Kegiatan">
+                                            <input type="text"
+                                                class="form-control @error('nama_kegiatan') is-invalid @enderror"
+                                                name="nama_kegiatan" id="" aria-describedby="helpId"
+                                                placeholder="Nama Kegiatan">
+                                            @error('nama_kegiatan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Penyelenggara Kegiatan</label><span
                                                 class="text-danger">*</span>
-                                            <select class="form-control" name="penyelenggara_kegiatan" id="penyelenggara"
-                                                onchange="load_bobot();">
+                                            <select
+                                                class="form-control @error('penyelenggara_kegiatan') is-invalid @enderror"
+                                                name="penyelenggara_kegiatan" id="penyelenggara" onchange="load_bobot();">
                                                 @forelse(Helper::penyelenggara('2') as $penyelenggara)
                                                     <option value="{{ $penyelenggara->id_penyelenggara }}">
                                                         {{ $penyelenggara->nama_penyelenggara }}</option>
                                                 @empty
                                                 @endforelse
                                             </select>
+                                            @error('penyelenggara_kegiatan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                            <select class="form-control" name="tingkat_kegiatan" id="tingkat"
-                                                onchange="load_bobot();">
+                                            <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
+                                                name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
                                                 @forelse(Helper::tingkat('1') as $tingkat)
                                                     <option value="{{ $tingkat->id_tingkat }}">
                                                         {{ $tingkat->nama_tingkat }}</option>
                                                 @empty
                                                 @endforelse
                                             </select>
+                                            @error('tingkat_kegiatan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Tanggal Mulai Kegiatan</label><span
                                                 class="text-danger">*</span>
-                                            <input type="date" class="form-control" name="tanggal_mulai_kegiatan" id=""
-                                                aria-describedby="helpId" placeholder="">
+                                            <input type="date"
+                                                class="form-control @error('tanggal_mulai_kegiatan') is-invalid @enderror"
+                                                name="tanggal_mulai_kegiatan" id="" aria-describedby="helpId"
+                                                placeholder="">
+                                            @error('tanggal_mulai_kegiatan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Tanggal Selesai Kegiatan</label><span
                                                 class="text-danger">*</span>
-                                            <input type="date" class="form-control" name="tanggal_selesai_kegiatan" id=""
-                                                aria-describedby="helpId" placeholder="">
+                                            <input type="date"
+                                                class="form-control @error('tanggal_selesai_kegiatan') is-invalid @enderror"
+                                                name="tanggal_selesai_kegiatan" id="" aria-describedby="helpId"
+                                                placeholder="">
+                                            @error('tanggal_selesai_kegiatan')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="peran" id="peran"
-                                                    onchange="load_bobot();">
+                                                <select class="form-control @error('peran') is-invalid @enderror"
+                                                    name="peran" id="peran" onchange="load_bobot();">
                                                     @forelse(Helper::peran(2) as $peran)
                                                         <option value="{{ $peran->id_peran }}">
                                                             {{ $peran->nama_peran }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
+                                                @error('peran')
+                                                    <span class="invalid-feedback" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                             <div class="form-group col-4 offset-1">
                                                 <label for="">Bobot Nilai Kegiatan</label>
@@ -95,13 +132,25 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Dosen Pembimbing</label>
-                                            <select class="form-control" name="dosen_pembimbing" id="dosen_pembimbing">
+                                            <select class="form-control @error('dosen_pembimbing') is-invalid @enderror"
+                                                name="dosen_pembimbing" id="dosen_pembimbing">
                                             </select>
+                                            @error('dosen_pembimbing')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
-                                            <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
-                                                placeholder="" aria-describedby="fileHelpId">
+                                            <input type="file"
+                                                class="form-control-file @error('bukti_kegiatan') is-invalid @enderror"
+                                                name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
+                                            @error('dosen_pembimbing')
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="card-footer">
@@ -134,41 +183,51 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $data->nama_kegiatan }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_selesai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa->kepeg_pegawai) }}
+                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa_single->kepeg_pegawai) }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->kegiatan_mahasiswa->validasi == '1')
-                                                            <span class="text-info"><i>Sedang di Ajukan</i></span>
+                                                        @if ($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                            <span class="badge badge-success"><i>di Validasi</i></span>
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '3')
+                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
                                                     <td>
-                                                        <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                            <a class="dropdown-item"
-                                                                href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan)) }}"><i
-                                                                    class="fa fa-info" aria-hidden="true"></i>
-                                                                Detail</a>
-                                                            <a class="dropdown-item" href="#"><i class="fas fa-edit"
-                                                                    aria-hidden="true"></i> Ubah</a>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-info btn-sm dropdown-toggle"
+                                                                type="button" id="triggerId" data-toggle="dropdown"
+                                                                aria-haspopup="true" aria-expanded="false">
+                                                                Proses
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan)) }}"><i
+                                                                        class="fa fa-info" aria-hidden="true"></i>
+                                                                    Detail</a>
+                                                                <a class="dropdown-item" href="#"><i class="fas fa-edit"
+                                                                        aria-hidden="true"></i> Ubah</a>
+                                                            </div>
                                                         </div>
-                                </div>
-                                </td>
-                                </tr>
-                            @empty
+                                                    </td>
+                                                </tr>
+                                            @empty
 
-                                @endforelse
-                                </tbody>
-                                </table>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
     </div>
 
 @endsection
@@ -209,7 +268,7 @@
                     'tingkat': $('#tingkat').val(),
                     'peran': $('#peran').val()
                 },
-                beforeSend:function(){
+                beforeSend: function() {
                     $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
                 },
                 success: function(data) {

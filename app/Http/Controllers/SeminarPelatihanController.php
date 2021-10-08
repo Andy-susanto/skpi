@@ -19,7 +19,7 @@ class SeminarPelatihanController extends Controller
      */
     public function index()
     {
-        $seminar = SeminarPelatihan::with(['kegiatan_mahasiswa','kegiatan_mahasiswa.kepeg_pegawai'])->get();
+        $seminar = SeminarPelatihan::has('kegiatan_mahasiswa_single')->with(['kegiatan_mahasiswa_single','kegiatan_mahasiswa.kepeg_pegawai'])->get();
         return view('seminar-pelatihan.index',compact('seminar'));
     }
 
@@ -47,9 +47,23 @@ class SeminarPelatihanController extends Controller
             'tingkat_kegiatan'         => 'required|integer',
             'tanggal_mulai_kegiatan'   => 'required|date',
             'tanggal_selesai_kegiatan' => 'required|date',
-            'peran'                 => 'required|integer',
+            'peran'                    => 'required|integer',
             'dosen_pembimbing'         => 'nullable|integer',
-            'bukti_kegiatan'           =>  'required|mimes:jpg,png,pdf,docx'
+            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
+        ],[
+            'nama_kegiatan.required'            => 'Nama Kegiatan Harus di isi',
+            'nama_kegiatan.string'              => 'Nama Kegiatan Harus berbentuk text',
+            'tingkat_kegiatan.required'         => 'Tingkat Kegiatan Harus di isi',
+            'tingkat_kegiatan.integer'          => 'Tingkat Kegiatan Salah',
+            'tanggal_mulai_kegiatan.required'   => 'Tanggal Mulai Kegiatan Harus di isi',
+            'tanggal_mulai_kegiatan.date'       => 'Format Tanggal Salah',
+            'tanggal_selesai_kegiatan.required' => 'Tanggal Selesai Kegiatan Harus di isi',
+            'tanggal_selesai_kegiatan.date'     => 'Format Tanggal Salah',
+            'peran.required'                    => 'Peran Harus di isi',
+            'peran.integer'                     => 'Format Peran Salah',
+            'dosen_pembimbing.integer'          => 'Format Data Dosen Salah',
+            'bukti_kegiatan.required'           => 'Bukti Kegiatan Harus di isi',
+            'bukti_kegiatan.mimes'              => 'Format File tidak mendukung'
         ]);
 
         if($request->file('bukti_kegiatan')){

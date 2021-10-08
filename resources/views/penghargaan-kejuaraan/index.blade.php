@@ -3,7 +3,33 @@
 @section('title', 'Penghargaan Kejuaraan')
 
 @section('content_header')
-    <h1 class="m-0 font-bold text-dark">Penghargaan Kejuaraan</h1>
+    <div class="row">
+        <div class="mb-3 col-12">
+            <h1 class="m-0 font-bold text-dark">Penghargaan Kejuaraan</h1>
+        </div>
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th>Capaian Bobot</th>
+                                <th>Bobot saat ini</th>
+                                <th>Kekurangn Bobot</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>100</td>
+                                <td>100</td>
+                                <td>0</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
 @stop
 @section('content')
     <div class="row">
@@ -22,7 +48,7 @@
                         <div class="col-12">
                             <div class="card">
                                 <form action="{{ route('penghargaan-kejuaraan.store') }}" method="post"
-                                    enctype="multipart/form-data">
+                                    enctype="multipart/form-data" id="form-penghargaan">
                                     <div class="card-header">
                                         @if ($errors->any())
                                             <div class="alert alert-danger">
@@ -36,47 +62,49 @@
                                     </div>
                                     <div class="card-body">
                                         @csrf
-                                        <div class="form-group col-4">
-                                            <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
-                                            <input type="text" class="form-control" name="nama_kegiatan" id=""
-                                                aria-describedby="helpId" placeholder="Nama Kegiatan">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Penyelenggara Kegiatan</label><span
-                                                class="text-danger">*</span>
-                                            <select class="form-control" name="penyelenggara_kegiatan" id="penyelenggara"
-                                                onchange="load_bobot();">
-                                                @forelse(Helper::penyelenggara('1') as $penyelenggara)
-                                                    <option value="{{ $penyelenggara->id_penyelenggara }}">
-                                                        {{ $penyelenggara->nama_penyelenggara }}</option>
-                                                @empty
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                            <select class="form-control" name="tingkat_kegiatan" id="tingkat"
-                                                onchange="load_bobot();">
-                                                @forelse(Helper::tingkat('1') as $tingkat)
-                                                    <option value="{{ $tingkat->id_tingkat }}">
-                                                        {{ $tingkat->nama_tingkat }}</option>
-                                                @empty
-                                                @endforelse
-                                            </select>
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Tanggal Mulai Kegiatan</label><span
-                                                class="text-danger">*</span>
-                                            <input type="date" class="form-control" name="tanggal_mulai_kegiatan" id=""
-                                                aria-describedby="helpId" placeholder="">
-                                        </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Tanggal Selesai Kegiatan</label><span
-                                                class="text-danger">*</span>
-                                            <input type="date" class="form-control" name="tanggal_selesai_kegiatan" id=""
-                                                aria-describedby="helpId" placeholder="">
+                                        <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
+                                                <input type="text" class="form-control" name="nama_kegiatan" id=""
+                                                    aria-describedby="helpId" placeholder="Nama Kegiatan">
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Penyelenggara Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <select class="form-control" name="penyelenggara_kegiatan"
+                                                    id="penyelenggara" onchange="load_bobot();">
+                                                    @forelse(Helper::penyelenggara('1') as $penyelenggara)
+                                                        <option value="{{ $penyelenggara->id_penyelenggara }}">
+                                                            {{ $penyelenggara->nama_penyelenggara }}</option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
+                                                <select class="form-control" name="tingkat_kegiatan" id="tingkat"
+                                                    onchange="load_bobot();">
+                                                    @forelse(Helper::tingkat('1') as $tingkat)
+                                                        <option value="{{ $tingkat->id_tingkat }}">
+                                                            {{ $tingkat->nama_tingkat }}</option>
+                                                    @empty
+                                                    @endforelse
+                                                </select>
+                                            </div>
                                         </div>
                                         <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Tanggal Mulai Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <input type="date" class="form-control" name="tanggal_mulai_kegiatan"
+                                                    id="" aria-describedby="helpId" placeholder="">
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Tanggal Selesai Kegiatan</label><span
+                                                    class="text-danger">*</span>
+                                                <input type="date" class="form-control" name="tanggal_selesai_kegiatan"
+                                                    id="" aria-describedby="helpId" placeholder="">
+                                            </div>
                                             <div class="form-group col-4">
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="prestasi" id="prestasi"
@@ -88,27 +116,30 @@
                                                     @endforelse
                                                 </select>
                                             </div>
-                                            <div class="form-group col-4 offset-1">
+                                        </div>
+                                        <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Dosen Pembimbing</label>
+                                                <select class="form-control" name="dosen_pembimbing"
+                                                    id="dosen_pembimbing">
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
+                                                <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
+                                                    placeholder="" aria-describedby="fileHelpId">
+                                            </div>
+                                            <div class="form-group col-4">
                                                 <label for="">Bobot Nilai Kegiatan :</label>
                                                 <div id="bobot"></div>
                                             </div>
                                         </div>
-                                        <div class="form-group col-4">
-                                            <label for="">Dosen Pembimbing</label>
-                                            <select class="form-control" name="dosen_pembimbing" id="dosen_pembimbing">
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
-                                            <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
-                                                placeholder="" aria-describedby="fileHelpId">
-                                        </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <button type="submit" class="btn btn-primary btn-sm">Kirim Data</button>
-                                    </div>
-                                </form>
                             </div>
+                            <div class="text-center card-footer">
+                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md">Kirim Data</button>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -134,30 +165,35 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $data->nama_kegiatan }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_selesai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa->kepeg_pegawai) }}
+                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa_single->kepeg_pegawai) }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->kegiatan_mahasiswa->validasi == '1')
+                                                        @if ($data->kegiatan_mahasiswa_single->validasi == '1')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa->validasi == '2')
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa->validasi == '3')
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '3')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
-                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                                    aria-expanded="false">
-                                                                        Proses
-                                                                    </button>
+                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button"
+                                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                Proses
+                                                            </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                                <a class="dropdown-item" href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan)) }}"><i class="fa fa-info" aria-hidden="true"></i> Detail</a>
-                                                                <a class="dropdown-item" href="#"><i class="fas fa-edit" aria-hidden="true"></i> Ubah</a>
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan)) }}"><i
+                                                                        class="fa fa-info" aria-hidden="true"></i>
+                                                                    Detail</a>
+                                                                <a class="dropdown-item" href="#"><i class="fas fa-edit"
+                                                                        aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>
                                                     </td>
@@ -175,9 +211,11 @@
             </div>
         </div>
     </div>
+    </div>
 
 @endsection
 @include('plugins.select2')
+@include('plugins.alertify')
 @section('plugins.Datatables', true)
 @section('js')
     <script>
@@ -214,7 +252,7 @@
                     'tingkat': $('#tingkat').val(),
                     'prestasi': $('#prestasi').val()
                 },
-                beforeSend:function(){
+                beforeSend: function() {
                     $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
                 },
                 success: function(data) {
@@ -222,5 +260,14 @@
                 }
             })
         }
+
+        function confirmation(id) {
+            alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
+                $('#' + id).submit();
+            }, function() {
+
+            })
+        }
+
     </script>
 @endsection
