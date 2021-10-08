@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BobotNilai;
 use App\Models\Files;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
@@ -52,9 +53,9 @@ class SeminarPelatihanController extends Controller
         ]);
 
         if($request->file('bukti_kegiatan')){
-            $filename = time().'_'.'bukti_kegiatan_seminar_pelatihan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
+            $filename      = time().'_'.'bukti_kegiatan_seminar_pelatihan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
             $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
 
             $files = Files::create([
                 'nama_file'     => $filename,
@@ -65,6 +66,18 @@ class SeminarPelatihanController extends Controller
             ]);
 
         }
+
+        $bobot_nilai = BobotNilai::where('jenis_kegiatan_id',1)
+                    ->when($request->penyelenggara_kegiatan,function($q) use($request) {
+                            $q->where('penyelenggara_kategori_id',$request->penyelenggara_kegiatan);})
+
+                    ->when($request->tingkat_kegiatan,function($q) use ($request){
+                            $q->where('tingkat_id',$request->tingkat_kegiatan);})
+
+                    ->when($request->prestasi,function($q) use ($request){
+                            $q->where('prestasi_peran_id',$request->prestasi);})
+
+                    ->first();
 
         $seminar = SeminarPelatihan::create([
             'nama_kegiatan'       => $request->nama_kegiatan,
@@ -82,7 +95,8 @@ class SeminarPelatihanController extends Controller
             'file_id'           => $files->id_file ?? 0,
             'pegawai_id'        => $request->dosen_pembimbing,
             'detail_id'         => $seminar->id_seminar_pelatihan,
-            'jenis_kegiatan_id' => 2
+            'jenis_kegiatan_id' => 2,
+            'bobot_nilai_id'    => $bobot_nilai->bobot_nilai_id ?? 0
         ]);
 
         toastr()->success('Berhasil Tambah Data');

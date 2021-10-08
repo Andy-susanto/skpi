@@ -44,7 +44,8 @@
                                         <div class="form-group col-4">
                                             <label for="">Penyelenggara Kegiatan</label><span
                                                 class="text-danger">*</span>
-                                            <select class="form-control" name="penyelenggara_kegiatan" id="penyelenggara" onchange="load_bobot();">
+                                            <select class="form-control" name="penyelenggara_kegiatan" id="penyelenggara"
+                                                onchange="load_bobot();">
                                                 @forelse(Helper::penyelenggara('2') as $penyelenggara)
                                                     <option value="{{ $penyelenggara->id_penyelenggara }}">
                                                         {{ $penyelenggara->nama_penyelenggara }}</option>
@@ -54,7 +55,8 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                            <select class="form-control" name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
+                                            <select class="form-control" name="tingkat_kegiatan" id="tingkat"
+                                                onchange="load_bobot();">
                                                 @forelse(Helper::tingkat('1') as $tingkat)
                                                     <option value="{{ $tingkat->id_tingkat }}">
                                                         {{ $tingkat->nama_tingkat }}</option>
@@ -77,7 +79,8 @@
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="peran" id="peran" onchange="load_bobot();">
+                                                <select class="form-control" name="peran" id="peran"
+                                                    onchange="load_bobot();">
                                                     @forelse(Helper::peran(2) as $peran)
                                                         <option value="{{ $peran->id_peran }}">
                                                             {{ $peran->nama_peran }}</option>
@@ -142,22 +145,30 @@
                                                             <span class="text-info"><i>Sedang di Ajukan</i></span>
                                                         @endif
                                                     </td>
-                                                    <td><a name="" id="" class="btn btn-primary btn-sm"
-                                                            href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan)) }}"
-                                                            role="button">Detail</a></td>
-                                                </tr>
-                                            @empty
-
-                                            @endforelse
-                                        </tbody>
-                                    </table>
+                                                    <td>
+                                                        <div class="dropdown-menu" aria-labelledby="triggerId">
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan)) }}"><i
+                                                                    class="fa fa-info" aria-hidden="true"></i>
+                                                                Detail</a>
+                                                            <a class="dropdown-item" href="#"><i class="fas fa-edit"
+                                                                    aria-hidden="true"></i> Ubah</a>
+                                                        </div>
                                 </div>
+                                </td>
+                                </tr>
+                            @empty
+
+                                @endforelse
+                                </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     </div>
 
 @endsection
@@ -196,7 +207,10 @@
                     'jenis_kegiatan': 2,
                     'penyelenggara': $('#penyelenggara').val(),
                     'tingkat': $('#tingkat').val(),
-                    'prestasi': $('#prestasi').val()
+                    'peran': $('#peran').val()
+                },
+                beforeSend:function(){
+                    $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
                 },
                 success: function(data) {
                     $('#bobot').text(data);

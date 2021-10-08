@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 class PenghargaanKejuaraan extends Model
 {
@@ -14,6 +15,10 @@ class PenghargaanKejuaraan extends Model
 
     public function kegiatan_mahasiswa(){
         return $this->HasOne(KegiatanMahasiswa::class,'detail_id','id_penghargaan_kejuaraan');
+    }
+
+    public function kegiatan_mahasiswa_single(){
+        return $this->HasOne(KegiatanMahasiswa::class,'detail_id','id_penghargaan_kejuaraan')->where('id_mhs_pt',Auth::User()->id);
     }
 
     public function penyelenggara(){

@@ -42,8 +42,10 @@
                                                 aria-describedby="helpId" placeholder="Nama Kegiatan">
                                         </div>
                                         <div class="form-group col-4">
-                                            <label for="">Penyelenggara Kegiatan</label><span class="text-danger">*</span>
-                                            <select class="form-control" name="penyelenggara_kegiatan" id="penyelenggara" onchange="load_bobot();">
+                                            <label for="">Penyelenggara Kegiatan</label><span
+                                                class="text-danger">*</span>
+                                            <select class="form-control" name="penyelenggara_kegiatan" id="penyelenggara"
+                                                onchange="load_bobot();">
                                                 @forelse(Helper::penyelenggara('1') as $penyelenggara)
                                                     <option value="{{ $penyelenggara->id_penyelenggara }}">
                                                         {{ $penyelenggara->nama_penyelenggara }}</option>
@@ -53,7 +55,8 @@
                                         </div>
                                         <div class="form-group col-4">
                                             <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                            <select class="form-control" name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
+                                            <select class="form-control" name="tingkat_kegiatan" id="tingkat"
+                                                onchange="load_bobot();">
                                                 @forelse(Helper::tingkat('1') as $tingkat)
                                                     <option value="{{ $tingkat->id_tingkat }}">
                                                         {{ $tingkat->nama_tingkat }}</option>
@@ -62,19 +65,22 @@
                                             </select>
                                         </div>
                                         <div class="form-group col-4">
-                                            <label for="">Tanggal Mulai Kegiatan</label><span class="text-danger">*</span>
+                                            <label for="">Tanggal Mulai Kegiatan</label><span
+                                                class="text-danger">*</span>
                                             <input type="date" class="form-control" name="tanggal_mulai_kegiatan" id=""
                                                 aria-describedby="helpId" placeholder="">
                                         </div>
                                         <div class="form-group col-4">
-                                            <label for="">Tanggal Selesai Kegiatan</label><span class="text-danger">*</span>
+                                            <label for="">Tanggal Selesai Kegiatan</label><span
+                                                class="text-danger">*</span>
                                             <input type="date" class="form-control" name="tanggal_selesai_kegiatan" id=""
                                                 aria-describedby="helpId" placeholder="">
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot();">
+                                                <select class="form-control" name="prestasi" id="prestasi"
+                                                    onchange="load_bobot();">
                                                     @forelse(Helper::prestasi('1') as $prestasi)
                                                         <option value="{{ $prestasi->id_prestasi }}">
                                                             {{ $prestasi->nama_prestasi }}</option>
@@ -84,7 +90,7 @@
                                             </div>
                                             <div class="form-group col-4 offset-1">
                                                 <label for="">Bobot Nilai Kegiatan :</label>
-                                                <div id="bobot">0</div>
+                                                <div id="bobot"></div>
                                             </div>
                                         </div>
                                         <div class="form-group col-4">
@@ -126,21 +132,35 @@
                                         <tbody>
                                             @forelse ($penghargaan as $data)
                                                 <tr>
-                                                    <td>{{$loop->iteration}}</td>
-                                                    <td>{{$data->nama_kegiatan}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
-                                                    <td>{{\Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
-                                                    <td>{{Helper::nama_gelar($data->kegiatan_mahasiswa->kepeg_pegawai)}}</td>
+                                                    <td>{{ $loop->iteration }}</td>
+                                                    <td>{{ $data->nama_kegiatan }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_mulai)->isoFormat('D MMMM Y') }}
+                                                    </td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_selesai)->isoFormat('D MMMM Y') }}
+                                                    </td>
+                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa->kepeg_pegawai) }}
+                                                    </td>
                                                     <td>
                                                         @if ($data->kegiatan_mahasiswa->validasi == '1')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
                                                         @elseif($data->kegiatan_mahasiswa->validasi == '2')
-                                                        <span class="badge badge-success"><i>di Validasi</i></span>
+                                                            <span class="badge badge-success"><i>di Validasi</i></span>
                                                         @elseif($data->kegiatan_mahasiswa->validasi == '3')
-                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
-                                                    <td><a name="" id="" class="btn btn-primary btn-sm" href="{{route('penghargaan-kejuaraan.show',encrypt($data->id_penghargaan_kejuaraan))}}" role="button">Detail</a></td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                                                    aria-expanded="false">
+                                                                        Proses
+                                                                    </button>
+                                                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                                                <a class="dropdown-item" href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan)) }}"><i class="fa fa-info" aria-hidden="true"></i> Detail</a>
+                                                                <a class="dropdown-item" href="#"><i class="fas fa-edit" aria-hidden="true"></i> Ubah</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @empty
 
@@ -185,16 +205,19 @@
 
         load_bobot()
 
-        function load_bobot(){
+        function load_bobot() {
             $.ajax({
-                url:"{{route('fungsi.load-bobot')}}",
-                data:{
-                    'jenis_kegiatan' :1,
+                url: "{{ route('fungsi.load-bobot') }}",
+                data: {
+                    'jenis_kegiatan': 1,
                     'penyelenggara': $('#penyelenggara').val(),
-                    'tingkat'      : $('#tingkat').val(),
-                    'prestasi'     : $('#prestasi').val()
+                    'tingkat': $('#tingkat').val(),
+                    'prestasi': $('#prestasi').val()
                 },
-                success:function(data){
+                beforeSend:function(){
+                    $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
+                },
+                success: function(data) {
                     $('#bobot').text(data);
                 }
             })

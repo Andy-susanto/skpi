@@ -24,7 +24,7 @@
     </a>
 
     {{-- Menu items --}}
-    <ul class="dropdown-menu border-0 shadow">
+    <ul class="border-0 shadow dropdown-menu">
         @each('adminlte::partials.navbar.dropdown-item', $item['submenu'], 'item')
     </ul>
 

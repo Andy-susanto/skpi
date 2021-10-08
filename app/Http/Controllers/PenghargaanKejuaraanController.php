@@ -18,7 +18,7 @@ class PenghargaanKejuaraanController extends Controller
      */
     public function index()
     {
-        $penghargaan = PenghargaanKejuaraan::with(['kegiatan_mahasiswa','kegiatan_mahasiswa.kepeg_pegawai'])->get();
+        $penghargaan = PenghargaanKejuaraan::has('kegiatan_mahasiswa_single')->with(['kegiatan_mahasiswa_single','kegiatan_mahasiswa.kepeg_pegawai'])->get();
         return view('penghargaan-kejuaraan.index',compact('penghargaan'));
     }
 
@@ -53,9 +53,9 @@ class PenghargaanKejuaraanController extends Controller
 
 
         if($request->file('bukti_kegiatan')){
-            $filename = time().'_'.'bukti_kegiatan_penghargaan_kejuaraan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
+            $filename      = time().'_'.'bukti_kegiatan_penghargaan_kejuaraan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
             $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
 
             $files = Files::create([
                 'nama_file'     => $filename,
@@ -67,13 +67,16 @@ class PenghargaanKejuaraanController extends Controller
 
         }
 
-        $bobot_nilai = BobotNilai::where('jenis_kegiatan_id',1)->when($request->penyelenggara_kegiatan,function($q) use($request) {
-            $q->where('penyelenggara_kategori_id',$request->penyelenggara_kegiatan);
-        })->when($request->tingkat_kegiatan,function($q) use ($request){
-            $q->where('tingkat_id',$request->tingkat_kegiatan);
-        })->when($request->prestasi,function($q) use ($request){
-            $q->where('prestasi_id',$request->prestasi);
-        })->first();
+
+        $bobot_nilai = BobotNilai::where('jenis_kegiatan_id',1)
+                    ->when($request->penyelenggara_kegiatan,function($q) use($request) {
+                        $q->where('penyelenggara_kategori_id',$request->penyelenggara_kegiatan);})
+                    ->when($request->tingkat_kegiatan,function($q) use ($request){
+                        $q->where('tingkat_id',$request->tingkat_kegiatan);})
+                    ->when($request->prestasi,function($q) use ($request){
+                        $q->where('prestasi_peran_id',$request->prestasi);})
+                    ->first();
+
 
         $penghargaan = PenghargaanKejuaraan::create([
             'nama_kegiatan'       => $request->nama_kegiatan,
