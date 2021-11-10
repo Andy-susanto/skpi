@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BobotNilai;
 use App\Models\Files;
+use App\Models\Tingkat;
+use App\Models\Prestasi;
+use App\Models\BobotNilai;
+use Illuminate\Http\Request;
+use App\Models\Penyelenggara;
+use App\Models\SeminarPelatihan;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
-use App\Models\SeminarPelatihan;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SeminarPelatihanController extends Controller
@@ -18,9 +21,12 @@ class SeminarPelatihanController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        $seminar = SeminarPelatihan::has('kegiatan_mahasiswa_single')->with(['kegiatan_mahasiswa_single','kegiatan_mahasiswa.kepeg_pegawai'])->get();
-        return view('seminar-pelatihan.index',compact('seminar'));
+{
+            $seminar         = SeminarPelatihan::all();
+        $data['penyelenggara'] = Penyelenggara::has('jenis_kegiatan')->get();
+        $data['tingkat']       = Tingkat::has('jenis_kegiatan')->get();
+        $data['peran']         = Prestasi::has('jenis_kegiatan')->get();
+        return view('seminar-pelatihan.index',compact('seminar','data'));
     }
 
     /**

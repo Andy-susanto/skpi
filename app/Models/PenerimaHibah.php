@@ -8,13 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class PenerimaHibah extends Model
 {
     use HasFactory;
-    protected $table      = 'penerima_hibah';
-    protected $primaryKey = 'id_penerima_hibah';
+    protected $table      = 'penerima_hibah_pendanaan';
+    protected $primaryKey = 'id_penerima_hibah_pendanaan';
     protected $guarded    = [];
-
-    public function kegiatan_mahasiswa(){
-        return $this->HasOne(KegiatanMahasiswa::class,'detail_id','id_penerima_hibah');
-    }
 
     public function penyelenggara(){
         return $this->belongsTo(Penyelenggara::class,'penyelenggara_id');

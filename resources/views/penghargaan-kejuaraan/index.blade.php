@@ -75,7 +75,7 @@
                                                     id="penyelenggara" onchange="load_bobot();">
                                                     @forelse($data['penyelenggara'] as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_penyelenggara }}">
-                                                            {{ $penyelenggara->nama_penyelenggara }}</option>
+                                                            {{ $penyelenggara->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -86,7 +86,7 @@
                                                     onchange="load_bobot();">
                                                     @forelse($data['tingkat'] as $tingkat)
                                                         <option value="{{ $tingkat->id_tingkat }}">
-                                                            {{ $tingkat->nama_tingkat }}</option>
+                                                            {{ $tingkat->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -111,7 +111,7 @@
                                                     onchange="load_bobot();">
                                                     @forelse($data['prestasi'] as $prestasi)
                                                         <option value="{{ $prestasi->id_prestasi }}">
-                                                            {{ $prestasi->nama_prestasi }}</option>
+                                                            {{ $prestasi->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>

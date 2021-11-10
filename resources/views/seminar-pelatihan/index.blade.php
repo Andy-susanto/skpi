@@ -82,9 +82,9 @@
                                                     class="form-control @error('penyelenggara_kegiatan') is-invalid @enderror"
                                                     name="penyelenggara_kegiatan" id="penyelenggara"
                                                     onchange="load_bobot();">
-                                                    @forelse(Helper::penyelenggara('2') as $penyelenggara)
+                                                    @forelse($data['penyelenggara'] as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_penyelenggara }}">
-                                                            {{ $penyelenggara->nama_penyelenggara }}</option>
+                                                            {{ $penyelenggara->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -98,9 +98,9 @@
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
                                                     name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
-                                                    @forelse(Helper::tingkat('1') as $tingkat)
+                                                    @forelse($data['tingkat'] as $tingkat)
                                                         <option value="{{ $tingkat->id_tingkat }}">
-                                                            {{ $tingkat->nama_tingkat }}</option>
+                                                            {{ $tingkat->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -142,9 +142,9 @@
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('peran') is-invalid @enderror"
                                                     name="peran" id="peran" onchange="load_bobot();">
-                                                    @forelse(Helper::peran(2) as $peran)
+                                                    @forelse($data['peran'] as $peran)
                                                         <option value="{{ $peran->id_peran }}">
-                                                            {{ $peran->nama_peran }}</option>
+                                                            {{ $peran->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>

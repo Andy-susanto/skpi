@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
+use App\Models\Tingkat;
+use App\Models\Prestasi;
+use Illuminate\Http\Request;
+use App\Models\Penyelenggara;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PengabdianMasyarakat;
 use App\Models\PenghargaanKejuaraan;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PengabdianMasyarakatController extends Controller
@@ -18,8 +21,11 @@ class PengabdianMasyarakatController extends Controller
      */
     public function index()
     {
-        $pengabdian = PengabdianMasyarakat::with(['kegiatan_mahasiswa','kegiatan_mahasiswa.kepeg_pegawai'])->get();
-        return view('pengabdian-masyarakat.index',compact('pengabdian'));
+        $pengabdian = PengabdianMasyarakat::get();
+        $data['penyelenggara']  = Penyelenggara::has('jenis_kegiatan')->get();
+        $data['tingkat']        = Tingkat::has('jenis_kegiatan')->get();
+        $data['peran']       = Prestasi::has('jenis_kegiatan')->get();
+        return view('pengabdian-masyarakat.index',compact('pengabdian','data'));
     }
 
     /**

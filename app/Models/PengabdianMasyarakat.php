@@ -12,10 +12,6 @@ class PengabdianMasyarakat extends Model
     protected $primaryKey = 'id_pengabdian_masyarakat';
     protected $guarded   = [];
 
-    public function kegiatan_mahasiswa(){
-        return $this->HasOne(KegiatanMahasiswa::class,'detail_id','id_pengabdian_masyarakat');
-    }
-
     public function penyelenggara(){
         return $this->belongsTo(Penyelenggara::class,'penyelenggara_id');
     }

@@ -73,9 +73,9 @@
                                                     class="text-danger">*</span>
                                                 <select class="form-control" name="penyelenggara_kegiatan"
                                                     id="penyelenggara">
-                                                    @forelse(Helper::penyelenggara('1') as $penyelenggara)
+                                                    @forelse($data['penyelenggara'] as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_penyelenggara }}">
-                                                            {{ $penyelenggara->nama_penyelenggara }}</option>
+                                                            {{ $penyelenggara->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -83,9 +83,9 @@
                                             <div class="form-group col-4">
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="tingkat_kegiatan" id="tingkat">
-                                                    @forelse(Helper::tingkat('1') as $tingkat)
+                                                    @forelse($data['tingkat'] as $tingkat)
                                                         <option value="{{ $tingkat->id_tingkat }}">
-                                                            {{ $tingkat->nama_tingkat }}</option>
+                                                            {{ $tingkat->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -107,9 +107,9 @@
                                             <div class="form-group col-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="peran" id="peran">
-                                                    @forelse(Helper::peran(3) as $peran)
+                                                    @forelse($data['peran'] as $peran)
                                                         <option value="{{ $peran->id_peran }}">
-                                                            {{ $peran->nama_peran }}</option>
+                                                            {{ $peran->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
