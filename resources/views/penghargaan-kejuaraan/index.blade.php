@@ -73,7 +73,7 @@
                                                     class="text-danger">*</span>
                                                 <select class="form-control" name="penyelenggara_kegiatan"
                                                     id="penyelenggara" onchange="load_bobot();">
-                                                    @forelse(Helper::penyelenggara('1') as $penyelenggara)
+                                                    @forelse($data['penyelenggara'] as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_penyelenggara }}">
                                                             {{ $penyelenggara->nama_penyelenggara }}</option>
                                                     @empty
@@ -84,7 +84,7 @@
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="tingkat_kegiatan" id="tingkat"
                                                     onchange="load_bobot();">
-                                                    @forelse(Helper::tingkat('1') as $tingkat)
+                                                    @forelse($data['tingkat'] as $tingkat)
                                                         <option value="{{ $tingkat->id_tingkat }}">
                                                             {{ $tingkat->nama_tingkat }}</option>
                                                     @empty
@@ -109,7 +109,7 @@
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="prestasi" id="prestasi"
                                                     onchange="load_bobot();">
-                                                    @forelse(Helper::prestasi('1') as $prestasi)
+                                                    @forelse($data['prestasi'] as $prestasi)
                                                         <option value="{{ $prestasi->id_prestasi }}">
                                                             {{ $prestasi->nama_prestasi }}</option>
                                                     @empty

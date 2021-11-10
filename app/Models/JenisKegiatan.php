@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class JenisKegiatan extends Model
 {
     use HasFactory;
-    protected $table      = 'jenis_kegiatan';
-    protected $primaryKey = 'id_jenis_kegiatan';
+    protected $table      = 'ref_jenis_kegiatan';
+    protected $primaryKey = 'id_ref_jenis_kegiatan';
     protected $guarded    = [];
 
     public function scopeAktif($query){

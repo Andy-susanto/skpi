@@ -6,6 +6,9 @@ use App\Models\BobotNilai;
 use App\Models\Files;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
+use App\Models\Penyelenggara;
+use App\Models\Prestasi;
+use App\Models\Tingkat;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,8 +21,11 @@ class PenghargaanKejuaraanController extends Controller
      */
     public function index()
     {
-        $penghargaan = PenghargaanKejuaraan::has('kegiatan_mahasiswa_single')->with(['kegiatan_mahasiswa_single','kegiatan_mahasiswa.kepeg_pegawai'])->get();
-        return view('penghargaan-kejuaraan.index',compact('penghargaan'));
+        $penghargaan            = PenghargaanKejuaraan::All();
+        $data['penyelenggara']  = Penyelenggara::has('jenis_kegiatan')->get();
+        $data['tingkat']        = Tingkat::has('jenis_kegiatan')->get();
+        $data['prestasi']       = Prestasi::has('jenis_kegiatan')->get();
+        return view('penghargaan-kejuaraan.index',compact('penghargaan','data'));
     }
 
     /**
