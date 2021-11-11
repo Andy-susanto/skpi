@@ -27,6 +27,15 @@ class User extends Authenticatable
         return $this->belongsToMany(Role::class,'users_has_roles','user_id','role_id');
     }
 
+    public function role_id(){
+        $data =[];
+        foreach ($this->roles as $roles) {
+            $data[] = $roles->id_role;
+        }
+
+        return $data;
+    }
+
     public function instansi()
     {
         return $this->belongsToMany(UnitKerja::class,'user_instansi','user_id','unit_kerja_id');
