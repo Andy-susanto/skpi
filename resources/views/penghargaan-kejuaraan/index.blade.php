@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark">Penghargaan Kejuaraan</h1>
+            <h1 class="m-0 font-bold text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Penghargaan Kejuaraan</h1>
         </div>
         <div class="col-12">
             <div class="card">
@@ -15,7 +15,7 @@
                             <tr>
                                 <th>Capaian Bobot</th>
                                 <th>Bobot saat ini</th>
-                                <th>Kekurangn Bobot</th>
+                                <th>Kekurangan Bobot</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,6 +23,13 @@
                                 <td>100</td>
                                 <td>100</td>
                                 <td>0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">Proses Bobot : 75/100</div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -144,7 +151,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md">Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
@@ -197,7 +204,7 @@
                                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button"
                                                                 id="triggerId" data-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
-                                                                Proses
+                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i> Proses
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"

@@ -28,7 +28,7 @@
         @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
             @if (Auth::user()->usertype == '1' || in_array( 3,Auth::user()->role_id() ) )
-                {{Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
+                <i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
             @else
             {{Helper::nama_gelar(Auth::user()->kepeg_pegawai)}}
             @endif

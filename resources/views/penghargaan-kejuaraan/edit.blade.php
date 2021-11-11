@@ -2,8 +2,8 @@
 @section('title', 'Ubah Penghargaan Kejuaraan')
 @section('content_header')
     <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm"
-                href="{{ route('penghargaan-kejuaraan.index') }}" role="button">Kembali</a></span> Ubah Penghargaan
-        Kejuaraan</h1>
+                href="{{ route('penghargaan-kejuaraan.index') }}" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a></span> Ubah Penghargaan
+        Kejuaraan <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
 @endsection
 
 @section('content')
@@ -88,7 +88,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 offset-5">
-                                <button type="button" onclick="confirmation('form-penghargaan')" class="btn btn-outline-primary">Simpan Data</button>
+                                <button type="button" onclick="confirmation('form-penghargaan')" class="btn btn-outline-primary"><i class="fas fa-save" aria-hidden="true"></i> Simpan Data</button>
                             </div>
                         </div>
                     </form>
