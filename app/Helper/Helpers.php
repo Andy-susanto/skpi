@@ -27,16 +27,22 @@ class Helpers
 
     public static function penyelenggara($jenis)
     {
-        return Penyelenggara::where('jenis_penyelenggara', $jenis)->get();
+        return Penyelenggara::whereHas('jenis_kegiatan',function($q) use ($jenis){
+            $q->where('id_ref_jenis_kegiatan',$jenis);
+        })->get();
     }
 
     public static function tingkat($jenis)
     {
-        return Tingkat::where('jenis_tingkat', $jenis)->get();
+        return Tingkat::whereHas('jenis_kegiatan',function($q) use ($jenis){
+            $q->where('id_ref_jenis_kegiatan',$jenis);
+        })->get();
     }
 
     public static function prestasi($jenis){
-        return Prestasi::where('jenis_prestasi',$jenis)->get();
+        return Prestasi::whereHas('jenis_kegiatan',function($q) use ($jenis){
+            $q->where('id_ref_jenis_kegiatan',$jenis);
+        })->get();
     }
 
     public static function tahun_aktif()

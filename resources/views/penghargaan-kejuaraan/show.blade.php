@@ -20,27 +20,27 @@
                         <tr>
                             <td>Penyelenggara Kegiatan</td>
                             <td>:</td>
-                            <td>{{$data->penyelenggara->nama_penyelenggara}}</td>
+                            <td>{{$data->penyelenggara->nama}}</td>
                         </tr>
                         <tr>
                             <td>Tingkat Kegiatan</td>
                             <td>:</td>
-                            <td>{{$data->tingkat->nama_tingkat}}</td>
+                            <td>{{$data->tingkat->nama}}</td>
                         </tr>
                         <tr>
                             <td>Tanggal Mulai Kegiatan</td>
                             <td>:</td>
-                            <td>{{\Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_mulai)->isoFormat('D MMMM Y')}}</td>
+                            <td>{{\Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y')}}</td>
                         </tr>
                         <tr>
                             <td>Tanggal Selesai Kegiatan</td>
                             <td>:</td>
-                            <td>{{\Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_selesai)->isoFormat('D MMMM Y')}}</td>
+                            <td>{{\Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y')}}</td>
                         </tr>
                         <tr>
                             <td>Prestasi</td>
                             <td>:</td>
-                            <td>{{$data->prestasi->nama_prestasi}}</td>
+                            <td>{{$data->prestasi->nama}}</td>
                         </tr>
                         <tr>
                             <td>Bobot Nilai Kegiatan</td>
@@ -50,12 +50,18 @@
                         <tr>
                             <td>Dosen Pembimbing</td>
                             <td>:</td>
-                            <td>{{$data->kegiatan_mahasiswa->kepeg_pegawai->nip}} - {{Helper::nama_gelar($data->kegiatan_mahasiswa->kepeg_pegawai)}}</td>
+                            <td>
+                                @if ($data->kepeg_pegawai()->exists())
+                                {{$data->kepeg_pegawai->nip}} - {{Helper::nama_gelar($data->kepeg_pegawai)}}
+                                @else
+                                -
+                                @endif
+                            </td>
                         </tr>
                         <tr>
                             <td>Bukti Kegiatan</td>
                             <td>:</td>
-                            <td><a href="{{asset('storage/'.$data->kegiatan_mahasiswa->files->path)}}" class="btn btn-sm btn-info">Lihat Bukti</a></td>
+                            <td><a href="{{asset('storage/'.$data->files->path)}}" class="btn btn-sm btn-info">Lihat Bukti</a></td>
                         </tr>
                     </tbody>
                 </table>

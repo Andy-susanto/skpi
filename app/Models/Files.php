@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Files extends Model
 {
     use HasFactory;
-    protected $table   = 'files';
-    protected $guarded = [];
-    protected $primaryKey = 'id_file';
+    protected $table        = 'file_kegiatan';
+    protected $guarded      = [];
+    protected $primaryKey   = 'id_file';
+    public    $incrementing = true;
 }

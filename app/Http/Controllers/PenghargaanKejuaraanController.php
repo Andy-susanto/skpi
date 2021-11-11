@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\BobotNilai;
 use App\Models\Files;
+use App\Models\Tingkat;
+use App\Models\Prestasi;
+use App\Models\BobotNilai;
+use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use App\Models\Penyelenggara;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
-use App\Models\Penyelenggara;
-use App\Models\Prestasi;
-use App\Models\Tingkat;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class PenghargaanKejuaraanController extends Controller
@@ -21,11 +22,8 @@ class PenghargaanKejuaraanController extends Controller
      */
     public function index()
     {
-        $penghargaan            = PenghargaanKejuaraan::All();
-        $data['penyelenggara']  = Penyelenggara::has('jenis_kegiatan')->get();
-        $data['tingkat']        = Tingkat::has('jenis_kegiatan')->get();
-        $data['prestasi']       = Prestasi::has('jenis_kegiatan')->get();
-        return view('penghargaan-kejuaraan.index',compact('penghargaan','data'));
+        $data['utama']            = PenghargaanKejuaraan::where('siakad_mhspt_id',Auth::user()->id)->get();
+        return view('penghargaan-kejuaraan.index',compact('data'));
     }
 
     /**
@@ -64,44 +62,37 @@ class PenghargaanKejuaraanController extends Controller
             $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
 
             $files = Files::create([
-                'nama_file'     => $filename,
-                'jenis'         => 'bukti kegiatan penghargaaan kejuaraan',
-                'original_name' => $original_name,
-                'path'          => $filePath,
-                'id_user'       => Auth::user()->id
+                'nama'                  => $filename,
+                'path'                  => $filePath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 1
             ]);
 
         }
 
-
-        $bobot_nilai = BobotNilai::where('jenis_kegiatan_id',1)
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id',1)
                     ->when($request->penyelenggara_kegiatan,function($q) use($request) {
-                        $q->where('penyelenggara_kategori_id',$request->penyelenggara_kegiatan);})
+                        $q->where('ref_penyelenggara_id',$request->penyelenggara_kegiatan);})
                     ->when($request->tingkat_kegiatan,function($q) use ($request){
-                        $q->where('tingkat_id',$request->tingkat_kegiatan);})
+                        $q->where('ref_tingkat_id',$request->tingkat_kegiatan);})
                     ->when($request->prestasi,function($q) use ($request){
-                        $q->where('prestasi_peran_id',$request->prestasi);})
+                        $q->where('ref_peran_prestasi_id',$request->prestasi);})
                     ->first();
 
 
         $penghargaan = PenghargaanKejuaraan::create([
-            'nama_kegiatan'       => $request->nama_kegiatan,
-            'penyelenggara_id'    => $request->penyelenggara_kegiatan,
-            'tingkat_id'          => $request->tingkat_kegiatan,
-            'prestasi_id'         => $request->prestasi,
-            'dosen_pembimbing_id' => $request->dosen_pembimbing,
-        ]);
-
-        KegiatanMahasiswa::create([
-            'id_mhs_pt'         => Auth::user()->id,
-            'validasi'          => 1,
-            'tanggal_mulai'     => $request->tanggal_mulai_kegiatan,
-            'tanggal_selesai'   => $request->tanggal_selesai_kegiatan,
-            'file_id'           => $files->id_file ?? 0,
-            'pegawai_id'        => $request->dosen_pembimbing,
-            'detail_id'         => $penghargaan->id_penghargaan_kejuaraan,
-            'jenis_kegiatan_id' => 1,
-            'bobot_nilai_id'    => $bobot_nilai->bobot_nilai_id ?? 0
+            'nama'                                => $request->nama_kegiatan,
+            'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
+            'ref_tingkat_id'                      => $request->tingkat_kegiatan,
+            'ref_peran_prestasi_id'               => $request->prestasi,
+            'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
+            'siakad_mhspt_id'                     => Auth::user()->id,
+            'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
+            'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
+            'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
+            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+            'status_validasi' => '0'
         ]);
 
         toastr()->success('Berhasil Tambah Data');
@@ -128,7 +119,8 @@ class PenghargaanKejuaraanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['utama'] = PenghargaanKejuaraan::findOrFail(decrypt($id));
+        return view('penghargaan-kejuaraan.edit',compact('data'));
     }
 
     /**

@@ -73,8 +73,8 @@
                                                     class="text-danger">*</span>
                                                 <select class="form-control" name="penyelenggara_kegiatan"
                                                     id="penyelenggara" onchange="load_bobot();">
-                                                    @forelse($data['penyelenggara'] as $penyelenggara)
-                                                        <option value="{{ $penyelenggara->id_penyelenggara }}">
+                                                    @forelse(Helper::penyelenggara(1) as $penyelenggara)
+                                                        <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                                             {{ $penyelenggara->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -84,8 +84,8 @@
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="tingkat_kegiatan" id="tingkat"
                                                     onchange="load_bobot();">
-                                                    @forelse($data['tingkat'] as $tingkat)
-                                                        <option value="{{ $tingkat->id_tingkat }}">
+                                                    @forelse(Helper::tingkat(1) as $tingkat)
+                                                        <option value="{{ $tingkat->id_ref_tingkat }}">
                                                             {{ $tingkat->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -109,8 +109,8 @@
                                                 <label for="">Prestasi</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="prestasi" id="prestasi"
                                                     onchange="load_bobot();">
-                                                    @forelse($data['prestasi'] as $prestasi)
-                                                        <option value="{{ $prestasi->id_prestasi }}">
+                                                    @forelse(Helper::prestasi(1) as $prestasi)
+                                                        <option value="{{ $prestasi->id_ref_peran_prestasi }}">
                                                             {{ $prestasi->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -134,6 +134,13 @@
                                                 <div id="bobot"></div>
                                             </div>
                                         </div>
+                                    </div>
+                                    <div class="card-footer">
+                                        <p class="">Catatan :
+                                            <ol class="text-red list-decimal ml-2">
+                                                <li>Tanda * harus di isi</li>
+                                            </ol>
+                                        </p>
                                     </div>
                             </div>
                             <div class="text-center card-footer">
@@ -161,22 +168,27 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($penghargaan as $data)
+                                            @forelse ($data['utama'] as $data)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama_kegiatan }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ $data->nama }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_selesai)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa_single->kepeg_pegawai) }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                        @if ($data->kepeg_pegawai()->exists())
+                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
+                                                        @else
+                                                            -
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->status_validasi == '0')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '3')
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
@@ -189,10 +201,10 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan)) }}"><i
+                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="#"><i class="fas fa-edit"
+                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>
