@@ -14,10 +14,12 @@
                     <h4 class="card-title font-bold">Ubah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="#" method="post" enctype="multipart/form-data" id="form-penghargaan">
+                    <form action="{{route('penghargaan-kejuaraan.update',encrypt($data['utama']->id_penghargaan_kejuaraan_kompetensi))}}" method="post" enctype="multipart/form-data" id="form-penghargaan">
+                        @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label for="">Nama Kegiatan</label>
-                            <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
+                            <input type="text" class="form-control" name="nama_kegiatan" id="" aria-describedby="helpId"
                                 placeholder="" value="{{ $data['utama']->nama }}">
                         </div>
                         <div class="form-group">
@@ -68,7 +70,7 @@
                         </div>
                         <div class="form-group">
                           <label for="">Bukti Kegiatan</label>
-                          <input type="file" class="form-control-file" name="file" id="" placeholder="" aria-describedby="fileHelpId">
+                          <input type="file" class="form-control-file" name="bukti_kegiatan" id="" placeholder="" aria-describedby="fileHelpId">
                           <small id="fileHelpId" class="form-text text-muted"><a href="{{asset('storage/'.$data['utama']->files->path)}}"><i class="fa fa-paperclip" aria-hidden="true"></i> Bukti Kegiatan</a></small>
                         </div>
                         <div class="form-group">
