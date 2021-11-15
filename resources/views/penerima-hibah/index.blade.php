@@ -76,11 +76,11 @@
                                                     aria-describedby="helpId" placeholder="Nama Kegiatan">
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Penyelenggara Kegiatan</label><span
+                                                <label for="">Pemberi Dana</label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control" name="penyelenggara_kegiatan"
                                                     id="penyelenggara" onchange="load_bobot();">
-                                                    @forelse(Helper::penyelenggara(1) as $penyelenggara)
+                                                    @forelse(Helper::penyelenggara(3) as $penyelenggara)
                                                         <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                                             {{ $penyelenggara->nama }}</option>
                                                     @empty
@@ -91,7 +91,7 @@
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="tingkat_kegiatan" id="tingkat"
                                                     onchange="load_bobot();">
-                                                    @forelse(Helper::tingkat(1) as $tingkat)
+                                                    @forelse(Helper::tingkat(3) as $tingkat)
                                                         <option value="{{ $tingkat->id_ref_tingkat }}">
                                                             {{ $tingkat->nama }}</option>
                                                     @empty
@@ -113,10 +113,10 @@
                                                     id="" aria-describedby="helpId" placeholder="">
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Prestasi</label><span class="text-danger">*</span>
+                                                <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="prestasi" id="prestasi"
                                                     onchange="load_bobot();">
-                                                    @forelse(Helper::prestasi(1) as $prestasi)
+                                                    @forelse(Helper::prestasi(3) as $prestasi)
                                                         <option value="{{ $prestasi->id_ref_peran_prestasi }}">
                                                             {{ $prestasi->nama }}</option>
                                                     @empty
@@ -151,7 +151,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-penerima-hibah')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
@@ -208,10 +208,10 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('penerima-hibah.show', encrypt($data->id_penerima_hibah_pendanaan)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
+                                                                <a class="dropdown-item" href="{{route('penerima-hibah.edit',encrypt($data->id_penerima_hibah_pendanaan))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>
@@ -266,7 +266,7 @@
             $.ajax({
                 url: "{{ route('fungsi.load-bobot') }}",
                 data: {
-                    'jenis_kegiatan': 1,
+                    'jenis_kegiatan': 3,
                     'penyelenggara': $('#penyelenggara').val(),
                     'tingkat': $('#tingkat').val(),
                     'prestasi': $('#prestasi').val()

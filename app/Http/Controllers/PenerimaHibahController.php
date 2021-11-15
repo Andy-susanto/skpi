@@ -56,7 +56,7 @@ class PenerimaHibahController extends Controller
         ]);
 
         if ($request->file('bukti_kegiatan')) {
-            $filename      = time() . '_' . 'bukti_kegiatan_penghargaan_kejuaraan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+            $filename      = time() . '_' . 'bukti_penerima_hibah' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
             $original_name = $request->bukti_kegiatan->getClientOriginalName();
             $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
@@ -64,11 +64,11 @@ class PenerimaHibahController extends Controller
                 'nama'                  => $filename,
                 'path'                  => $filePath,
                 'siakad_mhspt_id'       => Auth::user()->id,
-                'ref_jenis_kegiatan_id' => 1
+                'ref_jenis_kegiatan_id' => 3
             ]);
         }
 
-        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 1)
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 3)
             ->when($request->penyelenggara_kegiatan, function ($q) use ($request) {
                 $q->where('ref_penyelenggara_id', $request->penyelenggara_kegiatan);
             })
@@ -119,7 +119,8 @@ class PenerimaHibahController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['utama'] = PenerimaHibah::findOrFail(decrypt($id));
+        return view('penerima-hibah.edit', compact('data'));
     }
 
     /**
@@ -131,7 +132,78 @@ class PenerimaHibahController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_kegiatan'    => 'required|string',
+            'penyelenggara'    => 'required|integer',
+            'tingkat'          => 'required|integer',
+            'tgl_mulai'        => 'required|date',
+            'tgl_selesai'      => 'required|date',
+            'prestasi'         => 'required|integer',
+            'dosen_pembimbing' => 'nullable|integer',
+        ]);
+
+        $data_utama = PenerimaHibah::findOrFail(decrypt($id));
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 3)
+            ->when($request->penyelenggara_kegiatan, function ($q) use ($request) {
+                $q->where('ref_penyelenggara_id', $request->penyelenggara_kegiatan);
+            })
+            ->when($request->tingkat_kegiatan, function ($q) use ($request) {
+                $q->where('ref_tingkat_id', $request->tingkat_kegiatan);
+            })
+            ->when($request->prestasi, function ($q) use ($request) {
+                $q->where('ref_peran_prestasi_id', $request->prestasi);
+            })
+            ->first();
+
+        if ($request->file('bukti_kegiatan')) {
+            $extension = ['jpg,pdf,docx'];
+            $file = $request->bukti_kegiatan->getClientOriginalExtension();
+            if (in_array($file, $extension)) {
+                $filename      = time() . '_' . 'bukti_penerima_hibah' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+                $original_name = $request->bukti_kegiatan->getClientOriginalName();
+                $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+
+                $files = Files::where('id_file', $data_utama->files->id_file)->update([
+                    'nama'                  => $filename,
+                    'path'                  => $filePath,
+                ]);
+
+                $penerimaHibah = PenerimaHibah::where('id_penerima_hibah_pendanaan',decrypt($id))->update([
+                    'nama'                                => $request->nama_kegiatan ?? $data_utama->nama_kegiatan,
+                    'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
+                    'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
+                    'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
+                    'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
+                    'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
+                    'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
+                    'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
+                    'file_kegiatan_id'                    => $files->id_file,
+                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                    'status_validasi' => '0'
+                ]);
+
+                toastr()->success('Berhasil Update Data');
+                return back();
+
+            } else {
+                toastr()->error(' Terjadi Kesalahan :( ');
+            }
+        } else {
+            $PenerimaHibah = PenerimaHibah::where('id_penerima_hibah_pendanaan',decrypt($id))->update([
+                'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
+                'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
+                'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
+                'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
+                'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
+                'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
+                'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
+                'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
+                'status_validasi' => '0'
+            ]);
+
+            toastr()->success('Berhasil Update Data');
+            return back();
+        }
     }
 
     /**

@@ -74,71 +74,71 @@
         });
 
         function load_data() {
-            var table = $('#table').DataTable({
-                bAutoWidth: false,
-                bLengthChange: true,
-                iDisplayLength: 20,
-                searching: true,
-                processing: true,
-                serverSide: true,
-                bDestroy: true,
-                bStateSave: true,
-                ajax: {
-                    data: {
-                        id_jenis_kegiatan: $('#jenis_kegiatan').val(),
-                        status_kegiatan: $('#status_kegiatan').val()
-                    },
-                    url: "{{ route('validasi-rekam-kegiatan.index') }}",
-                },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable:false,searchable:false
-                    },
-                    {
-                        data: 'nama_mahasiswa',
-                        name: 'nama_mahasiswa'
-                    },
-                    {
-                        data: 'nim',
-                        name: 'nim'
-                    },
-                    {
-                        data: 'program_studi',
-                        name: 'program_studi'
-                    },
-                    {
-                        data: 'jenis_kegiatan',
-                        name: 'jenis_kegiatan'
-                    },
-                    {
-                        data: 'nama_kegiatan',
-                        name: 'nama_kegiatan'
-                    },
-                    {
-                        data: 'bukti_kegiatan',
-                        name: 'bukti_kegiatan'
-                    },
-                    {
-                        data: 'validasi',
-                        name: 'validasi',
-                        orderable:false,searchable:false
-                    },
-                    {
-                        data: 'action',
-                        name: 'action',
-                        orderable:false,searchable:false
-                    }
-                ],
-                aLengthMenu: [
-                    [10, 15, 25, 35, 50, 100, -1],
-                    [10, 15, 25, 35, 50, 100, "All"]
-                ],
-                responsive: !0,
-                drawCallback: function() {
-                    this.api().state.clear();
-                }
-            });
+            // var table = $('#table').DataTable({
+            //     bAutoWidth: false,
+            //     bLengthChange: true,
+            //     iDisplayLength: 20,
+            //     searching: true,
+            //     processing: true,
+            //     serverSide: true,
+            //     bDestroy: true,
+            //     bStateSave: true,
+            //     ajax: {
+            //         data: {
+            //             id_jenis_kegiatan: $('#jenis_kegiatan').val(),
+            //             status_kegiatan: $('#status_kegiatan').val()
+            //         },
+            //         url: "{{ route('validasi-rekam-kegiatan.index') }}",
+            //     },
+            //     columns: [{
+            //             data: 'DT_RowIndex',
+            //             name: 'DT_RowIndex',
+            //             orderable:false,searchable:false
+            //         },
+            //         {
+            //             data: 'nama_mahasiswa',
+            //             name: 'nama_mahasiswa'
+            //         },
+            //         {
+            //             data: 'nim',
+            //             name: 'nim'
+            //         },
+            //         {
+            //             data: 'program_studi',
+            //             name: 'program_studi'
+            //         },
+            //         {
+            //             data: 'jenis_kegiatan',
+            //             name: 'jenis_kegiatan'
+            //         },
+            //         {
+            //             data: 'nama_kegiatan',
+            //             name: 'nama_kegiatan'
+            //         },
+            //         {
+            //             data: 'bukti_kegiatan',
+            //             name: 'bukti_kegiatan'
+            //         },
+            //         {
+            //             data: 'validasi',
+            //             name: 'validasi',
+            //             orderable:false,searchable:false
+            //         },
+            //         {
+            //             data: 'action',
+            //             name: 'action',
+            //             orderable:false,searchable:false
+            //         }
+            //     ],
+            //     aLengthMenu: [
+            //         [10, 15, 25, 35, 50, 100, -1],
+            //         [10, 15, 25, 35, 50, 100, "All"]
+            //     ],
+            //     responsive: !0,
+            //     drawCallback: function() {
+            //         this.api().state.clear();
+            //     }
+            // });
         }
 
         function konfirmasi(id,text) {

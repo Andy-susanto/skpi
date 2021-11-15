@@ -1,8 +1,8 @@
 @extends('adminlte::page')
-@section('title', 'Ubah Seminar Pelatihan')
+@section('title', 'Ubah Pengabdian Masyarakat')
 @section('content_header')
     <h1 class="m-0 text-dark"><span><a name="" id="" class="btn btn-default btn-sm"
-                href="{{ route('seminar-pelatihan.index') }}" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a></span> Ubah Seminar Pelatihan <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
+                href="{{ route('pengabdian-masyarakat.index') }}" role="button"><i class="fa fa-arrow-left" aria-hidden="true"></i> Kembali</a></span> Ubah Pengabdian Masyarakat <button type="button" class="btn btn-outline-primary btn-sm"><i class="fa fa-info" aria-hidden="true"></i> Detail</button></h1>
 @endsection
 
 @section('content')
@@ -13,7 +13,7 @@
                     <h4 class="font-bold card-title">Ubah Data</h4>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('seminar-pelatihan.update',encrypt($data['utama']->id_seminar_pelatihan_workshop_diklat))}}" method="post" enctype="multipart/form-data" id="form-seminar">
+                    <form action="{{route('pengabdian-masyarakat.update',encrypt($data['utama']->id_pengabdian_masyarakat))}}" method="post" enctype="multipart/form-data" id="form-pengabdian-masyarakat">
                         @csrf
                         @method('PUT')
                         <div class="form-group">
@@ -24,7 +24,7 @@
                         <div class="form-group">
                             <label for="">Penyelenggara Kegiatan</label>
                             <select class="form-control" name="penyelenggara" id="penyelenggara" onchange="load_bobot()">
-                                @forelse (Helper::penyelenggara(2) as $penyelenggara)
+                                @forelse (Helper::penyelenggara(4) as $penyelenggara)
                                     <option value="{{ $penyelenggara->id_ref_penyelenggara }}"
                                         {{ $data['utama']->penyelenggara->id_ref_penyelenggara == $penyelenggara->id_ref_penyelenggara ? 'selected' : '' }}>
                                         {{ $penyelenggara->nama }}</option>
@@ -36,7 +36,7 @@
                         <div class="form-group">
                             <label for="">Tingkat Kegiatan</label>
                             <select class="form-control" name="tingkat" id="tingkat" onchange="load_bobot()">
-                                @forelse (Helper::tingkat(2) as $tingkat)
+                                @forelse (Helper::tingkat(4) as $tingkat)
                                     <option value="{{ $tingkat->id_ref_tingkat }}"
                                         {{ $data['utama']->tingkat->id_ref_tingkat == $tingkat->id_ref_tingkat ? 'selected' : '' }}>
                                         {{ $tingkat->nama }}</option>
@@ -48,9 +48,9 @@
                         <div class="form-group">
                             <label for="">Peran</label>
                             <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot()">
-                                @forelse (Helper::prestasi(2) as $prestasi)
+                                @forelse (Helper::prestasi(4) as $prestasi)
                                     <option value="{{ $prestasi->id_ref_peran_prestasi }}"
-                                        {{ $data['utama']->peran_prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
+                                        {{ $data['utama']->prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
                                         {{ $prestasi->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>
@@ -87,7 +87,7 @@
                         </div>
                         <div class="row">
                             <div class="col-12 offset-5">
-                                <button type="button" onclick="confirmation('form-seminar')" class="btn btn-outline-primary"><i class="fas fa-save" aria-hidden="true"></i> Simpan Data</button>
+                                <button type="button" onclick="confirmation('form-pengabdian-masyarakat')" class="btn btn-outline-primary"><i class="fas fa-save" aria-hidden="true"></i> Simpan Data</button>
                             </div>
                         </div>
                     </form>
@@ -127,7 +127,7 @@
             $.ajax({
                 url: "{{ route('fungsi.load-bobot') }}",
                 data: {
-                    'jenis_kegiatan': 2,
+                    'jenis_kegiatan': 4,
                     'penyelenggara': $('#penyelenggara').val(),
                     'tingkat': $('#tingkat').val(),
                     'prestasi': $('#prestasi').val()

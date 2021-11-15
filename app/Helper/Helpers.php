@@ -16,11 +16,6 @@ use Illuminate\Support\Facades\Session;
 class Helpers
 {
 
-    public static function kategori($jenis)
-    {
-        return Kategori::where('jenis_penyelenggara', $jenis)->get();
-    }
-
     public static function jenis_kegiatan(){
         return JenisKegiatan::all();
     }
@@ -31,6 +26,17 @@ class Helpers
            return Penyelenggara::all();
         }else{
             return Penyelenggara::whereHas('jenis_kegiatan',function($q) use ($jenis){
+                $q->where('id_ref_jenis_kegiatan',$jenis);
+            })->get();
+        }
+    }
+
+    public static function kategori($jenis=null)
+    {
+        if ($jenis==null) {
+           return Kategori::all();
+        }else{
+            return Kategori::whereHas('jenis_kegiatan',function($q) use ($jenis){
                 $q->where('id_ref_jenis_kegiatan',$jenis);
             })->get();
         }

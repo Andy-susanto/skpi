@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Beasiswa;
 use App\Models\Files;
 use App\Models\KegiatanMahasiswa;
 use App\Models\PenghargaanKejuaraan;
@@ -17,8 +18,8 @@ class BeasiswaController extends Controller
      */
     public function index()
     {
-        $penghargaan = PenghargaanKejuaraan::with(['kegiatan_mahasiswa','kegiatan_mahasiswa.kepeg_pegawai'])->get();
-        return view('penghargaan-kejuaraan.index',compact('penghargaan'));
+        $data['utama'] = Beasiswa::where('siakad_mhspt_id', Auth::user()->id)->get();
+        return view('beasiswa.index',compact('data'));
     }
 
     /**

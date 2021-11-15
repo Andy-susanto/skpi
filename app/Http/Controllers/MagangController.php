@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Files;
 use App\Models\KegiatanMahasiswa;
+use App\Models\Magang;
 use App\Models\PenghargaanKejuaraan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -17,8 +18,8 @@ class MagangController extends Controller
      */
     public function index()
     {
-        $penghargaan = PenghargaanKejuaraan::with(['kegiatan_mahasiswa','kegiatan_mahasiswa.kepeg_pegawai'])->get();
-        return view('penghargaan-kejuaraan.index',compact('penghargaan'));
+        $data['utama'] = Magang::where('siakad_mhspt_id', Auth::user()->id)->get();
+        return view('magang.index', compact('data'));
     }
 
     /**

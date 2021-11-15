@@ -170,7 +170,7 @@ class SeminarPelatihanController extends Controller
             $extension = ['jpg,pdf,docx'];
             $file = $request->bukti_kegiatan->getClientOriginalExtension();
             if (in_array($file, $extension)) {
-                $filename      = time() . '_' . 'bukti_kegiatan_penghargaan_kejuaraan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+                $filename      = time() . '_' . 'bukti_seminar_pelatihan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
                 $original_name = $request->bukti_kegiatan->getClientOriginalName();
                 $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 

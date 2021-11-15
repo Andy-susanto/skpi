@@ -29,4 +29,8 @@ class BobotNilai extends Model
         return $this->belongsTo(Prestasi::class,'ref_peran_prestasi_id');
     }
 
+    public function kategori(){
+        return $this->belongsTo(Kategori::class,'ref_kategori_id');
+    }
+
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BeasiswaController;
+use App\Http\Controllers\CetakController;
 use App\Http\Controllers\FungsiAjaxController;
 use App\Http\Controllers\KaryaMahasiswaController;
 use App\Http\Controllers\KemampuanBahasaAsingController;
@@ -68,4 +69,7 @@ Route::middleware(['auth'])->group(function () {
 
     // Master
     Route::resource('bobot-nilai', MasterBobotNilaiController::class);
+
+    // Cetak
+    Route::resource('cetak', CetakController::class);
 });
