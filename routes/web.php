@@ -7,6 +7,7 @@ use App\Http\Controllers\KemampuanBahasaAsingController;
 use App\Http\Controllers\KewirausahaanController;
 use App\Http\Controllers\LoadDataController;
 use App\Http\Controllers\MagangController;
+use App\Http\Controllers\Master\MasterBobotNilaiController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\PenerimaHibahController;
@@ -16,7 +17,6 @@ use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SeminarPelatihanController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ValidasiRekamKegiatanController;
-use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -65,4 +65,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('kemampuan-bahasa-asing', KemampuanBahasaAsingController::class);
     Route::resource('kewirausahaan', KewirausahaanController::class);
     Route::resource('karya-mahasiswa', KaryaMahasiswaController::class);
+
+    // Master
+    Route::resource('bobot-nilai', MasterBobotNilaiController::class);
 });

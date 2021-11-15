@@ -2,6 +2,7 @@
 
 namespace App\Helper;
 
+use App\Models\JenisKegiatan;
 use App\Models\Kategori;
 use App\Models\LogAktifitas;
 use App\Models\Penyelenggara;
@@ -20,29 +21,40 @@ class Helpers
         return Kategori::where('jenis_penyelenggara', $jenis)->get();
     }
 
-    public static function peran($jenis)
-    {
-        return Peran::where('jenis_penyelenggara', $jenis)->get();
+    public static function jenis_kegiatan(){
+        return JenisKegiatan::all();
     }
 
-    public static function penyelenggara($jenis)
+    public static function penyelenggara($jenis=null)
     {
-        return Penyelenggara::whereHas('jenis_kegiatan',function($q) use ($jenis){
-            $q->where('id_ref_jenis_kegiatan',$jenis);
-        })->get();
+        if ($jenis==null) {
+           return Penyelenggara::all();
+        }else{
+            return Penyelenggara::whereHas('jenis_kegiatan',function($q) use ($jenis){
+                $q->where('id_ref_jenis_kegiatan',$jenis);
+            })->get();
+        }
     }
 
-    public static function tingkat($jenis)
+    public static function tingkat($jenis=null)
     {
-        return Tingkat::whereHas('jenis_kegiatan',function($q) use ($jenis){
-            $q->where('id_ref_jenis_kegiatan',$jenis);
-        })->get();
+        if ($jenis==null) {
+            return Tingkat::all();
+        }else{
+            return Tingkat::whereHas('jenis_kegiatan',function($q) use ($jenis){
+                $q->where('id_ref_jenis_kegiatan',$jenis);
+            })->get();
+        }
     }
 
-    public static function prestasi($jenis){
-        return Prestasi::whereHas('jenis_kegiatan',function($q) use ($jenis){
-            $q->where('id_ref_jenis_kegiatan',$jenis);
-        })->get();
+    public static function prestasi($jenis=null){
+        if ($jenis == null) {
+            return Prestasi::all();
+        }else{
+            return Prestasi::whereHas('jenis_kegiatan',function($q) use ($jenis){
+                $q->where('id_ref_jenis_kegiatan',$jenis);
+            })->get();
+        }
     }
 
     public static function tahun_aktif()
