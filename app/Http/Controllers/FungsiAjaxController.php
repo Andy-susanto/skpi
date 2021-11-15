@@ -20,7 +20,6 @@ class FungsiAjaxController extends Controller
 
                 ->when($request->peran,function($q) use($request){
                     $q->where('ref_peran_prestasi_id',$request->peran);}) // Peran Prestasi
-
                 ->first();
         if(!$data){
             $data = 0;

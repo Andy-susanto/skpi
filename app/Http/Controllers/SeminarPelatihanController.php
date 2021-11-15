@@ -23,7 +23,7 @@ class SeminarPelatihanController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Show the form for creating a ew resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -46,7 +46,7 @@ class SeminarPelatihanController extends Controller
             'tingkat_kegiatan'         => 'required|integer',
             'tanggal_mulai_kegiatan'   => 'required|date',
             'tanggal_selesai_kegiatan' => 'required|date',
-            'peran'                    => 'required|integer',
+            'prestasi'                 => 'required|integer',
             'dosen_pembimbing'         => 'nullable|integer',
             'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
         ],[
@@ -200,7 +200,7 @@ class SeminarPelatihanController extends Controller
                 toastr()->error(' Terjadi Kesalahan :( ');
             }
         } else {
-            $penghargaan = SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+            $seminarPelatihan = SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
                 'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
                 'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
                 'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,

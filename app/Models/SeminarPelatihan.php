@@ -21,7 +21,7 @@ class SeminarPelatihan extends Model
         return $this->belongsTo(Tingkat::class,'ref_tingkat_id');
     }
 
-    public function peran(){
+    public function peran_prestasi(){
         return $this->belongsTo(Peran::class,'ref_peran_prestasi_id');
     }
 

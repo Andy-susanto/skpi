@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Peran extends Model
 {
     use HasFactory;
-    protected $table      = 'peran';
-    protected $primaryKey = 'id_peran';
+    protected $table      = 'ref_peran_prestasi';
+    protected $primaryKey = 'id_ref_peran_prestasi';
     protected $guarded    = [];
 }

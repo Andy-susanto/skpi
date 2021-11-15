@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Files;
 use App\Models\Tingkat;
 use App\Models\Prestasi;
+use App\Models\BobotNilai;
 use Illuminate\Http\Request;
 use App\Models\PenerimaHibah;
 use App\Models\Penyelenggara;
@@ -21,11 +22,8 @@ class PenerimaHibahController extends Controller
      */
     public function index()
     {
-        $hibah = PenerimaHibah::get();
-        $data['penyelenggara']  = Penyelenggara::has('jenis_kegiatan')->get();
-        $data['tingkat']        = Tingkat::has('jenis_kegiatan')->get();
-        $data['peran']       = Prestasi::has('jenis_kegiatan')->get();
-        return view('penerima-hibah.index',compact('hibah','data'));
+        $data['utama'] = PenerimaHibah::where('siakad_mhspt_id', Auth::user()->id)->get();
+        return view('penerima-hibah.index',compact('data'));
     }
 
     /**
@@ -52,44 +50,50 @@ class PenerimaHibahController extends Controller
             'tingkat_kegiatan'         => 'required|integer',
             'tanggal_mulai_kegiatan'   => 'required|date',
             'tanggal_selesai_kegiatan' => 'required|date',
-            'peran'                    => 'required|integer',
+            'prestasi'                 => 'required|integer',
             'dosen_pembimbing'         => 'nullable|integer',
-            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
+            'bukti_kegiatan'           =>  'required|mimes:jpg,png,pdf,docx'
         ]);
 
-        if($request->file('bukti_kegiatan')){
-            $filename = time().'_'.'bukti_kegiatan_penghargaan_kejuaraan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
+        if ($request->file('bukti_kegiatan')) {
+            $filename      = time() . '_' . 'bukti_kegiatan_penghargaan_kejuaraan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
             $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
             $files = Files::create([
-                'nama_file'     => $filename,
-                'jenis'         => 'bukti kegiatan penerima hibah',
-                'original_name' => $original_name,
-                'path'          => $filePath,
-                'id_user'       => Auth::user()->id
+                'nama'                  => $filename,
+                'path'                  => $filePath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 1
             ]);
-
         }
 
-        $hibah = PenerimaHibah::create([
-            'nama_kegiatan'       => $request->nama_kegiatan,
-            'penyelenggara_id'    => $request->penyelenggara_kegiatan,
-            'tingkat_id'          => $request->tingkat_kegiatan,
-            'peran_id'            => $request->peran,
-            'dosen_pembimbing_id' => $request->dosen_pembimbing,
-        ]);
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 1)
+            ->when($request->penyelenggara_kegiatan, function ($q) use ($request) {
+                $q->where('ref_penyelenggara_id', $request->penyelenggara_kegiatan);
+            })
+            ->when($request->tingkat_kegiatan, function ($q) use ($request) {
+                $q->where('ref_tingkat_id', $request->tingkat_kegiatan);
+            })
+            ->when($request->prestasi, function ($q) use ($request) {
+                $q->where('ref_peran_prestasi_id', $request->prestasi);
+            })
+            ->first();
 
-        KegiatanMahasiswa::create([
-            'id_mhs_pt'         => Auth::user()->id,
-            'validasi'          => 1,
-            'tanggal_mulai'     => $request->tanggal_mulai_kegiatan,
-            'tanggal_selesai'   => $request->tanggal_selesai_kegiatan,
-            'file_id'           => $files->id_file ?? 0,
-            'pegawai_id'        => $request->dosen_pembimbing,
-            'detail_id'         => $hibah->id_penerima_hibah,
-            'jenis_kegiatan_id' => 3
-        ]);
+            $PenerimaHibah = PenerimaHibah::create([
+                'nama'                                => $request->nama_kegiatan,
+                'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
+                'ref_tingkat_id'                      => $request->tingkat_kegiatan,
+                'ref_peran_prestasi_id'               => $request->prestasi,
+                'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
+                'siakad_mhspt_id'                     => Auth::user()->id,
+                'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
+                'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
+                'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
+                'file_kegiatan_id'                    => $files->id_file,
+                'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                'status_validasi' => '0'
+            ]);
 
         toastr()->success('Berhasil Tambah Data');
         return back();

@@ -50,7 +50,7 @@
                             <select class="form-control" name="prestasi" id="prestasi" onchange="load_bobot()">
                                 @forelse (Helper::prestasi(1) as $prestasi)
                                     <option value="{{ $prestasi->id_ref_peran_prestasi }}"
-                                        {{ $data['utama']->prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
+                                        {{ $data['utama']->peran_prestasi->id_ref_peran_prestasi == $prestasi->id_ref_peran_prestasi ? 'selected' : '' }}>
                                         {{ $prestasi->nama }}</option>
                                 @empty
                                     <option>Data Tidak ada</option>

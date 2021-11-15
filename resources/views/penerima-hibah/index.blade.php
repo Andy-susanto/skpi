@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark">Penerima Hibah</h1>
+            <h1 class="m-0 font-bold text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Penerima Hibah</h1>
         </div>
         <div class="col-12">
             <div class="card">
@@ -15,7 +15,7 @@
                             <tr>
                                 <th>Capaian Bobot</th>
                                 <th>Bobot saat ini</th>
-                                <th>Kekurangn Bobot</th>
+                                <th>Kekurangan Bobot</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -23,6 +23,13 @@
                                 <td>100</td>
                                 <td>100</td>
                                 <td>0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">
+                                    <div class="progress">
+                                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">Proses Bobot : 75/100</div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -37,9 +44,9 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                        aria-controls="nav-home" aria-selected="true">Mendaftar</a>
+                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i> Mendaftar</a>
                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                        aria-controls="nav-profile" aria-selected="false">Daftar Hibah</a>
+                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i> Daftar Penerima Hibah</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -72,9 +79,9 @@
                                                 <label for="">Penyelenggara Kegiatan</label><span
                                                     class="text-danger">*</span>
                                                 <select class="form-control" name="penyelenggara_kegiatan"
-                                                    id="penyelenggara">
-                                                    @forelse($data['penyelenggara'] as $penyelenggara)
-                                                        <option value="{{ $penyelenggara->id_penyelenggara }}">
+                                                    id="penyelenggara" onchange="load_bobot();">
+                                                    @forelse(Helper::penyelenggara(1) as $penyelenggara)
+                                                        <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                                             {{ $penyelenggara->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -82,9 +89,10 @@
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="tingkat_kegiatan" id="tingkat">
-                                                    @forelse($data['tingkat'] as $tingkat)
-                                                        <option value="{{ $tingkat->id_tingkat }}">
+                                                <select class="form-control" name="tingkat_kegiatan" id="tingkat"
+                                                    onchange="load_bobot();">
+                                                    @forelse(Helper::tingkat(1) as $tingkat)
+                                                        <option value="{{ $tingkat->id_ref_tingkat }}">
                                                             {{ $tingkat->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -105,11 +113,12 @@
                                                     id="" aria-describedby="helpId" placeholder="">
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Peran</label><span class="text-danger">*</span>
-                                                <select class="form-control" name="peran" id="peran">
-                                                    @forelse($data['peran'] as $peran)
-                                                        <option value="{{ $peran->id_peran }}">
-                                                            {{ $peran->nama }}</option>
+                                                <label for="">Prestasi</label><span class="text-danger">*</span>
+                                                <select class="form-control" name="prestasi" id="prestasi"
+                                                    onchange="load_bobot();">
+                                                    @forelse(Helper::prestasi(1) as $prestasi)
+                                                        <option value="{{ $prestasi->id_ref_peran_prestasi }}">
+                                                            {{ $prestasi->nama }}</option>
                                                     @empty
                                                     @endforelse
                                                 </select>
@@ -127,16 +136,24 @@
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
                                                     placeholder="" aria-describedby="fileHelpId">
                                             </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Bobot Nilai Kegiatan :</label>
+                                                <div id="bobot"></div>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="card-footer">
-                                        <div class="text-center card-footer">
-                                            <button type="button" onclick="confirmation('form-penerima-hibah')"
-                                                class="btn btn-primary btn-md">Kirim Data</button>
-                                        </div>
+                                        <p class="">Catatan :
+                                            <ol class="ml-2 list-decimal text-red">
+                                                <li>Tanda * harus di isi</li>
+                                            </ol>
+                                        </p>
                                     </div>
-                                </form>
                             </div>
+                            <div class="text-center card-footer">
+                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                            </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -158,24 +175,47 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($hibah as $data)
+                                            @forelse ($data['utama'] as $data)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama_kegiatan }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ $data->nama }}</td>
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa->tanggal_selesai)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa->kepeg_pegawai) }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->kegiatan_mahasiswa->validasi == '1')
-                                                            <span class="text-info"><i>Sedang di Ajukan</i></span>
+                                                        @if ($data->kepeg_pegawai()->exists())
+                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
+                                                        @else
+                                                            -
                                                         @endif
                                                     </td>
-                                                    <td><a name="" id="" class="btn btn-primary btn-sm"
-                                                            href="{{ route('penerima-hibah.show', encrypt($data->id_penerima_hibah)) }}"
-                                                            role="button">Detail</a></td>
+                                                    <td>
+                                                        @if ($data->status_validasi == '0')
+                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                            <span class="badge badge-success"><i>di Validasi</i></span>
+                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                        @endif
+                                                    </td>
+                                                    <td>
+                                                        <div class="dropdown">
+                                                            <button class="btn btn-info btn-sm dropdown-toggle" type="button"
+                                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                                                aria-expanded="false">
+                                                                <i class="fa fa-hourglass-start" aria-hidden="true"></i> Proses
+                                                            </button>
+                                                            <div class="dropdown-menu" aria-labelledby="triggerId">
+                                                                <a class="dropdown-item"
+                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                        class="fa fa-info" aria-hidden="true"></i>
+                                                                    Detail</a>
+                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
+                                                                        aria-hidden="true"></i> Ubah</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
                                             @empty
 
@@ -190,15 +230,16 @@
             </div>
         </div>
     </div>
+    </div>
 
 @endsection
 @include('plugins.select2')
-@section('plugins.Datatables', true)
 @include('plugins.alertify')
+@section('plugins.Datatables', true)
 @section('js')
     <script>
         $('#table').DataTable();
-        $('#penyelenggara,#tingkat,#peran').select2();
+        $('#penyelenggara,#tingkat,#prestasi').select2();
         $("#dosen_pembimbing").select2({
             placeholder: "Cari Dosen Pembimbing..",
             ajax: {
@@ -225,10 +266,10 @@
             $.ajax({
                 url: "{{ route('fungsi.load-bobot') }}",
                 data: {
-                    'jenis_kegiatan': 2,
+                    'jenis_kegiatan': 1,
                     'penyelenggara': $('#penyelenggara').val(),
                     'tingkat': $('#tingkat').val(),
-                    'peran': $('#peran').val()
+                    'prestasi': $('#prestasi').val()
                 },
                 beforeSend: function() {
                     $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
@@ -246,5 +287,6 @@
 
             })
         }
+
     </script>
 @endsection

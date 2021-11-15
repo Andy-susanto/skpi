@@ -148,7 +148,7 @@
                                             <div class="form-group col-4">
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('peran') is-invalid @enderror"
-                                                    name="peran" id="peran" onchange="load_bobot();">
+                                                    name="prestasi" id="peran" onchange="load_bobot();">
                                                     @forelse(Helper::prestasi(2) as $peran)
                                                         <option value="{{ $peran->id_ref_peran_prestasi }}">
                                                             {{ $peran->nama }}</option>
@@ -224,20 +224,25 @@
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
                                                     <td>{{ $data->nama_kegiatan }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_mulai)->isoFormat('D MMMM Y') }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
                                                     </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->kegiatan_mahasiswa_single->tanggal_selesai)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                    <td>{{ Helper::nama_gelar($data->kegiatan_mahasiswa_single->kepeg_pegawai) }}
+                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
                                                     </td>
                                                     <td>
-                                                        @if ($data->kegiatan_mahasiswa_single->validasi == '1')
-                                                            <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
-                                                            <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '3')
-                                                            <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                        @if ($data->kepeg_pegawai()->exists())
+                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
+                                                        @else
+                                                            -
                                                         @endif
+                                                    </td>
+                                                    <td>
+                                                        @if ($data->status_validasi == '0')
+                                                        <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
+                                                    @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                        <span class="badge badge-success"><i>di Validasi</i></span>
+                                                    @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                        <span class="badge badge-danger"><i>di Tolak</i></span>
+                                                    @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
