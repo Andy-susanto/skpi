@@ -5,7 +5,7 @@
 @section('content_header')
 <div class="row">
     <div class="mb-3 col-12">
-        <h1 class="m-0 font-bold text-dark">Seminar Pelatihan</h1>
+        <h1 class="m-0 font-bold text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Seminar Pelatihan</h1>
     </div>
     <div class="col-12">
         <div class="card">
@@ -15,7 +15,7 @@
                         <tr>
                             <th>Capaian Bobot</th>
                             <th>Bobot saat ini</th>
-                            <th>Kekurangn Bobot</th>
+                            <th>Kekurangan Bobot</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -23,6 +23,13 @@
                             <td>100</td>
                             <td>100</td>
                             <td>0</td>
+                        </tr>
+                        <tr>
+                            <td colspan="3">
+                                <div class="progress">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">Proses Bobot : 75/100</div>
+                                </div>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -37,9 +44,9 @@
             <nav>
                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                     <a class="font-bold nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                        aria-controls="nav-home" aria-selected="true">Mendaftar</a>
+                        aria-controls="nav-home" aria-selected="true"><i class="fa fa-arrow-right" aria-hidden="true"></i> Mendaftar</a>
                     <a class="font-bold nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                        aria-controls="nav-profile" aria-selected="false">Daftar Seminar Pelatihan</a>
+                        aria-controls="nav-profile" aria-selected="false"><i class="fa fa-book" aria-hidden="true"></i> Daftar Seminar Pelatihan</a>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
@@ -82,8 +89,8 @@
                                                     class="form-control @error('penyelenggara_kegiatan') is-invalid @enderror"
                                                     name="penyelenggara_kegiatan" id="penyelenggara"
                                                     onchange="load_bobot();">
-                                                    @forelse($data['penyelenggara'] as $penyelenggara)
-                                                        <option value="{{ $penyelenggara->id_penyelenggara }}">
+                                                    @forelse(Helper::penyelenggara(2) as $penyelenggara)
+                                                        <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                                             {{ $penyelenggara->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -98,8 +105,8 @@
                                                 <label for="">Tingkat Kegiatan</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('tingkat_kegiatan') is-invalid @enderror"
                                                     name="tingkat_kegiatan" id="tingkat" onchange="load_bobot();">
-                                                    @forelse($data['tingkat'] as $tingkat)
-                                                        <option value="{{ $tingkat->id_tingkat }}">
+                                                    @forelse(Helper::tingkat(2) as $tingkat)
+                                                        <option value="{{ $tingkat->id_ref_tingkat }}">
                                                             {{ $tingkat->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -142,8 +149,8 @@
                                                 <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control @error('peran') is-invalid @enderror"
                                                     name="peran" id="peran" onchange="load_bobot();">
-                                                    @forelse($data['peran'] as $peran)
-                                                        <option value="{{ $peran->id_peran }}">
+                                                    @forelse(Helper::prestasi(2) as $peran)
+                                                        <option value="{{ $peran->id_ref_peran_prestasi }}">
                                                             {{ $peran->nama }}</option>
                                                     @empty
                                                     @endforelse
@@ -187,7 +194,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <div class="text-center card-footer">
-                                            <button type="button" onclick="confirmation('form-seminar')"  class="btn btn-primary btn-md">Kirim Data</button>
+                                            <button type="button" onclick="confirmation('form-seminar')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                                         </div>
                                     </div>
                                 </form>
@@ -241,10 +248,10 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan)) }}"><i
+                                                                    href="{{ route('seminar-pelatihan.show', encrypt($data->id_seminar_pelatihan_workshop_diklat)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="#"><i class="fas fa-edit"
+                                                                <a class="dropdown-item" href="{{route('seminar-pelatihan.edit',encrypt($data->id_seminar_pelatihan_workshop_diklat))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>

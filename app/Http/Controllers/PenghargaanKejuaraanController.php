@@ -22,7 +22,7 @@ class PenghargaanKejuaraanController extends Controller
      */
     public function index()
     {
-        $data['utama']            = PenghargaanKejuaraan::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = PenghargaanKejuaraan::where('siakad_mhspt_id', Auth::user()->id)->get();
         return view('penghargaan-kejuaraan.index', compact('data'));
     }
 

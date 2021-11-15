@@ -144,7 +144,7 @@
                                     </div>
                                     <div class="card-footer">
                                         <p class="">Catatan :
-                                            <ol class="text-red list-decimal ml-2">
+                                            <ol class="ml-2 list-decimal text-red">
                                                 <li>Tanda * harus di isi</li>
                                             </ol>
                                         </p>

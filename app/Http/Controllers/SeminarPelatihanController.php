@@ -3,14 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
-use App\Models\Tingkat;
-use App\Models\Prestasi;
 use App\Models\BobotNilai;
 use Illuminate\Http\Request;
-use App\Models\Penyelenggara;
 use App\Models\SeminarPelatihan;
-use App\Models\KegiatanMahasiswa;
-use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\Auth;
 
 class SeminarPelatihanController extends Controller
@@ -22,11 +17,9 @@ class SeminarPelatihanController extends Controller
      */
     public function index()
 {
-            $seminar         = SeminarPelatihan::all();
-        $data['penyelenggara'] = Penyelenggara::has('jenis_kegiatan')->get();
-        $data['tingkat']       = Tingkat::has('jenis_kegiatan')->get();
-        $data['peran']         = Prestasi::has('jenis_kegiatan')->get();
-        return view('seminar-pelatihan.index',compact('seminar','data'));
+
+        $seminar = SeminarPelatihan::where('siakad_mhspt_id',Auth::user()->id)->get();
+        return view('seminar-pelatihan.index',compact('seminar'));
     }
 
     /**
@@ -78,45 +71,39 @@ class SeminarPelatihanController extends Controller
             $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
 
             $files = Files::create([
-                'nama_file'     => $filename,
-                'jenis'         => 'bukti kegiatan seminar pelatihan',
-                'original_name' => $original_name,
-                'path'          => $filePath,
-                'id_user'       => Auth::user()->id
+                'nama'                  => $filename,
+                'path'                  => $filePath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 2
             ]);
 
         }
 
-        $bobot_nilai = BobotNilai::where('jenis_kegiatan_id',1)
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id',2)
                     ->when($request->penyelenggara_kegiatan,function($q) use($request) {
-                            $q->where('penyelenggara_kategori_id',$request->penyelenggara_kegiatan);})
+                            $q->where('ref_penyelenggara_id',$request->penyelenggara_kegiatan);})
 
                     ->when($request->tingkat_kegiatan,function($q) use ($request){
-                            $q->where('tingkat_id',$request->tingkat_kegiatan);})
+                            $q->where('ref_tingkat_id',$request->tingkat_kegiatan);})
 
                     ->when($request->prestasi,function($q) use ($request){
-                            $q->where('prestasi_peran_id',$request->prestasi);})
+                            $q->where('ref_peran_prestasi_id',$request->prestasi);})
 
                     ->first();
 
         $seminar = SeminarPelatihan::create([
-            'nama_kegiatan'       => $request->nama_kegiatan,
-            'penyelenggara_id'    => $request->penyelenggara_kegiatan,
-            'tingkat_id'          => $request->tingkat_kegiatan,
-            'dosen_pembimbing_id' => $request->dosen_pembimbing,
-            'peran_id'            => $request->peran,
-        ]);
-
-        KegiatanMahasiswa::create([
-            'id_mhs_pt'         => Auth::user()->id,
-            'validasi'          => 1,
-            'tanggal_mulai'     => $request->tanggal_mulai_kegiatan,
-            'tanggal_selesai'   => $request->tanggal_selesai_kegiatan,
-            'file_id'           => $files->id_file ?? 0,
-            'pegawai_id'        => $request->dosen_pembimbing,
-            'detail_id'         => $seminar->id_seminar_pelatihan,
-            'jenis_kegiatan_id' => 2,
-            'bobot_nilai_id'    => $bobot_nilai->bobot_nilai_id ?? 0
+            'nama'                                => $request->nama_kegiatan,
+            'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan,
+            'ref_tingkat_id'                      => $request->tingkat_kegiatan,
+            'ref_peran_prestasi_id'               => $request->prestasi,
+            'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
+            'siakad_mhspt_id'                     => Auth::user()->id,
+            'tgl_mulai'                           => $request->tanggal_mulai_kegiatan,
+            'tgl_selesai'                         => $request->tanggal_selesai_kegiatan,
+            'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai,
+            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+            'status_validasi' => '0'
         ]);
 
         toastr()->success('Berhasil Tambah Data');
@@ -143,7 +130,8 @@ class SeminarPelatihanController extends Controller
      */
     public function edit($id)
     {
-        //
+        $data['utama'] = SeminarPelatihan::findOrFail(decrypt($id));
+        return view('seminar-pelatihan.edit', compact('data'));
     }
 
     /**
@@ -155,7 +143,78 @@ class SeminarPelatihanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama_kegiatan'    => 'required|string',
+            'penyelenggara'    => 'required|integer',
+            'tingkat'          => 'required|integer',
+            'tgl_mulai'        => 'required|date',
+            'tgl_selesai'      => 'required|date',
+            'prestasi'         => 'required|integer',
+            'dosen_pembimbing' => 'nullable|integer',
+        ]);
+
+        $data_utama = SeminarPelatihan::findOrFail(decrypt($id));
+        $bobot_nilai = BobotNilai::where('ref_jenis_kegiatan_id', 1)
+            ->when($request->penyelenggara_kegiatan, function ($q) use ($request) {
+                $q->where('ref_penyelenggara_id', $request->penyelenggara_kegiatan);
+            })
+            ->when($request->tingkat_kegiatan, function ($q) use ($request) {
+                $q->where('ref_tingkat_id', $request->tingkat_kegiatan);
+            })
+            ->when($request->prestasi, function ($q) use ($request) {
+                $q->where('ref_peran_prestasi_id', $request->prestasi);
+            })
+            ->first();
+
+        if ($request->file('bukti_kegiatan')) {
+            $extension = ['jpg,pdf,docx'];
+            $file = $request->bukti_kegiatan->getClientOriginalExtension();
+            if (in_array($file, $extension)) {
+                $filename      = time() . '_' . 'bukti_kegiatan_penghargaan_kejuaraan' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
+                $original_name = $request->bukti_kegiatan->getClientOriginalName();
+                $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
+
+                $files = Files::where('id_file', $data_utama->files->id_file)->update([
+                    'nama'                  => $filename,
+                    'path'                  => $filePath,
+                ]);
+
+                $penghargaan = SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+                    'nama'                                => $request->nama_kegiatan ?? $data_utama->nama_kegiatan,
+                    'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
+                    'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
+                    'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
+                    'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
+                    'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
+                    'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
+                    'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
+                    'file_kegiatan_id'                    => $files->id_file,
+                    'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
+                    'status_validasi' => '0'
+                ]);
+
+                toastr()->success('Berhasil Update Data');
+                return back();
+
+            } else {
+                toastr()->error(' Terjadi Kesalahan :( ');
+            }
+        } else {
+            $penghargaan = SeminarPelatihan::where('id_seminar_pelatihan_workshop_diklat',decrypt($id))->update([
+                'nama'                                => $request->nama_kegiatan ?? $data_utama->nama,
+                'ref_penyelenggara_id'                => $request->penyelenggara_kegiatan ?? $data_utama->ref_penyelenggara_id,
+                'ref_tingkat_id'                      => $request->tingkat_kegiatan ?? $data_utama->ref_tingkat_id,
+                'ref_peran_prestasi_id'               => $request->prestasi ?? $data_utama->ref_peran_prestasi_id,
+                'kepeg_pegawai_id'                    => $request->dosen_pembimbing ?? $data_utama->kepeg_pegawai_id,
+                'tgl_mulai'                           => $request->tanggal_mulai_kegiatan ?? $data_utama->tgl_mulai,
+                'tgl_selesai'                         => $request->tanggal_selesai_kegiatan ?? $data_utama->tgl_selesai,
+                'bobot_nilai_id'                      => $bobot_nilai->id_bobot_nilai ?? $data_utama->bobot_nilai_id,
+                'status_validasi' => '0'
+            ]);
+
+            toastr()->success('Berhasil Update Data');
+            return back();
+        }
     }
 
     /**
