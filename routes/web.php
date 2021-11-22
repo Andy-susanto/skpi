@@ -40,6 +40,11 @@ Route::get('/', function () {
 
 Auth::routes();
 
+Route::get('/login', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'login'])->name('keycloak.login');
+Route::get('/callback', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'callback'])->name('keycloak.callback');
+Route::post('/logout', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'logout'])->name('keycloak.logout');
+
+
 Route::get('/home', function() {
     return view('home');
 })->name('home')->middleware('auth');
