@@ -18,7 +18,8 @@ class MasterBobotNilaiController extends Controller
             'ref_jenis_kegiatan_id' => 'required',
             'ref_penyelenggara_id'  => 'required',
             'ref_tingkat_id'        => 'required',
-            'ref_peran_prestasi_id' => 'required'
+            'ref_peran_prestasi_id' => 'required',
+            'ref_kategori_id'       => 'required'
         ]);
 
         $store = BobotNilai::create($request->all());
@@ -28,6 +29,7 @@ class MasterBobotNilaiController extends Controller
             return back();
         }else{
             toastr()->error('Tejadi Kesalahan, Silahkan Coba Lagi');
+            return back();
         }
     }
 
@@ -42,7 +44,8 @@ class MasterBobotNilaiController extends Controller
             'ref_jenis_kegiatan_id' => 'required',
             'ref_penyelenggara_id'  => 'required',
             'ref_tingkat_id'        => 'required',
-            'ref_peran_prestasi_id' => 'required'
+            'ref_peran_prestasi_id' => 'required',
+            'ref_kategori_id'       => 'required'
         ]);
 
         $update = BobotNilai::where('id_bobot_nilai',decrypt($id))->update($request->except(['_token','_method']));
@@ -61,6 +64,7 @@ class MasterBobotNilaiController extends Controller
             return back();
         }else{
             toastr()->error('Tejadi Kesalahan, Silahkan Coba Lagi');
+            return back();
         }
     }
 }

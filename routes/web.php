@@ -8,7 +8,9 @@ use App\Http\Controllers\KemampuanBahasaAsingController;
 use App\Http\Controllers\KewirausahaanController;
 use App\Http\Controllers\LoadDataController;
 use App\Http\Controllers\MagangController;
+use App\Http\Controllers\Master\MasterBidangController;
 use App\Http\Controllers\Master\MasterBobotNilaiController;
+use App\Http\Controllers\Master\MasterKategoriController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrganisasiController;
 use App\Http\Controllers\PenerimaHibahController;
@@ -43,7 +45,7 @@ Route::get('/home', function() {
 })->name('home')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('permission/create',[MenuController::class,'createPermission'])->name('menus.permission');
+    Route::post('pe rmission/create',[MenuController::class,'createPermission'])->name('menus.permission');
     Route::get('load/dosen-pegawai',[LoadDataController::class,'loadDosenPegawai'])->name('load.dosen-pegawai');
     Route::get('load/dosen',[LoadDataController::class,'loadDosen'])->name('load.dosen');
 
@@ -69,6 +71,8 @@ Route::middleware(['auth'])->group(function () {
 
     // Master
     Route::resource('bobot-nilai', MasterBobotNilaiController::class);
+    Route::resource('kategori', MasterKategoriController::class);
+    Route::resource('bidang', MasterBidangController::class);
 
     // Cetak
     Route::resource('cetak', CetakController::class);

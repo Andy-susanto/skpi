@@ -14,7 +14,7 @@
     <label for="">Penyelenggara</label>
     <select class="form-control" name="ref_penyelenggara_id" id="" required>
         @forelse (Helper::penyelenggara() as $penyelenggara)
-            <option value="{{ $penyelenggara->id_ref_penyelenggara }}" {{$data['bobot']->id_ref_penyelenggara == $jenis_kegiatan->id_ref_penyelenggara_id ?'selected' : ''}}>
+            <option value="{{ $penyelenggara->id_ref_penyelenggara }}" {{$data['bobot']->ref_penyelenggara_id == $jenis_kegiatan->id_ref_penyelenggara_id ?'selected' : ''}}>
                 {{ $penyelenggara->nama }}
             </option>
         @empty
@@ -26,7 +26,7 @@
     <label for="">Tingkat</label>
     <select class="form-control" name="ref_tingkat_id" id="" required>
         @forelse (Helper::tingkat() as $tingkat)
-            <option value="{{ $tingkat->id_ref_tingkat }}" {{$data['bobot']->id_ref_tingkat == $jenis_kegiatan->id_ref_tingkat ?'selected' : ''}}>{{ $tingkat->nama }}</option>
+            <option value="{{ $tingkat->id_ref_tingkat }}" {{$data['bobot']->ref_tingkat_id == $jenis_kegiatan->id_ref_tingkat ?'selected' : ''}}>{{ $tingkat->nama }}</option>
         @empty
             <option>Tidak Ada Data</option>
         @endforelse
@@ -36,7 +36,18 @@
     <label for="">Prestasi</label>
     <select class="form-control" name="ref_peran_prestasi_id" id="" required>
         @forelse (Helper::prestasi() as $prestasi)
-            <option value="{{ $prestasi->id_ref_peran_prestasi }}" {{$data['bobot']->id_ref_peran_prestasi == $jenis_kegiatan->id_ref_peran_prestasi ?'selected' : ''}}>{{ $prestasi->nama }}
+            <option value="{{ $prestasi->id_ref_peran_prestasi }}" {{$data['bobot']->ref_peran_prestasi_id == $jenis_kegiatan->id_ref_peran_prestasi ?'selected' : ''}}>{{ $prestasi->nama }}
+            </option>
+        @empty
+            <option>Tidak Ada Data</option>
+        @endforelse
+    </select>
+</div>
+<div class="form-group">
+    <label for="">Kategori</label>
+    <select class="form-control" name="ref_kategori_id" id="" required>
+        @forelse (Helper::kategori() as $kategori)
+            <option value="{{ $kategori->id_ref_kategori }}" {{$data['bobot']->ref_kategori_id == $jenis_kegiatan->id_ref_peran_prestasi ?'selected' : ''}}>{{ $kategori->nama_kategori }}
             </option>
         @empty
             <option>Tidak Ada Data</option>

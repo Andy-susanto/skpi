@@ -8,7 +8,11 @@ use Illuminate\Http\Request;
 class FungsiAjaxController extends Controller
 {
     public function load_bobot(Request $request){
+
         $data = BobotNilai::where('ref_jenis_kegiatan_id',$request->jenis_kegiatan)
+                ->when($request->kategori,function($q) use ($request){
+                    $q->where('ref_kategori_id',$request->kategori);  // Kategori
+                })
                 ->when($request->penyelenggara_kegiatan,function($q) use($request) {
                     $q->where('ref_penyelenggara_id',$request->penyelenggara_kegiatan);}) // Penyelenggara
 

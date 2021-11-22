@@ -35,4 +35,6 @@ class Organisasi extends Model
     public function bobot_nilai(){
         return $this->belongsTo(BobotNilai::class,'bobot_nilai_id','id_bobot_nilai');
     }
+
+
 }

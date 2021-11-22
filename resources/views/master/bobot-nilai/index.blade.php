@@ -31,6 +31,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Jenis Kegiatan</th>
+                                <th>Kategori</th>
                                 <th>Penyelenggara</th>
                                 <th>Tingkat</th>
                                 <th>Prestasi</th>
@@ -39,10 +40,17 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($data['bobot'] as $dataBobot)
+                            @foreach ($data['bobot'] as $dataBobot)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
                                     <td>{{ $dataBobot->jenis_kegiatan->nama }}</td>
+                                    <td>
+                                        @if ($dataBobot->kategori()->exists())
+                                            {{$dataBobot->kategori->nama_kategori}}
+                                        @else
+                                            -
+                                        @endif
+                                    </td>
                                     <td>{{ $dataBobot->penyelenggara->nama }}</td>
                                     <td>{{ $dataBobot->tingkat->nama }}</td>
                                     <td>{{ $dataBobot->prestasi->nama }}</td>
@@ -66,11 +74,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6"> Data Kosong</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -94,7 +98,7 @@
                         @csrf
                         <div class="form-group">
                             <label for="">Jenis Kegiatan</label>
-                            <select class="form-control" name="ref_jenis_kegiatan_id" id="" required>
+                            <select class="form-control " style="width: 100%" name="ref_jenis_kegiatan_id" id="jenis_kegiatan" required>
                                 @forelse (Helper::jenis_kegiatan() as $jenis_kegiatan)
                                     <option value="{{ $jenis_kegiatan->id_ref_jenis_kegiatan }}">
                                         {{ $jenis_kegiatan->nama }}
@@ -138,9 +142,20 @@
                             </select>
                         </div>
                         <div class="form-group">
+                            <label for="">Kategori</label>
+                            <select class="form-control" name="ref_kategori_id" id="" required>
+                                @forelse (Helper::kategori() as $kategori)
+                                    <option value="{{ $kategori->id_ref_kategori }}">{{ $kategori->nama_kategori }}
+                                    </option>
+                                @empty
+                                    <option>Tidak Ada Data</option>
+                                @endforelse
+                            </select>
+                        </div>
+                        <div class="form-group">
                             <label for="">Bobot</label>
                             <input type="number" class="form-control" name="bobot" id="" aria-describedby="helpId"
-                                placeholder="Isi Bobot Niali" required>
+                                placeholder="Isi Bobot Nilai" required>
                         </div>
                         <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fas fa-save"
                                 aria-hidden="true"></i> Simpan Data</button>
@@ -175,10 +190,28 @@
 
 @endsection
 @section('plugins.Datatables', true)
+@include('plugins.select2')
 @include('plugins.alertify')
 @section('js')
     <script>
-        $('#table-bobot').DataTable();
+        $(document).ready(function(){
+            $('#table-bobot').DataTable({
+            bLengthChange: true,
+            iDisplayLength: 10,
+            searching: true,
+            processing: false,
+            serverSide: false,
+            aLengthMenu: [
+                [5, 10, 15, 25, 35, 50, 100, -1],
+                [5, 10, 15, 25, 35, 50, 100, "All"]
+            ],
+            responsive: !0,
+            bStateSave: true
+            });
+        });
+        $('#jenis_kegiatan').select2({
+            dropdownParent : $('#modalTambah')
+        });
         $('.ubah-data').on('click',function(){
             $route_update = $(this).data('update');
             $route_edit   = $(this).data('edit');

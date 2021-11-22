@@ -3,7 +3,7 @@
 @section('title', 'Menus')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Halaman Menus</h1>
+    <h1 class="m-0 text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Halaman Menus</h1>
 @stop
 
 @section('content')
@@ -81,7 +81,7 @@
                     @csrf
                     <div class="modal-header">
                         <div class="modal-title">
-                            <h3><b><i class="glyphicon glyphicon-plus"></i> Tambah Menu Baru</b></h3>
+                            <h3><b><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Menu Baru</b></h3>
                         </div>
                     </div>
                     <div class="modal-body">
@@ -251,9 +251,12 @@
 
 @stop
 @section('plugins.Datatables', true)
+@include('plugins.select2')
 @include('plugins.alertify')
 @section('js')
     <script>
+        $(document).ready(function(){
+            $('.select2').select2();
         $('.button-icon').on('change', function(e) {
             $('.icon').val("fa " + e.icon);
         });
@@ -272,6 +275,7 @@
             bStateSave: true
 
         });
+        })
 
         // Delete Menu
         $('.deletemenu').on('click', function() {

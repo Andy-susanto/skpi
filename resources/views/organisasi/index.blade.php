@@ -251,7 +251,7 @@
 @section('js')
     <script>
         $('#table').DataTable();
-        $('#penyelenggara,#tingkat,#prestasi').select2();
+        $('#penyelenggara,#tingkat,#prestasi,#kategori_organisasi').select2();
         $("#dosen_pembimbing").select2({
             placeholder: "Cari Dosen Pembimbing..",
             ajax: {
@@ -280,6 +280,7 @@
                 data: {
                     'jenis_kegiatan': 5,
                     'penyelenggara': $('#penyelenggara').val(),
+                    'kategori': $('#kategori_organisasi').val(),
                     'tingkat': $('#tingkat').val(),
                     'prestasi': $('#prestasi').val()
                 },
