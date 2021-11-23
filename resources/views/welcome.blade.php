@@ -81,7 +81,7 @@
                 @if (Auth::check())
                 <li class=""><a href="{{url('home')}}">Dashboard</a></li>
                 @else
-                <li class=""><a href="{{route('login')}}">LOGIN</a></li>
+                <li class=""><a href="{{route('keycloak.login')}}">LOGIN</a></li>
                 @endif
             </ul>
         </div>
@@ -101,9 +101,11 @@
                                 </h2>
                                 <p class="hs-des"></p>
                                 @if (Auth::check())
-                                <a class="site-btn" href="{{route('login')}}">Dashboard</a>
+                                @php var_dump(Auth::user()->name); @endphp
+                                
+                                <a class="site-btn" href="{{route('keycloak.login')}}">Dashboard</a>
                                 @else
-                                <a class="site-btn" href="{{route('login')}}">Masuk</a>
+                                <a class="site-btn" href="{{route('keycloak.login')}}">Masuk</a>
                                 @endif
                             </div>
                         </div>
