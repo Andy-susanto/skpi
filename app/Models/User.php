@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
+use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {

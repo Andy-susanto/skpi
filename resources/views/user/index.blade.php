@@ -14,6 +14,8 @@
                     <div class="pull-right">
                         <a href="{{ url('user/create') }}" class="btn btn-sm btn-primary"><i
                                 class="fa fa-plus"></i> Tambah User</a>
+                        <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalLoginAs"><i
+                                    class="fa fa-plus"></i> Impersonate / Login As</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -29,6 +31,35 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalLoginAs" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-gradient-primary">
+                    <h5 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Login AS</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                </div>
+                <div class="modal-body">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Nama User</th>
+                                <th>Usertype</th>
+                                <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
                     </table>
                 </div>
             </div>

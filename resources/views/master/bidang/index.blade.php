@@ -129,7 +129,22 @@
 @include('plugins.select2')
 @section('js')
     <script>
-        $('#table-bobot').DataTable();
+        $(document).ready(function(){
+            $('#table-bobot').DataTable({
+                LengthChange: true,
+                iDisplayLength: 10,
+                searching: true,
+                processing: false,
+                serverSide: false,
+                aLengthMenu: [
+                    [5, 10, 15, 25, 35, 50, 100, -1],
+                    [5, 10, 15, 25, 35, 50, 100, "All"]
+                ],
+                responsive: !0,
+                bStateSave: true
+            });
+        })
+
         $('.ubah-data').on('click', function() {
             $route_update = $(this).data('update');
             $route_edit = $(this).data('edit');

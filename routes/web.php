@@ -10,6 +10,7 @@ use App\Http\Controllers\LoadDataController;
 use App\Http\Controllers\MagangController;
 use App\Http\Controllers\Master\MasterBidangController;
 use App\Http\Controllers\Master\MasterBobotNilaiController;
+use App\Http\Controllers\Master\MasterDivisiController;
 use App\Http\Controllers\Master\MasterKategoriController;
 use App\Http\Controllers\MenuController;
 use App\Http\Controllers\OrganisasiController;
@@ -39,6 +40,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
+Route::impersonate();
 
 Route::get('/home', function() {
     return view('home');
@@ -73,6 +75,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('bobot-nilai', MasterBobotNilaiController::class);
     Route::resource('kategori', MasterKategoriController::class);
     Route::resource('bidang', MasterBidangController::class);
+    Route::resource('divisi', MasterDivisiController::class);
 
     // Cetak
     Route::resource('cetak', CetakController::class);
