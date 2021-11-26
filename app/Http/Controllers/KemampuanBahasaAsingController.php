@@ -41,47 +41,34 @@ class KemampuanBahasaAsingController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kegiatan'            => 'required|string',
-            'penyelenggara_kegiatan'   => 'required|integer',
-            'tingkat_kegiatan'         => 'required|integer',
-            'tanggal_mulai_kegiatan'   => 'required|date',
-            'tanggal_selesai_kegiatan' => 'required|date',
-            'prestasi'                 => 'required|integer',
-            'dosen_pembimbing'         => 'nullable|integer',
-            'bukti_kegiatan'           =>  'required|mimes:jpg,png,pdf,docx'
+            'nilai_tes'                => 'required',
+            'ref_bahasa_id'            => 'required|integer',
+            'ref_level_bahasa_id'      => 'required|integer',
+            'ref_jenis_tes_id'         => 'required|integer',
+            'bukti_kegiatan'           => 'required|mimes:jpg,png,pdf,docx'
         ]);
 
-        if($request->file('bukti_kegiatan')){
-            $filename = time().'_'.'bukti_kegiatan_penghargaan_kejuaraan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
+        if ($request->file('bukti_kegiatan')) {
+            $filename      = time() . '_' . 'bukti_kemampuan_bahasa_asing' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
             $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
             $files = Files::create([
-                'nama_file'     => $filename,
-                'jenis_file'    => 'bukti kegiatan penghargaaan kejuaraan',
-                'original_name' => $original_name,
-                'path'          => $filePath,
-                'id_user'       => Auth::user()->id
+                'nama'                  => $filename,
+                'path'                  => $filePath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 8
             ]);
-
         }
 
-        $penghargaan = PenghargaanKejuaraan::create([
-            'nama_kegiatan'       => $request->nama_kegiatan,
-            'penyelenggara_id'    => $request->penyelenggara_kegiatan,
-            'tingkat_id'          => $request->tingkat_kegiatan,
-            'prestasi_id'         => $request->prestasi,
-            'dosen_pembimbing_id' => $request->dosen_pembimbing,
-        ]);
-
-        KegiatanMahasiswa::create([
-            'id_mhs_pt'       => Auth::user()->id,
-            'validasi'        => 1,
-            'tanggal_mulai'   => $request->tanggal_mulai_kegiatan,
-            'tanggal_selesai' => $request->tanggal_selesai_kegiatan,
-            'file_id'         => $files->id_file ?? 0,
-            'pegawai_id'      => $request->dosen_pembimbing,
-            'detail_id'       => $penghargaan->id_penghargaan_kejuaraan
+        $magang = KemampuanBahasaAsing::create([
+            'nilai_tes'                           => $request->nilai_tes,
+            'ref_bahasa_id'                       => $request->ref_bahasa_id,
+            'ref_level_bahasa_id'                 => $request->ref_level_bahasa_id,
+            'ref_jenis_tes_id'                    => $request->ref_jenis_tes_id,
+            'file_kegiatan_id'                    => $files->id_file,
+            'siakad_mhspt_id'                     => Auth::user()->id,
+            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
         ]);
 
         toastr()->success('Berhasil Tambah Data');

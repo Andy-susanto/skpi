@@ -6,8 +6,6 @@ use App\Models\Files;
 use App\Models\BobotNilai;
 use App\Models\Organisasi;
 use Illuminate\Http\Request;
-use App\Models\KegiatanMahasiswa;
-use App\Models\PenghargaanKejuaraan;
 use Illuminate\Support\Facades\Auth;
 
 class OrganisasiController extends Controller
@@ -19,7 +17,7 @@ class OrganisasiController extends Controller
      */
     public function index()
     {
-        $data['utama'] = PenghargaanKejuaraan::where('siakad_mhspt_id', Auth::user()->id)->get();
+        $data['utama'] = Organisasi::where('siakad_mhspt_id', Auth::user()->id)->get();
         return view('organisasi.index',compact('data'));
     }
 

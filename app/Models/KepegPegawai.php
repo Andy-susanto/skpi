@@ -11,4 +11,8 @@ class KepegPegawai extends Model
     protected $table      = 'kepeg.pegawai';
     protected $guarded    = [];
     protected $primaryKey = 'id_pegawai';
+
+    public function unit_kerja(){
+        return $this->belongsTo(UnitKerja::class,'unit_kerja_id');
+    }
 }

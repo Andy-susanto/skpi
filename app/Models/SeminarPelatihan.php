@@ -37,4 +37,8 @@ class SeminarPelatihan extends Model
         return $this->belongsTo(BobotNilai::class,'bobot_nilai_id','id_bobot_nilai');
     }
 
+    public function mhspt(){
+        return $this->belongsTo(SiakadMhspt::class,'siakad_mhspt_id');
+    }
+
 }

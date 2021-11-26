@@ -71,7 +71,7 @@
                                         @csrf
                                         <div class="form-row">
                                             <div class="form-group col-4">
-                                                <label for="">Nama Kegiatan</label><span class="text-danger">*</span>
+                                                <label for="">Nama Organisasi</label><span class="text-danger">*</span>
                                                 <input type="text" class="form-control" name="nama_kegiatan" id=""
                                                     aria-describedby="helpId" placeholder="Nama Kegiatan">
                                             </div>
@@ -125,7 +125,7 @@
                                                     id="" aria-describedby="helpId" placeholder="">
                                             </div>
                                             <div class="form-group col-4">
-                                                <label for="">Prestasi</label><span class="text-danger">*</span>
+                                                <label for="">Peran</label><span class="text-danger">*</span>
                                                 <select class="form-control" name="prestasi" id="prestasi"
                                                     onchange="load_bobot();">
                                                     @forelse(Helper::prestasi(5) as $prestasi)

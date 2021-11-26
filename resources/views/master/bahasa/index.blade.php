@@ -1,9 +1,9 @@
 @extends('adminlte::page')
-@section('title', 'Master Kategori')
+@section('title', 'Master Bahasa')
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark"><i class="fa fa-book" aria-hidden="true"></i> Master Kategori</h1>
+            <h1 class="m-0 font-bold text-dark"><i class="fa fa-book" aria-hidden="true"></i> Master Bahasa</h1>
         </div>
     </div>
 @endsection
@@ -30,33 +30,15 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
-                                <th>Nama Kategori</th>
-                                <th>Jenis Kegiatan</th>
+                                <th>Nama Bahasa</th>
                                 <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse ($data['pokok'] as $dataKategori)
+                            @foreach ($data['pokok'] as $dataBahasa)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $dataKategori->nama_kategori }}</td>
-                                    <td>
-                                        <div class="list-group">
-                                            @foreach ($dataKategori->jenis_kegiatan as $jenisKegiatan)
-                                                <div class="dropdown open">
-                                                    <a class="list-group-item list-group-item-action btn btn-secondary dropdown-toggle"
-                                                        type="button" id="triggerId" data-toggle="dropdown"
-                                                        aria-haspopup="true" aria-expanded="false">
-                                                        {{ $jenisKegiatan->nama }}</a>
-                                                    <div class="dropdown-menu" style="width: 100%"
-                                                        aria-labelledby="triggerId">
-                                                        <a class="dropdown-item" href="#"><i class="fa fa-trash"
-                                                                aria-hidden="true"></i> Hapus</a>
-                                                    </div>
-                                                </div>
-                                            @endforeach
-                                        </div>
-                                    </td>
+                                    <td>{{ $dataBahasa->nama }}</td>
                                     <td>
                                         <div class="dropdown open">
                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button" id="triggerId"
@@ -65,16 +47,16 @@
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                 <a class="dropdown-item ubah-data" href="#modalUbah" data-toggle="modal"
-                                                    data-update="{{ route('kategori.update', encrypt($dataKategori->id_ref_kategori)) }}"
-                                                    data-edit="{{ route('kategori.edit', encrypt($dataKategori->id_ref_kategori)) }}"><i
+                                                    data-update="{{ route('bahasa.update', encrypt($dataBahasa->id_ref_bahasa)) }}"
+                                                    data-edit="{{ route('bahasa.edit', encrypt($dataBahasa->id_ref_bahasa)) }}"><i
                                                         class="fa fa-edit" aria-hidden="true"></i> Ubah</a>
 
                                                 <a class="dropdown-item"
-                                                    onclick="confirmation('kategori_{{ $dataKategori->id_ref_kategori }}')"><i
+                                                    onclick="confirmation('bahasa_{{ $dataBahasa->id_ref_bahasa }}')"><i
                                                         class="fa fa-trash" aria-hidden="true"></i> Hapus
                                                     <form
-                                                        action="{{ route('kategori.destroy', encrypt($dataKategori->id_ref_kategori)) }}"
-                                                        method="post" id="kategori_{{ $dataKategori->id_ref_kategori }}">
+                                                        action="{{ route('bahasa.destroy', encrypt($dataBahasa->id_ref_bahasa)) }}"
+                                                        method="post" id="bahasa_{{ $dataBahasa->id_ref_bahasa }}">
                                                         @csrf
                                                         @method('delete')
                                                     </form>
@@ -83,11 +65,7 @@
                                         </div>
                                     </td>
                                 </tr>
-                            @empty
-                                <tr>
-                                    <td colspan="6"> Data Kosong</td>
-                                </tr>
-                            @endforelse
+                            @endforeach
                         </tbody>
                     </table>
                 </div>
@@ -100,33 +78,19 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header bg-blue-400 text-white">
+                <div class="modal-header">
                     <h5 class="modal-title"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form action="{{ route('kategori.store') }}" method="post" id="form-kategori">
+                    <form action="{{ route('bahasa.store') }}" method="post" id="form-kategori">
                         @csrf
                         <div class="form-group">
-                            <label for="">Nama Kategori</label>
-                            <input type="text" class="form-control" name="nama_kategori" id="nama" aria-describedby="helpId"
-                                placeholder="Nama Kategori" autofocus>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="">Jenis Kegiatan</label>
-                            <select class="form-control" name="ref_jenis_kegiatan_id[]" id="jenis_kegiatan" required
-                                style="width:100%" multiple>
-                                @forelse (Helper::jenis_kegiatan() as $jenis_kegiatan)
-                                    <option value="{{ $jenis_kegiatan->id_ref_jenis_kegiatan }}">
-                                        {{ $jenis_kegiatan->nama }}
-                                    </option>
-                                @empty
-                                    <option>Tidak Ada Data</option>
-                                @endforelse
-                            </select>
+                            <label for="">Nama Bahasa</label>
+                            <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
+                                placeholder="Nama Bahasa">
                         </div>
                         <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fas fa-save"
                                 aria-hidden="true"></i> Simpan Data</button>
@@ -165,17 +129,7 @@
 @include('plugins.select2')
 @section('js')
     <script>
-        $(document).keydown(function(event) {
-            if (event.altKey && event.which === 79) {
-                $('#modalTambah').modal('show');
-                event.preventDefault();
-            }
-        });
-        $('#jenis_kegiatan').select2({
-            dropdownParent: $('#modalTambah')
-        });
-
-        $(document).ready(function() {
+        $(document).ready(function(){
             $('#table-bobot').DataTable({
                 LengthChange: true,
                 iDisplayLength: 10,

@@ -2,8 +2,15 @@
 
 namespace App\Helper;
 
+use App\Models\Bahasa;
+use App\Models\Bidang;
+use App\Models\CakupanBeasiswa;
+use App\Models\Divisi;
+use App\Models\Jenis;
 use App\Models\JenisKegiatan;
+use App\Models\JenisTes;
 use App\Models\Kategori;
+use App\Models\LevelPenguasaan;
 use App\Models\LogAktifitas;
 use App\Models\Penyelenggara;
 use App\Models\Peran;
@@ -15,11 +22,6 @@ use Illuminate\Support\Facades\Session;
 
 class Helpers
 {
-
-    public static function jenis_kegiatan(){
-        return JenisKegiatan::all();
-    }
-
     public static function penyelenggara($jenis=null)
     {
         if ($jenis==null) {
@@ -29,6 +31,38 @@ class Helpers
                 $q->where('id_ref_jenis_kegiatan',$jenis);
             })->get();
         }
+    }
+
+    public static function bidang(){
+        return Bidang::oldest()->get();
+    }
+
+    public static function jenis_kegiatan(){
+        return JenisKegiatan::oldest()->get();
+    }
+
+    public static function bahasa(){
+        return Bahasa::oldest()->get();
+    }
+
+    public static function jenis_tes(){
+        return JenisTes::oldest()->get();
+    }
+
+    public static function jenis(){
+        return Jenis::oldest()->get();
+    }
+
+    public static function level_bahasa(){
+        return LevelPenguasaan::oldest()->get();
+    }
+
+    public static function divisi(){
+        return Divisi::oldest()->get();
+    }
+
+    public static function cakupan_beasiswa(){
+        return CakupanBeasiswa::oldest()->get();
     }
 
     public static function kategori($jenis=null)

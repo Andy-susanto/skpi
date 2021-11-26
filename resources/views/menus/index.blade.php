@@ -52,7 +52,7 @@
                                                 data-id="{{ $menu->id_menu }}">Edit</a>
                                                 <a class="dropdown-item deletemenu" href="#" data-id="{{ $menu->id_menu }}"
                                                     data-nama="{{ $menu->nama_menu }}">Delete</a>
-                                                    <form action="{{ url('menus' . $menu->id_menu) }}"
+                                                    <form action="{{ route('menus.destroy',$menu->id_menu) }}"
                                                         method="post" id="{{ $menu->id_menu }}">
                                                         @csrf
                                                         @method('DELETE')
@@ -251,7 +251,7 @@
 
 @stop
 @section('plugins.Datatables', true)
-@include('plugins.select2')
+@section('plugins.Select2',true)
 @include('plugins.alertify')
 @section('js')
     <script>
@@ -271,7 +271,10 @@
                 [5, 10, 15, 25, 35, 50, 100, -1],
                 [5, 10, 15, 25, 35, 50, 100, "All"]
             ],
-            responsive: !0,
+            rowReorder: {
+            selector: 'td:nth-child(2)'
+            },
+            responsive: true,
             bStateSave: true
 
         });

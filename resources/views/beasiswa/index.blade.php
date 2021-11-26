@@ -48,25 +48,29 @@
                                             </div>
                                             <div class="form-group col-8">
                                                 <label for="">Nama Perusahaan / Industri / Instansi / Yayasan Pemberi Beasiswa ( Promotor ) </label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control" name="nama_perusahaan" id=""
-                                                    aria-describedby="helpId" placeholder="Nama Perusahaan">
+                                                <input type="text" class="form-control" name="nama_promotor" id=""
+                                                    aria-describedby="helpId" placeholder="Nama Promotor">
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="">Kategori Beasiswa </label><span
                                                     class="text-danger">*</span>
-                                                <select class="form-control" name="kategori_beasiswa"
-                                                    id="bidang">
-
+                                                <select class="form-control select" name="ref_kategori_id"
+                                                    id="beasiswa">
+                                                    @foreach (Helper::kategori(7) as $loopKategori)
+                                                        <option value="{{$loopKategori->id_ref_kategori}}">{{$loopKategori->nama_kategori}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Cakupan Beasiswa </label><span
                                                     class="text-danger">*</span>
-                                                <select class="form-control" name="kategori_beasiswa"
-                                                    id="bidang">
-
+                                                <select class="form-control select" name="ref_cakupan_beasiswa_id"
+                                                    id="cakupan_beasiswa">
+                                                @foreach (Helper::cakupan_beasiswa() as $loopCakupan)
+                                                    <option value="{{$loopCakupan->id_ref_cakupan_beasiswa}}">{{$loopCakupan->nama}}</option>
+                                                @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group col-4">
@@ -85,7 +89,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-beasiswa')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
@@ -109,43 +113,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data['utama'] as $data)
+                                            @forelse ($data['utama'] as $loopUtama)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
-                                                    </td>
+                                                    <td>{{ $loopUtama->nama }}</td>
+                                                    <td>{{$loopUtama->nama_promotor}}</td>
+                                                    <td>{{$loopUtama->kategori->nama_kategori}}</td>
+                                                    <td>{{$loopUtama->cakupan_beasiswa->nama}}</td>
                                                     <td>
-                                                        @if ($data->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if ($data->status_validasi == '0')
+                                                        @if ($loopUtama->status_validasi == '0')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                        @elseif($loopUtama->kegiatan_mahasiswa_single->validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                        @elseif($loopUtama->kegiatan_mahasiswa_single->validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
                                                     <td>
                                                         <div class="dropdown">
                                                             <button class="btn btn-info btn-sm dropdown-toggle" type="button"
-                                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                                                id="triggerId" loopUtama-toggle="dropdown" aria-haspopup="true"
                                                                 aria-expanded="false">
                                                                 <i class="fa fa-hourglass-start" aria-hidden="true"></i> Proses
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('beasiswa.show', encrypt($loopUtama->id_beasiswa)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
+                                                                <a class="dropdown-item" href="{{route('beasiswa.edit',encrypt($loopUtama->id_beasiswa))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>
@@ -167,53 +163,13 @@
     </div>
 
 @endsection
-@include('plugins.select2')
 @include('plugins.alertify')
 @section('plugins.Datatables', true)
+@section('plugins.Select2',true)
 @section('js')
     <script>
         $('#table').DataTable();
         $('#penyelenggara,#tingkat,#prestasi').select2();
-        $("#dosen_pembimbing").select2({
-            placeholder: "Cari Dosen Pembimbing..",
-            ajax: {
-                url: "{{ route('load.dosen') }}",
-                dataTyper: "json",
-                data: function(param) {
-                    var value = {
-                        search: param.term,
-                    }
-                    return value;
-                },
-                processResults: function(hasil) {
-
-                    return {
-                        results: hasil,
-                    }
-                }
-            }
-        });
-
-        load_bobot()
-
-        function load_bobot() {
-            $.ajax({
-                url: "{{ route('fungsi.load-bobot') }}",
-                data: {
-                    'jenis_kegiatan': 1,
-                    'penyelenggara': $('#penyelenggara').val(),
-                    'tingkat': $('#tingkat').val(),
-                    'prestasi': $('#prestasi').val()
-                },
-                beforeSend: function() {
-                    $('#bobot').html('<i class="fa fa-spinner fa-spin" aria-hidden="true"></i>')
-                },
-                success: function(data) {
-                    $('#bobot').text(data);
-                }
-            })
-        }
-
         function confirmation(id) {
             alertify.confirm("Konfirmasi!", "Kirim Data ? Pastikan data yang anda isi sudah benar !", function() {
                 $('#' + id).submit();

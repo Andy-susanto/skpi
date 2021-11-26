@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <form action="{{ route('penghargaan-kejuaraan.store') }}" method="post"
+                                <form action="{{ route('kewirausahaan.store') }}" method="post"
                                     enctype="multipart/form-data" id="form-penghargaan">
                                     <div class="card-header">
                                         @if ($errors->any())
@@ -43,15 +43,27 @@
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="">Nama Usaha Mandiri</label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control" name="nama" id=""
+                                                <input type="text" class="form-control" name="nama_usaha" id=""
                                                     aria-describedby="helpId" placeholder="Nama Usaha Mandiri">
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Kategori Usaha Mandiri </label><span
                                                     class="text-danger">*</span>
-                                                <select class="form-control" name="bidang"
+                                                <select class="form-control select" name="ref_kategori_id"
                                                     id="bidang">
-
+                                                    @foreach (Helper::kategori(9) as $loopKategori)
+                                                        <option value="{{$loopKategori->id_ref_kategori}}">{{$loopKategori->nama_kategori}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
+                                            <div class="form-group col-4">
+                                                <label for="">Jenis Kegiatan </label><span
+                                                    class="text-danger">*</span>
+                                                <select class="form-control select" name="ref_jenis_id"
+                                                    id="bidang">
+                                                    @foreach (Helper::jenis() as $loopJenis)
+                                                        <option value="{{$loopJenis->id_ref_jenis}}">{{$loopJenis->nama}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -59,13 +71,13 @@
                                             <div class="form-group col-4">
                                                 <div class="form-group">
                                                   <label for="">Alamat Usaha Mandiri</label>
-                                                  <textarea class="form-control" name="alamat_perusahaan" id="" rows="1"></textarea>
+                                                  <textarea class="form-control" name="alamat_usaha" placeholder="ex: Jalan gajahmada ..." id="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">No Izin Usaha Mandiri</label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control" name="judul_laporan_akhir" id=""
-                                                    aria-describedby="helpId" placeholder="No Izin Usaha">
+                                                <input type="text" class="form-control" name="no_izin" id=""
+                                                    aria-describedby="helpId" placeholder="ex : 10/ad/xxx">
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
@@ -107,27 +119,19 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data['utama'] as $data)
+                                            @forelse ($data['utama'] as $loopUtama)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
-                                                    </td>
+                                                    <td>{{ $loopUtama->nama_usaha }}</td>
+                                                    <td>{{$loopUtama->alamat_usaha}}</td>
+                                                    <td>{{$loopUtama->kategori->nama_kategori}}</td>
+                                                    <td>{{$loopUtama->no_izin}}</td>
                                                     <td>
-                                                        @if ($data->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if ($data->status_validasi == '0')
+                                                        @if ($loopUtama->status_validasi == '0')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                        @elseif($loopUtama->status_validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                        @elseif($loopUtama->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
@@ -140,10 +144,10 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('kewirausahaan.show', encrypt($loopUtama->id_kewirausahaan)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
+                                                                <a class="dropdown-item" href="{{route('kewirausahaan.edit',encrypt($loopUtama->id_kewirausahaan))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>

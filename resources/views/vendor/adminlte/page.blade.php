@@ -51,4 +51,5 @@
     @toastr_js
     @toastr_render
     @yield('js')
+    <script src="{{asset('js/main.js')}}"></script>
 @stop

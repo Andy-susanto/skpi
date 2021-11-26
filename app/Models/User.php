@@ -7,8 +7,6 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Symfony\Component\CssSelector\XPath\Extension\FunctionExtension;
-use Lab404\Impersonate\Models\Impersonate;
 
 class User extends Authenticatable
 {
@@ -58,6 +56,16 @@ class User extends Authenticatable
             }
         }
         return in_array($key,$data);
+    }
+
+    public function unit_kerja(){
+        $unit = [];
+        if($this->level_akun == 1){
+            foreach ($this->instansi as $v) {
+                $unit[] = (int) $v->id_unit_kerja_siakad;
+            }
+        }
+        return $unit;
     }
 
     /**

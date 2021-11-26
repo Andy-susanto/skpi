@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <form action="{{ route('penghargaan-kejuaraan.store') }}" method="post"
+                                <form action="{{ route('karya-mahasiswa.store') }}" method="post"
                                     enctype="multipart/form-data" id="form-penghargaan">
                                     <div class="card-header">
                                         @if ($errors->any())
@@ -43,25 +43,35 @@
                                         <div class="form-row">
                                             <div class="form-group col-4">
                                                 <label for="">Judul / Nama Hasil Karya</label><span class="text-danger">*</span>
-                                                <input type="text" class="form-control" name="nama" id=""
-                                                    aria-describedby="helpId" placeholder="Nama Kegiatan">
+                                                <input type="text" class="form-control" name="judul_hasil_karya" id=""
+                                                    aria-describedby="helpId" placeholder="ex : Aplikasi xxxx">
                                             </div>
                                             <div class="form-group col-4">
                                                 <label for="">Kategori hasil karya </label><span
                                                     class="text-danger">*</span>
-                                                <select class="form-control" name="bidang"
-                                                    id="bidang">
-
+                                                <select class="form-control select" name="ref_kategori_id">
+                                                    @foreach (Helper::kategori(10) as $loopKategori)
+                                                        <option value="{{$loopKategori->id_ref_kategori}}">{{$loopKategori->nama_kategori}}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                             <div class="form-group col-4">
                                                 <div class="form-group">
                                                   <label for="">HaKI / Hak Cipta / Paten</label>
-                                                  <textarea class="form-control" name="tugas_utama_magang" id="" rows="1"></textarea>
+                                                  <textarea class="form-control" name="no_hki" id="" rows="1"></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="form-row">
+                                            <div class="form-group col-4">
+                                                <label for="">Jenis Kegiatan </label><span
+                                                    class="text-danger">*</span>
+                                                <select class="form-control select" name="ref_jenis_id">
+                                                    @foreach (Helper::jenis() as $loopJenis)
+                                                        <option value="{{$loopJenis->id_ref_jenis}}">{{$loopJenis->nama}}</option>
+                                                    @endforeach
+                                                </select>
+                                            </div>
                                             <div class="form-group col-4">
                                                 <label for="">Bukti Kegiatan</label><span class="text-danger">*</span>
                                                 <input type="file" class="form-control-file" name="bukti_kegiatan" id=""
@@ -101,27 +111,18 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @forelse ($data['utama'] as $data)
+                                            @forelse ($data['utama'] as $loopUtama)
                                                 <tr>
                                                     <td>{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->nama }}</td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_mulai)->isoFormat('D MMMM Y') }}
-                                                    </td>
-                                                    <td>{{ \Carbon\Carbon::parse($data->tgl_selesai)->isoFormat('D MMMM Y') }}
-                                                    </td>
+                                                    <td>{{ $loopUtama->judul_hasil_karya }}</td>
+                                                    <td>{{$loopUtama->kategori->nama_kategori}}</td>
+                                                    <td>{{$loopUtama->no_hki}}</td>
                                                     <td>
-                                                        @if ($data->kepeg_pegawai()->exists())
-                                                            {{ Helper::nama_gelar($data->kepeg_pegawai)}}
-                                                        @else
-                                                            -
-                                                        @endif
-                                                    </td>
-                                                    <td>
-                                                        @if ($data->status_validasi == '0')
+                                                        @if ($loopUtama->status_validasi == '0')
                                                             <span class="badge badge-warning"><i>Sedang di Ajukan</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '1')
+                                                        @elseif($loopUtama->status_validasi == '1')
                                                             <span class="badge badge-success"><i>di Validasi</i></span>
-                                                        @elseif($data->kegiatan_mahasiswa_single->validasi == '2')
+                                                        @elseif($loopUtama->status_validasi == '2')
                                                             <span class="badge badge-danger"><i>di Tolak</i></span>
                                                         @endif
                                                     </td>
@@ -134,10 +135,10 @@
                                                             </button>
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
-                                                                    href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
+                                                                    href="{{ route('karya-mahasiswa.show', encrypt($loopUtama->id_karya_mahasiswa)) }}"><i
                                                                         class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
-                                                                <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
+                                                                <a class="dropdown-item" href="{{route('karya-mahasiswa.edit',encrypt($loopUtama->id_karya_mahasiswa))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
                                                             </div>
                                                         </div>

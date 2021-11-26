@@ -69,7 +69,6 @@
 
 @section('plugins.Datatables', true)
 @include('plugins.alertify')
-
 @section('js')
     <script>
         var table = $('#table').DataTable({

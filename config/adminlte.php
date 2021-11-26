@@ -85,8 +85,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => 'enables',
+    'layout_fixed_navbar' => 'enables',
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -279,10 +279,20 @@ return [
                     'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
+                [
+                    'type'     => 'css',
+                    'assset'   => true,
+                    'location' => '//cdn.datatables.net/rowreorder/1.2.8/css/rowReorder.dataTables.min.css',
+                ],
+                [
+                    'type'     => 'css',
+                    'assset'   => true,
+                    'location' => '//cdn.datatables.net/responsive/2.2.9/css/responsive.dataTables.min.css',
+                ]
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
@@ -317,7 +327,7 @@ return [
             ],
         ],
         'Pace' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'css',

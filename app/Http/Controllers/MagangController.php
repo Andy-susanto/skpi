@@ -41,47 +41,43 @@ class MagangController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama_kegiatan'            => 'required|string',
-            'penyelenggara_kegiatan'   => 'required|integer',
-            'tingkat_kegiatan'         => 'required|integer',
-            'tanggal_mulai_kegiatan'   => 'required|date',
-            'tanggal_selesai_kegiatan' => 'required|date',
-            'prestasi'                 => 'required|integer',
-            'dosen_pembimbing'         => 'nullable|integer',
-            'bukti_kegiatan'           =>  'required|mimes:jpg,png,pdf,docx'
+            'nama'                => 'required|string',
+            'ref_bidang_id'       => 'required|integer',
+            'ref_divisi_id'       => 'required|integer',
+            'tgl_mulai'           => 'required|date',
+            'tgl_selesai'         => 'required|date',
+            'alamat'              => 'required',
+            'kepeg_pegawai_id'    => 'sometimes|integer',
+            'bukti_kegiatan'      => 'required|mimes:jpg,png,pdf,docx',
+            'judul_laporan_akhir' => 'required'
         ]);
 
-        if($request->file('bukti_kegiatan')){
-            $filename = time().'_'.'bukti_kegiatan_penghargaan_kejuaraan'.'_'.Auth::user()->username.'.'.$request->bukti_kegiatan->getClientOriginalExtension();
+        if ($request->file('bukti_kegiatan')) {
+            $filename      = time() . '_' . 'bukti_magang' . '_' . Auth::user()->username . '.' . $request->bukti_kegiatan->getClientOriginalExtension();
             $original_name = $request->bukti_kegiatan->getClientOriginalName();
-            $filePath = $request->file('bukti_kegiatan')->storeAs('uploads',$filename,'public');
+            $filePath      = $request->file('bukti_kegiatan')->storeAs('uploads', $filename, 'public');
 
             $files = Files::create([
-                'nama_file'     => $filename,
-                'jenis_file'    => 'bukti kegiatan penghargaaan kejuaraan',
-                'original_name' => $original_name,
-                'path'          => $filePath,
-                'id_user'       => Auth::user()->id
+                'nama'                  => $filename,
+                'path'                  => $filePath,
+                'siakad_mhspt_id'       => Auth::user()->id,
+                'ref_jenis_kegiatan_id' => 6
             ]);
-
         }
 
-        $penghargaan = PenghargaanKejuaraan::create([
-            'nama_kegiatan'       => $request->nama_kegiatan,
-            'penyelenggara_id'    => $request->penyelenggara_kegiatan,
-            'tingkat_id'          => $request->tingkat_kegiatan,
-            'prestasi_id'         => $request->prestasi,
-            'dosen_pembimbing_id' => $request->dosen_pembimbing,
-        ]);
-
-        KegiatanMahasiswa::create([
-            'id_mhs_pt'       => Auth::user()->id,
-            'validasi'        => 1,
-            'tanggal_mulai'   => $request->tanggal_mulai_kegiatan,
-            'tanggal_selesai' => $request->tanggal_selesai_kegiatan,
-            'file_id'         => $files->id_file ?? 0,
-            'pegawai_id'      => $request->dosen_pembimbing,
-            'detail_id'       => $penghargaan->id_penghargaan_kejuaraan
+        $magang = Magang::create([
+            'nama'                                => $request->nama,
+            'ref_bidang_id'                       => $request->ref_bidang_id,
+            'ref_divisi_id'                       => $request->ref_divisi_id,
+            'kepeg_pegawai_id'                    => $request->dosen_pembimbing,
+            'judul_laporan_akhir'                 => $request->judul_laporan_akhir,
+            'tugas_utama_magang'                  => $request->tugas_utama_magang,
+            'siakad_mhspt_id'                     => Auth::user()->id,
+            'tgl_mulai'                           => $request->tgl_mulai,
+            'tgl_selesai'                         => $request->tgl_selesai,
+            'alamat'                              => $request->alamat,
+            'file_kegiatan_id'                    => $files->id_file,
+            'file_kegiatan_ref_jenis_kegiatan_id' => $files->ref_jenis_kegiatan_id,
         ]);
 
         toastr()->success('Berhasil Tambah Data');
@@ -97,7 +93,7 @@ class MagangController extends Controller
     public function show($id)
     {
         $data = PenghargaanKejuaraan::findOrFail(decrypt($id));
-        return view('penghargaan-kejuaraan.show',compact('data'));
+        return view('penghargaan-kejuaraan.show', compact('data'));
     }
 
     /**
