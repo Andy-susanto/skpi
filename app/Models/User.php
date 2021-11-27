@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -45,7 +44,7 @@ class User extends Authenticatable
     }
 
     public function siakad_mhspt(){
-        return $this->belongsTo(SiakadMhspt::class,'id','id_mhs_pt');
+    return $this->belongsTo(SiakadMhspt::class,'id','id_mhs_pt');
     }
 
     public function hasPermission($key){

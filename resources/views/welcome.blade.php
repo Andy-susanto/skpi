@@ -12,7 +12,7 @@
     <link href="{{asset('images/logo.png')}}" rel="shortcut icon" />
 
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Rubik:400,400i,500,500i,700,700i"       rel="stylesheet">
 
     <!-- Stylesheets -->
     <link rel="stylesheet" href="{{asset('front/css/bootstrap.min.css')}}" />
@@ -52,7 +52,7 @@
         <div class="container">
             <!-- logo -->
 
-            <a href="https://simpeg.unja.ac.id" class="site-logo" style="padding-top: 0px;">
+            <a href="https://skpi.unja.ac.id" class="site-logo" style="padding-top: 0px;">
                 <img width="400px;"src="{{asset('images/logo3.png')}}" alt="">
             </a>
 
@@ -77,11 +77,11 @@
         <div class="container ">
 
             <ul class="main-menu ">
-                <li class="active "><a href="https://simpeg.unja.ac.id">HOME</a></li>
+                <li class="active "><a href="https://skpi.unja.ac.id">HOME</a></li>
                 @if (Auth::check())
                 <li class=""><a href="{{url('home')}}">Dashboard</a></li>
                 @else
-                <li class=""><a href="{{route('keycloak.login')}}">LOGIN</a></li>
+                <li class=""><a href="{{route('keycloack.login')}}">LOGIN</a></li>
                 @endif
             </ul>
         </div>
@@ -97,15 +97,15 @@
                         <div class="row">
                             <div class="col-lg-12">
                                 <div class="hs-subtitle">A World Class Enterpreneurship University</div>
-                                <h2 class="hs-title">SELAMAT DATANG DI SISTEM INFORMASI SURAT PENDAMPING IJAZAH UNIVERSITAS JAMBI
+                                <h2 class="hs-title">SELAMAT DATANG DI SISTEM INFORMASI SURAT KETERANGAN PENDAMPING IJAZAH UNIVERSITAS JAMBI
                                 </h2>
                                 <p class="hs-des"></p>
                                 @if (Auth::check())
                                 @php var_dump(Auth::user()->name); @endphp
-                                
-                                <a class="site-btn" href="{{route('keycloak.login')}}">Dashboard</a>
+
+                                <a class="site-btn" href="{{route('keycloack.login')}}">Dashboard</a>
                                 @else
-                                <a class="site-btn" href="{{route('keycloak.login')}}">Masuk</a>
+                                <a class="site-btn" href="{{route('keycloack.login')}}">Masuk</a>
                                 @endif
                             </div>
                         </div>
@@ -119,7 +119,7 @@
 
 
 
-    <section class="enroll-section spad set-bg" data-setbg="img/enroll-bg.jpg">
+    <section class="enroll-section spad     set-bg" data-setbg="img/enroll-bg.jpg">
         <div class="container">
             <div class="row">
                 <div class="p-4 col-lg-7 p-lg-0">

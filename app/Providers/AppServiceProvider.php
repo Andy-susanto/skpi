@@ -58,7 +58,7 @@ class AppServiceProvider extends ServiceProvider
                                 $anothermenu = [];
                                 $subsubmenus = Menu::where('parent_id', $submenu->id_menu)->whereHas('roles', function ($q) use ($role_ids) {
                                     $q->whereIn('id_role', $role_ids);
-                                })->orderBy('urutan', 'asc')->get();
+                                })->orderBy('nama_menu', 'asc')->get();
 
                                 foreach ($subsubmenus as $subsubmenu) {
                                     $subsubmenu2['text'] = $subsubmenu->nama_menu;

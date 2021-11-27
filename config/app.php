@@ -176,9 +176,6 @@ return [
         App\Providers\RouteServiceProvider::class,
         Vizir\KeycloakWebGuard\KeycloakWebGuardServiceProvider::class,
 
-        // Impersonate
-        Lab404\Impersonate\ImpersonateServiceProvider::class,
-
     ],
 
     /*

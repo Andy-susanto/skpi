@@ -40,6 +40,11 @@ return [
             'driver' => 'keycloak-web',
             'provider' => 'users',
         ],
+
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
     ],
 
     /*
@@ -65,10 +70,10 @@ return [
             'model' => Vizir\KeycloakWebGuard\Models\KeycloakUser::class,
         ],
 
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
     ],
 
     /*
