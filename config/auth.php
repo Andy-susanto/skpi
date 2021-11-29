@@ -41,10 +41,10 @@ return [
             'provider' => 'users',
         ],
 
-        'web' => [
-            'driver' => 'session',
-            'provider' => 'users',
-        ],
+        // 'web' => [
+        //     'driver' => 'session',
+        //     'provider' => 'users',
+        // ],
     ],
 
     /*
@@ -70,10 +70,10 @@ return [
             'model' => Vizir\KeycloakWebGuard\Models\KeycloakUser::class,
         ],
 
-        'users' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\User::class,
-        ],
+        // 'users' => [
+        //     'driver' => 'eloquent',
+        //     'model' => App\Models\User::class,
+        // ],
     ],
 
     /*

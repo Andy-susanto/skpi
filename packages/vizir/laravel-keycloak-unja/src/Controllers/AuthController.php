@@ -62,7 +62,6 @@ class AuthController extends Controller
         if (! empty($request->input('error'))) {
             $error = $request->input('error_description');
             $error = ($error) ?: $request->input('error');
-
             throw new KeycloakCallbackException($error);
         }
 
