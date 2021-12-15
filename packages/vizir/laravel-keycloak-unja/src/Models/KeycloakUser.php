@@ -19,8 +19,8 @@ class KeycloakUser implements Authenticatable
         'id'
     ];
 
-    protected $table = 'users';
-    
+    protected $table = 'siakad.users';
+
     /**
      * User attributes
      *

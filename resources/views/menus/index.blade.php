@@ -3,7 +3,7 @@
 @section('title', 'Menus')
 
 @section('content_header')
-    <h1 class="m-0 text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Halaman Menus</h1>
+    <h1 class="m-0 font-bold"><i class="fa fa-bookmark" aria-hidden="true"></i> Halaman Menus</h1>
 @stop
 
 @section('content')
@@ -11,9 +11,10 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-menu">Tambah Menus</button>
+                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-menu">Tambah
+                        Menus</button>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-bordered table-stripped" id="table">
                         <thead class="thead-dark">
                             <tr>
@@ -43,23 +44,26 @@
                                     </td>
                                     <td>
                                         <div class="dropdown">
-                                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button" id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                    aria-expanded="false">
-                                                        Aksi
-                                                    </button>
+                                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                                id="triggerId" data-toggle="dropdown" aria-haspopup="true"
+                                                aria-expanded="false">
+                                                Aksi
+                                            </button>
                                             <div class="dropdown-menu" aria-labelledby="triggerId">
-                                                <a class="dropdown-item editmenu" href="#" data-target="#edit-menu" data-toggle="modal"
-                                                data-id="{{ $menu->id_menu }}">Edit</a>
-                                                <a class="dropdown-item deletemenu" href="#" data-id="{{ $menu->id_menu }}"
+                                                <a class="dropdown-item editmenu" href="#" data-target="#edit-menu"
+                                                    data-toggle="modal" data-id="{{ $menu->id_menu }}">Edit</a>
+                                                <a class="dropdown-item deletemenu" href="#"
+                                                    data-id="{{ $menu->id_menu }}"
                                                     data-nama="{{ $menu->nama_menu }}">Delete</a>
-                                                    <form action="{{ route('menus.destroy',$menu->id_menu) }}"
-                                                        method="post" id="{{ $menu->id_menu }}">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                    </form>
-                                                <a class="dropdown-item addpermission" href="#" data-target="#add-permission"
-                                                data-toggle="modal" data-id="{{ $menu->id_menu }}"
-                                                data-nama="{{ $menu->nama_menu }}">Tambah permission</a>
+                                                <form action="{{ route('menus.destroy', $menu->id_menu) }}" method="post"
+                                                    id="{{ $menu->id_menu }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                </form>
+                                                <a class="dropdown-item addpermission" href="#"
+                                                    data-target="#add-permission" data-toggle="modal"
+                                                    data-id="{{ $menu->id_menu }}"
+                                                    data-nama="{{ $menu->nama_menu }}">Tambah permission</a>
                                             </div>
                                         </div>
                                     </td>
@@ -77,7 +81,7 @@
     <div class="modal fade" id="add-menu">
         <div class="modal-dialog modal-md">
             <div class="modal-content">
-                <form action="{{route('menus.store')}}" method="post" class="form-horizontal">
+                <form action="{{ route('menus.store') }}" method="post" class="form-horizontal">
                     @csrf
                     <div class="modal-header">
                         <div class="modal-title">
@@ -251,33 +255,37 @@
 
 @stop
 @section('plugins.Datatables', true)
-@section('plugins.Select2',true)
+@section('plugins.Select2', true)
 @include('plugins.alertify')
 @section('js')
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             $('.select2').select2();
-        $('.button-icon').on('change', function(e) {
-            $('.icon').val("fa " + e.icon);
-        });
+            $('.button-icon').on('change', function(e) {
+                $('.icon').val("fa " + e.icon);
+            });
 
-        var table = $('#table').DataTable({
-            bLengthChange: true,
-            iDisplayLength: 10,
-            searching: true,
-            processing: false,
-            serverSide: false,
-            aLengthMenu: [
-                [5, 10, 15, 25, 35, 50, 100, -1],
-                [5, 10, 15, 25, 35, 50, 100, "All"]
-            ],
-            rowReorder: {
-            selector: 'td:nth-child(2)'
-            },
-            responsive: true,
-            bStateSave: true
+            var table = $('#table').DataTable({
+                bLengthChange: true,
+                iDisplayLength: 10,
+                searching: true,
+                processing: false,
+                serverSide: false,
+                dom: 'Bfrtip',
+                buttons: [
+                    'colvis'
+                ],
+                aLengthMenu: [
+                    [5, 10, 15, 25, 35, 50, 100, -1],
+                    [5, 10, 15, 25, 35, 50, 100, "All"]
+                ],
+                rowReorder: {
+                    selector: 'td:nth-child(2)'
+                },
+                responsive: true,
+                bStateSave: true
 
-        });
+            });
         })
 
         // Delete Menu
@@ -313,11 +321,11 @@
 
         // Add Permission
         $('.addpermission').on('click', function() {
-        var id = $(this).data('id');
-        var menu = $(this).data('nama');
-        $('#add-permission').modal('show');
-        $('#menu_id').val(id);
-        $('#nama_menu_permission').html(menu);
+            var id = $(this).data('id');
+            var menu = $(this).data('nama');
+            $('#add-permission').modal('show');
+            $('#menu_id').val(id);
+            $('#nama_menu_permission').html(menu);
         });
     </script>
 @endsection

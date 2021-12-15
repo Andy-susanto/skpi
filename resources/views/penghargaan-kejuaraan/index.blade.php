@@ -209,7 +209,7 @@
                                                             <div class="dropdown-menu" aria-labelledby="triggerId">
                                                                 <a class="dropdown-item"
                                                                     href="{{ route('penghargaan-kejuaraan.show', encrypt($data->id_penghargaan_kejuaraan_kompetensi)) }}"><i
-                                                                        class="fa fa-info" aria-hidden="true"></i>
+                                                                sele        class="fa fa-info" aria-hidden="true"></i>
                                                                     Detail</a>
                                                                 <a class="dropdown-item" href="{{route('penghargaan-kejuaraan.edit',encrypt($data->id_penghargaan_kejuaraan_kompetensi))}}"><i class="fas fa-edit"
                                                                         aria-hidden="true"></i> Ubah</a>
@@ -244,7 +244,7 @@
             placeholder: "Cari Dosen Pembimbing..",
             ajax: {
                 url: "{{ route('load.dosen') }}",
-                dataTyper: "json",
+                dataType: "json",
                 data: function(param) {
                     var value = {
                         search: param.term,

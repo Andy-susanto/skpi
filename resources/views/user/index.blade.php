@@ -42,14 +42,14 @@
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header bg-gradient-primary">
-                    <h5 class="modal-title"><i class="fa fa-user" aria-hidden="true"></i> Login AS</h5>
+                    <h5 class="modal-title font-bold"><i class="fa fa-user" aria-hidden="true"></i> Login AS</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                 </div>
-                <div class="modal-body">
-                    <table class="table">
-                        <thead>
+                <div class="modal-body table-respponsive">
+                    <table class="table table-hover table-stripped" id="tabel-login-as">
+                        <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
                                 <th>Nama User</th>
@@ -127,6 +127,49 @@
             ],
             responsive: !0
         });
+
+
+        var tabel_login_as = $('#tabel-login-as').DataTable({
+            bAutoWidth: false,
+            bLengthChange: true,
+            iDisplayLength: 10,
+            searching: true,
+            processing: true,
+            serverSide: true,
+            bDestroy: true,
+            bStateSave: true,
+            ajax:{
+                url: '{{ route("cari.user") }}',
+            },
+            columns:[
+                {
+                    data: 'DT_RowIndex',
+                    orderable: false,
+                    searchable: false
+                },
+                {
+                    data:'name',
+                    name:'name'
+
+                },
+                {
+                    data:'usertype',
+                    name:'usertype'
+                },
+                {
+                    data: 'aksi',
+                    orderable: false,
+                    searchable: false
+                }
+            ],
+            aLengthMenu: [
+                [10, 15, 25, 35, 50, 100, -1],
+                [10, 15, 25, 35, 50, 100, "All"]
+            ],
+            responsive: !0
+        });
+
+        var tableImpersonate = $('#tabel-login-as').DataTable();
 
         function confirmation(id) {
             alertify.confirm("Konfirmasi!", "Apakah anda yakin menghapus data ini?", function() {

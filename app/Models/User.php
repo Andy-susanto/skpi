@@ -26,7 +26,7 @@ class User extends Authenticatable
     }
 
     public function role_id(){
-        $data =[];
+    $data =[];
         foreach ($this->roles as $roles) {
             $data[] = $roles->id_role;
         }

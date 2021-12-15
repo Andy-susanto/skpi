@@ -166,4 +166,41 @@ class UserController extends Controller
     {
         //
     }
+
+    public function cari_user(Request $request)
+    {
+        if ($request->ajax()) {
+            $user = DB::table('siakad.users');
+            return DataTables::of($user)
+                ->addIndexColumn()
+                ->addColumn('aksi', function ($row) {
+                    return '<a name="" id="" class="btn btn-info btn-sm" href="'.route('login-as',encrypt($row->id)).'" role="button">Login As</a>';
+                })
+                ->escapeColumns('aksi')
+                ->toJson();
+        }
+    }
+
+    public function login_as($id)
+    {
+        $cek = DB::table('siakad.users')->where('id',decrypt($id))->first();
+        if ($cek) {
+            session(['kamuflase' => $cek->username]);
+            toastr()->success('Berhasil melakukan login as');
+            return redirect('home');
+        } else {
+            return back();
+        }
+    }
+
+    public function logout_as($id){
+        $cek = User::find(decrypt($id));
+        if ($cek) {
+            Session()->forget('kamuflase');
+            toastr()->success('Kembali Ke Akun Utama');
+            return redirect()->route('user.index');
+        }else{
+            return back();
+        }
+    }
 }

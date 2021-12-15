@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Files;
-use App\Models\Tingkat;
+use App\Models\Tingkat; 
 use App\Models\Prestasi;
 use App\Models\BobotNilai;
 use Illuminate\Support\Str;

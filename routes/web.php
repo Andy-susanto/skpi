@@ -51,30 +51,39 @@ Route::get('/callback', [\Vizir\KeycloakWebGuard\Controllers\AuthController::cla
 Route::post('/logout', [\Vizir\KeycloakWebGuard\Controllers\AuthController::class, 'logout'])->name('keycloak.logout');
 
 
-Route::get('/home', function() {
+Route::get('/home', function () {
     return view('home');
 })->name('home')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('pe rmission/create',[MenuController::class,'createPermission'])->name('menus.permission');
-    Route::get('load/dosen-pegawai',[LoadDataController::class,'loadDosenPegawai'])->name('load.dosen-pegawai');
-    Route::get('load/dosen',[LoadDataController::class,'loadDosen'])->name('load.dosen');
+    Route::post('pe rmission/create', [MenuController::class, 'createPermission'])->name('menus.permission');
+    Route::get('load/dosen-pegawai', [LoadDataController::class, 'loadDosenPegawai'])->name('load.dosen-pegawai');
+    Route::get('load/dosen', [LoadDataController::class, 'loadDosen'])->name('load.dosen');
+
+    // Cari User
+    Route::get('user/cari', [UserController::class, 'cari_user'])->name('cari.user');
+
+    // Login AS
+    Route::get('user/login-as/{id}', [UserController::class, 'login_as'])->name('login-as');
+
+    // Logout AS
+    Route::get('user/logout-as/{id}', [UserController::class, 'logout_as'])->name('logout-as');
 
     Route::resource('menus', MenuController::class);
     Route::resource('roles', RoleController::class);
     Route::resource('user', UserController::class);
 
-    Route::put('validasi-rekam-kegiatan/{type}/{id}/update',[ValidasiRekamKegiatanController::class,'update'])->name('validasi.update');
+    Route::put('validasi-rekam-kegiatan/{type}/{id}/update', [ValidasiRekamKegiatanController::class, 'update'])->name('validasi.update');
 
-    Route::delete('validasi-rekam-kegiatan/{type}/{id}/destroy',[ValidasiRekamKegiatanController::class,'destroy'])->name('validasi.destroy');
+    Route::delete('validasi-rekam-kegiatan/{type}/{id}/destroy', [ValidasiRekamKegiatanController::class, 'destroy'])->name('validasi.destroy');
 
     Route::resource('validasi-rekam-kegiatan', ValidasiRekamKegiatanController
     ::class);
 
     // fungsi
-    Route::get('load-bobot',[FungsiAjaxController::class,'load_bobot'])->name('fungsi.load-bobot');
+    Route::get('load-bobot', [FungsiAjaxController::class, 'load_bobot'])->name('fungsi.load-bobot');
 
-    Route::resource('penghargaan-kejuaraan',PenghargaanKejuaraanController::class);
+    Route::resource('penghargaan-kejuaraan', PenghargaanKejuaraanController::class);
     Route::resource('seminar-pelatihan', SeminarPelatihanController::class);
     Route::resource('penerima-hibah', PenerimaHibahController::class);
     Route::resource('pengabdian-masyarakat', PengabdianMasyarakatController::class);
@@ -88,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
     // Master
     Route::resource('bobot-nilai', MasterBobotNilaiController::class);
     Route::resource('kategori', MasterKategoriController::class);
-    Route::resource('bidang', MasterBidangpmasteController::class);
+    Route::resource('bidang', MasterBidangController::class);
     Route::resource('divisi', MasterDivisiController::class);
     Route::resource('cakupan-beasiswa', MasterCakupanBeasiswaController::class);
     Route::resource('bahasa', MasterBahasaController::class);
