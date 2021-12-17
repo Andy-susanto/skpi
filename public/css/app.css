@@ -68828,33 +68828,30 @@ Ensure the default browser behavior of the `hidden` attribute.
 .border-0 {
   border-width: 0px;
 }
-.bg-white {
-  --tw-bg-opacity: 1;
-  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
-}
 .bg-blue-400 {
   --tw-bg-opacity: 1;
   background-color: rgb(96 165 250 / var(--tw-bg-opacity));
 }
+.bg-white {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+}
 .bg-gradient-to-r {
   background-image: linear-gradient(to right, var(--tw-gradient-stops));
-}
-.bg-gradient-to-tr {
-  background-image: linear-gradient(to top right, var(--tw-gradient-stops));
-}
-.from-cyan-500 {
-  --tw-gradient-from: #06b6d4;
-  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(6 182 212 / 0));
 }
 .from-yellow-500 {
   --tw-gradient-from: #eab308;
   --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(234 179 8 / 0));
 }
-.to-blue-500 {
-  --tw-gradient-to: #3b82f6;
+.from-cyan-500 {
+  --tw-gradient-from: #06b6d4;
+  --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-to, rgb(6 182 212 / 0));
 }
 .to-orange-500 {
   --tw-gradient-to: #f97316;
+}
+.to-blue-500 {
+  --tw-gradient-to: #3b82f6;
 }
 .p-4 {
   padding: 1rem;
@@ -68920,10 +68917,10 @@ Ensure the default browser behavior of the `hidden` attribute.
   --tw-bg-opacity: 1;
   background-color: rgb(29 78 216 / var(--tw-bg-opacity));
 }
-.hover\:to-green-500:hover {
-  --tw-gradient-to: #22c55e;
-}
 .hover\:to-red-500:hover {
   --tw-gradient-to: #ef4444;
+}
+.hover\:to-green-500:hover {
+  --tw-gradient-to: #22c55e;
 }
 

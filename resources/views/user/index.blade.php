@@ -3,7 +3,7 @@
 @section('title', 'User')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">User</h1>
+    <h1 class="m-0 text-dark font-bold"><i class="fa fa-bookmark" aria-hidden="true"></i> User</h1>
 @stop
 
 @section('content')
@@ -15,10 +15,10 @@
                         <a href="{{ url('user/create') }}" class="btn btn-sm btn-primary"><i
                                 class="fa fa-plus"></i> Tambah User</a>
                         <a href="#" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#modalLoginAs"><i
-                                    class="fa fa-plus"></i> Impersonate / Login As</a>
+                                    class="fa fa-plus"></i> Login As</a>
                     </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body table-responsive">
                     <table class="table table-striped table-bordered" id="table">
                         <thead>
                             <tr>
@@ -27,7 +27,6 @@
                                 <th>Nama </th>
                                 <th>Roles</th>
                                 <th>Level Akun</th>
-                                <th>Created at</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -107,10 +106,6 @@
                 {
                     data: 'level_akun',
                     name: 'level_akun'
-                },
-                {
-                    data: 'created_at',
-                    name: 'created_at'
                 },
                 {
                     data: 'action',

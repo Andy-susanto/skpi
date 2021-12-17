@@ -16,7 +16,7 @@
 <li class="nav-item dropdown user-menu">
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-        {{-- @if(config('adminlte.usermenu_image'))
+        @if(config('adminlte.usermenu_image'))
             <img src="{{ Auth::user()->adminlte_image() }}"
                  class="user-image img-circle elevation-2"
                  alt="
@@ -25,12 +25,12 @@
              @else
                 {{Helper::nama_gelar(Auth::user()->kepeg_pegawai)}}
              @endif">
-        @endif --}}
+        @endif
         <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
             @if (Auth::user()->usertype == '1' || in_array( 3,Auth::user()->role_id() ) )
-                <i class="fa fa-user" aria-hidden="true"></i> {{Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
+                <i class="fa fa-user" aria-hidden="true"></i> {{strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}
             @else
-            {{Helper::nama_gelar(Auth::user()->kepeg_pegawai)}}
+            {{strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai))}}
             @endif
         </span>
     </a>
@@ -45,10 +45,10 @@
                 @if(config('adminlte.usermenu_image'))
                     <img src="{{ Auth::user()->adminlte_image() }}"
                          class="img-circle elevation-2"
-                         alt="{{ Auth::user()->name }}">
+                         alt="{{ strtoupper(Auth::user()->name) }}">
                 @endif
                 <p class="@if(!config('adminlte.usermenu_image')) mt-0 @endif">
-                    {{ Auth::user()->name }}
+                    {{ strtoupper(Auth::user()->name) }}
                     @if(config('adminlte.usermenu_desc'))
                         <small>{{ Auth::user()->adminlte_desc() }}</small>
                     @endif
@@ -71,7 +71,11 @@
         {{-- User menu footer --}}
         @if(Session::has('kamuflase'))
         <li class="user-footer">
-            <a name="" id="" class="btn btn-default btn-flat btn-block" href="{{route('logout-as',encrypt(Auth::user()->id))}}" role="button">Kembali Ke Akun Utama</a>
+            <a name="" id="" class="btn btn-default btn-flat btn-block" href="{{route('logout-as',encrypt(Auth::user()->id))}}" role="button"><i class="fa fa-power-off" aria-hidden="true"></i> Logout As  @if (Auth::user()->usertype == '1' || in_array( 3,Auth::user()->role_id() ) )
+                {{strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}
+            @else
+            {{strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai))}}
+            @endif</a>
         </li>
         @endif
         <li class="user-footer">

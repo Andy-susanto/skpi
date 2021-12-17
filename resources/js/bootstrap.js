@@ -9,6 +9,7 @@ window._ = require('lodash');
 try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
+    const alertify = require('alertifyjs');
     require('overlayscrollbars');
     require('../../vendor/almasaeed2010/adminlte/dist/js/adminlte');
     require('bootstrap');

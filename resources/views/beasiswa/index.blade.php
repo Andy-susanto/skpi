@@ -89,7 +89,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-beasiswa')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-beasiswa')"  class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
