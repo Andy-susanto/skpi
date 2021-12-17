@@ -87,8 +87,8 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</h5>
+                <div class="modal-header bg-gradient-to-r from-cyan-500 to-blue-500">
+                    <h5 class="modal-title text-white"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Penyelenggara</label>
-                            <select class="form-control" name="ref_penyelenggara_id" id="" required>
+                            <select class="form-control" name="ref_penyelenggara_id" id=""  style="width: 100%" required>
                                 @forelse (Helper::penyelenggara() as $penyelenggara)
                                     <option value="{{ $penyelenggara->id_ref_penyelenggara }}">
                                         {{ $penyelenggara->nama }}
@@ -122,7 +122,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Tingkat</label>
-                            <select class="form-control" name="ref_tingkat_id" id="" required>
+                            <select class="form-control" name="ref_tingkat_id" id="" style="width: 100%" required>
                                 @forelse (Helper::tingkat() as $tingkat)
                                     <option value="{{ $tingkat->id_ref_tingkat }}">{{ $tingkat->nama }}</option>
                                 @empty
@@ -132,7 +132,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Prestasi</label>
-                            <select class="form-control" name="ref_peran_prestasi_id" id="" required>
+                            <select class="form-control" name="ref_peran_prestasi_id" id="" style="width: 100%" required>
                                 @forelse (Helper::prestasi() as $prestasi)
                                     <option value="{{ $prestasi->id_ref_peran_prestasi }}">{{ $prestasi->nama }}
                                     </option>
@@ -143,7 +143,7 @@
                         </div>
                         <div class="form-group">
                             <label for="">Kategori</label>
-                            <select class="form-control" name="ref_kategori_id" id="" required>
+                            <select class="form-control" name="ref_kategori_id" id="" style="width: 100%" required>
                                 @forelse (Helper::kategori() as $kategori)
                                     <option value="{{ $kategori->id_ref_kategori }}">{{ $kategori->nama_kategori }}
                                     </option>
@@ -157,7 +157,7 @@
                             <input type="number" class="form-control" name="bobot" id="" aria-describedby="helpId"
                                 placeholder="Isi Bobot Nilai" required>
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fas fa-save"
+                        <button type="submit" class="btn bg-blue-400 btn-block btn-sm"><i class="fas fa-save"
                                 aria-hidden="true"></i> Simpan Data</button>
                     </form>
                 </div>

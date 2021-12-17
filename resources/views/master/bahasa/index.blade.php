@@ -10,7 +10,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <div class="card">
+            <div class="card shadow-md">
                 @if ($errors->any())
                     <div class="card-header">
                         <div class="alert alert-danger">
@@ -24,9 +24,9 @@
                 @endif
                 <div class="card-body">
                     <button type="button" data-toggle="modal" data-target="#modalTambah"
-                        class="mb-2 btn btn-outline-primary btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        class="mb-2 btn bg-blue-400 text-white hover:bg-cyan-400 shadow-2xl shadow-gray-600 btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Tambah Data</button>
-                    <table class="table" id="table-bobot">
+                    <table class="table shadow-md" id="table-bobot">
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
@@ -78,9 +78,9 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header bg-gradient-to-r from-cyan-500 to-blue-500">
+                    <h5 class="modal-title text-white"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Data</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -88,11 +88,11 @@
                     <form action="{{ route('bahasa.store') }}" method="post" id="form-kategori">
                         @csrf
                         <div class="form-group">
-                            <label for="">Nama Bahasa</label>
+                            <label for="" class="font-bold font-black">Nama Bahasa</label>
                             <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
                                 placeholder="Nama Bahasa">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fas fa-save"
+                        <button type="submit" class="btn bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 rounded-full text-white btn-block btn-sm"><i class="fas fa-save"
                                 aria-hidden="true"></i> Simpan Data</button>
                     </form>
                 </div>
@@ -104,9 +104,9 @@
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title"><i class="fa fa-edit" aria-hidden="true"></i> Ubah Data</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <div class="modal-header bg-gradient-to-r from-yellow-500 to-orange-500">
+                    <h5 class="modal-title text-white font-bold"><i class="fa fa-edit" aria-hidden="true"></i> Ubah Data</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -125,8 +125,8 @@
 
 @endsection
 @section('plugins.Datatables', true)
+@section('plugins.Select2',true)
 @include('plugins.alertify')
-@include('plugins.select2')
 @section('js')
     <script>
         $(document).ready(function(){

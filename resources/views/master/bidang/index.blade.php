@@ -24,7 +24,7 @@
                 @endif
                 <div class="card-body">
                     <button type="button" data-toggle="modal" data-target="#modalTambah"
-                        class="mb-2 btn btn-outline-primary btn-sm"><i class="fa fa-plus-circle" aria-hidden="true"></i>
+                        class="mb-2 shadow-2xl bg-blue-400 text-white btn-sm hover:bg-blue-700"><i class="fa fa-plus-circle" aria-hidden="true"></i>
                         Tambah Data</button>
                     <table class="table" id="table-bobot">
                         <thead class="thead-dark">
@@ -92,7 +92,7 @@
                             <input type="text" class="form-control" name="nama" id="" aria-describedby="helpId"
                                 placeholder="Nama Kategori">
                         </div>
-                        <button type="submit" class="btn btn-primary btn-block btn-sm"><i class="fas fa-save"
+                        <button type="submit" class="btn bg-blue-400 text-white shadow-2xl rounded-full btn-block btn-sm"><i class="fas fa-save"
                                 aria-hidden="true"></i> Simpan Data</button>
                     </form>
                 </div>

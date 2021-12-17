@@ -52,6 +52,7 @@
                         <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
+                                <th>Username</th>
                                 <th>Nama User</th>
                                 <th>Usertype</th>
                                 <th><i class="fa fa-cogs" aria-hidden="true"></i></th>
@@ -146,6 +147,11 @@
                     data: 'DT_RowIndex',
                     orderable: false,
                     searchable: false
+                },
+                {
+                    data:'username',
+                    name:'username'
+
                 },
                 {
                     data:'name',
