@@ -101,8 +101,6 @@
                                 </h2>
                                 <p class="hs-des"></p>
                                 @if (Auth::check())
-                                @php var_dump(Auth::user()->name); @endphp
-
                                 <a class="site-btn" href="{{route('keycloak.login')}}">Dashboard</a>
                                 @else
                                 <a class="site-btn" href="{{route('keycloak.login')}}">Masuk</a>

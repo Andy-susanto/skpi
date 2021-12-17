@@ -11,7 +11,7 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#add-menu">Tambah
+                    <button type="button" class="btn bg-blue-400 hover:bg-cyan-400 text-white btn-sm" data-toggle="modal" data-target="#add-menu"><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah
                         Menus</button>
                 </div>
                 <div class="card-body table-responsive">
@@ -44,9 +44,9 @@
                                     </td>
                                     <td>
                                         <div class="dropdown">
-                                            <button class="btn btn-primary btn-sm dropdown-toggle" type="button"
+                                            <button class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-sm dropdown-toggle" type="button"
                                                 id="triggerId" data-toggle="dropdown" aria-haspopup="true"
-                                                aria-expanded="false">
+                                                aria-expanded="false"> <i class="fa fa-th-list" aria-hidden="true"></i>
                                                 Aksi
                                             </button>
                                             <div class="dropdown-menu" aria-labelledby="triggerId">
@@ -83,8 +83,8 @@
             <div class="modal-content">
                 <form action="{{ route('menus.store') }}" method="post" class="form-horizontal">
                     @csrf
-                    <div class="modal-header">
-                        <div class="modal-title">
+                    <div class="modal-header bg-gradient-to-r from-cyan-500 to-blue-500">
+                        <div class="modal-title text-white">
                             <h3><b><i class="fa fa-plus-circle" aria-hidden="true"></i> Tambah Menu Baru</b></h3>
                         </div>
                     </div>
@@ -121,24 +121,17 @@
                             <label class="control-label col-sm-3">Icon</label>
                             <div class="col-sm-8">
                                 <div class="input-group">
-
                                     <input type="text" name="icon" class="form-control icon"
                                         placeholder="Tentukan icon menu">
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-primary btn-md button-icon" data-search="true"
-                                            data-rows="5" data-cols="5" data-search="true" data-iconset="fontawesome"
-                                            data-selected-class="btn-danger" data-unselected-class="btn-info"
-                                            data-placement="top" id="target" role="iconpicker"></button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"><i
+                        <button type="button" class="btn btn-sm bg-gradient-to-r from-yellow-500 to-orange-500 text-white hover:to-red-500" data-dismiss="modal"><i
                                 class="glyphicon glyphicon-remove"></i> Batal</button>
-                        <button class="btn btn-sm btn-info"><i class="glyphicon glyphicon-floppy-disk"></i> Simpan</button>
+                        <button class="btn btn-sm bg-gradient-to-r from-cyan-500 to-blue-500 hover:to-green-500 text-white"><i class="glyphicon glyphicon-floppy-disk"></i> Simpan</button>
                     </div>
                 </form>
             </div>
@@ -151,8 +144,8 @@
                 <form action="" id="form-edit-menu" method="post" class="form-horizontal">
                     @csrf
                     @method('patch')
-                    <div class="modal-header">
-                        <div class="modal-title">
+                    <div class="modal-header bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+                        <div class="modal-title font-bold">
                             <h3><b><i class="fa fa-edit"></i> Edit Menu</b></h3>
                         </div>
                     </div>
@@ -193,21 +186,15 @@
 
                                     <input type="text" name="icon" class="form-control icon" id="icon"
                                         placeholder="Pick an icon">
-                                    <div class="input-group-btn">
-                                        <button type="button" class="btn btn-primary btn-md button-icon" data-search="true"
-                                            data-rows="5" data-cols="5" data-search="true" data-iconset="fontawesome"
-                                            data-selected-class="btn-danger" data-unselected-class="btn-info"
-                                            data-placement="top" id="target" role="iconpicker"></button>
-                                    </div>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-sm btn-danger" data-dismiss="modal"><i
+                        <button type="button" class="btn btn-sm bg-gradient-to-r from-yellow-500 to-orange-500 text-white" data-dismiss="modal"><i
                                 class="glyphicon glyphicon-remove"></i> Tutup</button>
-                        <button class="btn btn-sm btn-info"><i class="glyphicon glyphicon-floppy-disk"></i> Update</button>
+                        <button class="btn btn-sm bg-blue-400  hover:bg-green-500 text-white"><i class="glyphicon glyphicon-floppy-disk"></i> Update</button>
                     </div>
                 </form>
             </div>

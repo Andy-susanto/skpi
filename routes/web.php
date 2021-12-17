@@ -107,4 +107,9 @@ Route::middleware(['auth'])->group(function () {
 
     // Cetak
     Route::resource('cetak', CetakController::class);
+
+    // Tabbed View
+    Route::get('tabbed-menu',function(){
+        return view('tab-menu');
+    });
 });

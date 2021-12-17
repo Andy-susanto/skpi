@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <table class="table table-bordered table-stripped" id="table">
-                        <thead>
+                        <thead class="thead-dark">
                             <tr>
                                 <th>#</th>
                                 <th>Nama Role</th>
@@ -31,8 +31,8 @@
                                     <td>{{ $role->keterangan_role }}</td>
                                     <td>
                                         <a href="{{ url('roles/' . $role->id_role . '/edit') }}"
-                                            class="btn btn-xs btn-info"><i class="fa fa-edit"></i> Edit</a> |
-                                        <a onclick="confirmation('{{ $role->id_role }}')" class="btn btn-xs btn-danger"><i
+                                            class="btn btn-sm text-white btn-info"><i class="fa fa-edit"></i> Edit</a> |
+                                        <a onclick="confirmation('{{ $role->id_role }}')" class="btn text-white btn-sm btn-danger"><i
                                                 class="fa fa-trash"></i> Delete</a>
                                         <form id="{{ $role->id_role }}" action="{{ url('roles/' . $role->id_role) }}"
                                             method="post">

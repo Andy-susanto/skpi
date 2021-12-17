@@ -104,7 +104,7 @@
                       </div>
                       <div class="form-group">
                         <div class="col-sm-offset-2 col-sm-7">
-                          <button class="btn btn-sm btn-primary" type="submit"><i class="glyphicon glyphicon-floppy-disk"></i> Update</button>
+                          <button class="btn btn-sm bg-blue-400 hover:bg-green-400 text-white" type="submit">Update</button>
                         </div>
                       </div>
                     </div>
