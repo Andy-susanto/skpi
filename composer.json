@@ -26,6 +26,7 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
+        "recca0120/terminal": "^1.9",
         "sven/artisan-view": "^3.4"
     },
     "autoload": {
