@@ -17,22 +17,21 @@
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
-            <img src="{{ Auth::user()->adminlte_image() }}"
-                 class="user-image img-circle elevation-2"
+            <img src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
+                 class="user-image float-left img-circle elevation-2"
                  alt="
              @if (Auth::user()->usertype == '1' || in_array(3,Auth::user()->role_id() ) )
                  {{Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa }}
              @else
                 {{Helper::nama_gelar(Auth::user()->kepeg_pegawai)}}
              @endif">
+
         @endif
-        <span @if(config('adminlte.usermenu_image')) class="d-none d-md-inline" @endif>
             @if (Auth::user()->usertype == '1' || in_array( 3,Auth::user()->role_id() ) )
-                <i class="fa fa-user" aria-hidden="true"></i> {{strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}
+               <span class="font-bold">{{strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}</span>
             @else
-            {{strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai))}}
+            <span class="font-black">{{strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai))}}</span>
             @endif
-        </span>
     </a>
 
     {{-- User menu dropdown --}}
@@ -43,10 +42,15 @@
             <li class="user-header {{ config('adminlte.usermenu_header_class', 'bg-primary') }}
                 @if(!config('adminlte.usermenu_image')) h-auto @endif">
                 @if(config('adminlte.usermenu_image'))
-                    <img src="{{ Auth::user()->adminlte_image() }}"
+                    <img src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
                          class="img-circle elevation-2"
                          alt="{{ strtoupper(Auth::user()->name) }}">
                 @endif
+                @if (Auth::user()->usertype == '1' || in_array( 3,Auth::user()->role_id() ) )
+                <span><i class="fa fa-user" aria-hidden="true"></i> {{strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}</span>
+            @else
+            {{strtoupper(Helper::nama_gelar(Auth::user()->kepeg_pegawai))}}
+            @endif
                 <p class="@if(!config('adminlte.usermenu_image')) mt-0 @endif">
                     {{ strtoupper(Auth::user()->name) }}
                     @if(config('adminlte.usermenu_desc'))

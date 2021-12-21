@@ -5,7 +5,7 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Magang</h1>
+            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Magang</h1>
         </div>
     </div>
 @stop
@@ -27,8 +27,8 @@
                             <div class="card">
                                 <form action="{{ route('magang.store') }}" method="post"
                                     enctype="multipart/form-data" id="form-penghargaan">
-                                    <div class="card-header">
                                         @if ($errors->any())
+                                        <div class="card-header">
                                             <div class="alert alert-danger">
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
@@ -36,8 +36,8 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
+                                        </div>
                                         @endif
-                                    </div>
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
@@ -110,16 +110,18 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
+                                    <div class="ml-3 mb-2">
                                         <p class="">Catatan :
-                                            <ol class="ml-2 list-decimal text-red">
-                                                <li>Tanda * harus di isi</li>
-                                            </ol>
+                                        <ol class="ml-2 list-decimal text-red">
+                                            <li>Tanda * harus di isi</li>
+                                        </ol>
                                         </p>
                                     </div>
-                            </div>
-                            <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                    <div class="text-center mb-2">
+                                        <button type="button" onclick="confirmation('form-penghargaan')"
+                                            class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
+                                                class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                    </div>
                             </div>
                             </form>
                         </div>

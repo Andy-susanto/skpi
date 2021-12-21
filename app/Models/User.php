@@ -57,6 +57,10 @@ class User extends Authenticatable
         return in_array($key,$data);
     }
 
+    public function SiakadUser(){
+        return $this->belongsTo(SiakadUser::class,'username','username');
+    }
+
     public function unit_kerja(){
         $unit = [];
         if($this->level_akun == 1){

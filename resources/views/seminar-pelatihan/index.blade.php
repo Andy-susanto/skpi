@@ -56,8 +56,8 @@
                             <div class="card">
                                 <form action="{{ route('seminar-pelatihan.store') }}" method="post"
                                     enctype="multipart/form-data" id="form-seminar">
-                                    <div class="card-header">
                                         @if ($errors->any())
+                                        <div class="card-header">
                                             <div class="alert alert-danger">
                                                 <ul>
                                                     @foreach ($errors->all() as $error)
@@ -65,8 +65,8 @@
                                                     @endforeach
                                                 </ul>
                                             </div>
+                                        </div>
                                         @endif
-                                    </div>
                                     <div class="card-body">
                                         @csrf
                                         <div class="form-row">
@@ -192,10 +192,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="card-footer">
-                                        <div class="text-center card-footer">
-                                            <button type="button" onclick="confirmation('form-seminar')"  class="btn bg-blue-400 hover:bg-cyan-400 text-white btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
-                                        </div>
+                                    <div class="ml-3 mb-2">
+                                        <p class="">Catatan :
+                                        <ol class="ml-2 list-decimal text-red">
+                                            <li>Tanda * harus di isi</li>
+                                        </ol>
+                                        </p>
+                                    </div>
+                                    <div class="text-center mb-2">
+                                        <button type="button" onclick="confirmation('form-penghargaan')"
+                                            class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i
+                                                class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                                     </div>
                                 </form>
                             </div>
