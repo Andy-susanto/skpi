@@ -68932,18 +68932,6 @@ Ensure the default browser behavior of the `hidden` attribute.
 .outline-2 {
   outline-width: 2px;
 }
-.drop-shadow-lg {
-  --tw-drop-shadow: drop-shadow(0 10px 8px rgb(0 0 0 / 0.04)) drop-shadow(0 4px 3px rgb(0 0 0 / 0.1));
-  filter: var(--tw-filter);
-}
-.drop-shadow-xl {
-  --tw-drop-shadow: drop-shadow(0 20px 13px rgb(0 0 0 / 0.03)) drop-shadow(0 8px 5px rgb(0 0 0 / 0.08));
-  filter: var(--tw-filter);
-}
-.drop-shadow-sm {
-  --tw-drop-shadow: drop-shadow(0 1px 1px rgb(0 0 0 / 0.05));
-  filter: var(--tw-filter);
-}
 .drop-shadow-md {
   --tw-drop-shadow: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
   filter: var(--tw-filter);
