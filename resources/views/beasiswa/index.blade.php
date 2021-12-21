@@ -89,7 +89,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-beasiswa')"  class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-beasiswa')"  class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
@@ -99,9 +99,9 @@
                     <div class="row">
                         <div class="col-12">
                             <div class="card">
-                                <div class="card-body">
-                                    <table class="table table-bordered table-stripped" id="table">
-                                        <thead class="thead-dark">
+                                <div class="card-body table-responsive">
+                                    <table class="table table-bordered table-stripped shadow-sm" id="table">
+                                        <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama Beasiswa</th>

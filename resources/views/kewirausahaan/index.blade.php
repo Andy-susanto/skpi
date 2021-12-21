@@ -95,7 +95,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-penghargaan')"  class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
@@ -107,7 +107,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <table class="table table-bordered table-stripped" id="table">
-                                        <thead class="thead-dark">
+                                        <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama Usaha Mandiri</th>

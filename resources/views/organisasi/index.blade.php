@@ -5,13 +5,13 @@
 @section('content_header')
     <div class="row">
         <div class="mb-3 col-12">
-            <h1 class="m-0 font-bold text-dark"><i class="fa fa-bookmark" aria-hidden="true"></i> Organisasi</h1>
+            <h1 class="m-0 font-bold text-dark uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Organisasi</h1>
         </div>
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
                     <table class="table table-bordered">
-                        <thead class="thead-dark">
+                        <thead class="bg-gradient-to-r from-lime-500 to-green-500 text-white">
                             <tr>
                                 <th>Capaian Bobot</th>
                                 <th>Bobot saat ini</th>
@@ -163,7 +163,7 @@
                                     </div>
                             </div>
                             <div class="text-center card-footer">
-                                <button type="button" onclick="confirmation('form-organisasi')"  class="btn btn-primary btn-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
+                                <button type="button" onclick="confirmation('form-organisasi')"  class="btn bg-blue-400 text-white hover:bg-cyan-400 btn-md drop-shadow-md"><i class="fas fa-save" aria-hidden="true"></i> Kirim Data</button>
                             </div>
                             </form>
                         </div>
@@ -175,7 +175,7 @@
                             <div class="card">
                                 <div class="card-body">
                                     <table class="table table-bordered table-stripped" id="table">
-                                        <thead class="thead-dark">
+                                        <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                                             <tr>
                                                 <th>#</th>
                                                 <th>Nama Kegiatan</th>
