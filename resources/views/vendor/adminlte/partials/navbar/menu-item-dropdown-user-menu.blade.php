@@ -17,7 +17,11 @@
     {{-- User menu toggler --}}
     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
         @if(config('adminlte.usermenu_image'))
-            <img src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
+            <img @if (Auth::user()->usertype == '1' || in_array(3,Auth::user()->role_id() ) )
+            src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
+            @else
+                src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
+            @endif
                  class="user-image float-left img-circle elevation-2"
                  alt="
              @if (Auth::user()->usertype == '1' || in_array(3,Auth::user()->role_id() ) )
@@ -42,7 +46,11 @@
             <li class="user-header {{ config('adminlte.usermenu_header_class', 'bg-primary') }}
                 @if(!config('adminlte.usermenu_image')) h-auto @endif">
                 @if(config('adminlte.usermenu_image'))
-                    <img src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
+                    <img @if (Auth::user()->usertype == '1' || in_array(3,Auth::user()->role_id() ) )
+                    src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
+                    @else
+                        src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
+                    @endif
                          class="img-circle elevation-2"
                          alt="{{ strtoupper(Auth::user()->name) }}">
                 @endif
