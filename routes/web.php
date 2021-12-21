@@ -56,7 +56,7 @@ Route::get('/home', function () {
 })->name('home')->middleware('auth');
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('pe rmission/create', [MenuController::class, 'createPermission'])->name('menus.permission');
+    Route::post('permission/create', [MenuController::class, 'createPermission'])->name('menus.permission');
     Route::get('load/dosen-pegawai', [LoadDataController::class, 'loadDosenPegawai'])->name('load.dosen-pegawai');
     Route::get('load/dosen', [LoadDataController::class, 'loadDosen'])->name('load.dosen');
 
