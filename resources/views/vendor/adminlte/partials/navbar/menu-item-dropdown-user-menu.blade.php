@@ -19,8 +19,10 @@
         @if(config('adminlte.usermenu_image'))
             <img @if ((Auth::user()->usertype == '1' || in_array(3,Auth::user()->role_id())) && isset(Auth::user()->siakad_file->path) )
             src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
-            @elseif(Auth::user()->kepeg_pegawai->biodata->file_foto)
+            @elseif(Auth::user()->kepeg_pegawai)
+                @if (Auth::user()->kepeg_pegawai->biodata->file_foto)
                 src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
+                @endif
             @else
                 src=""
             @endif
@@ -50,8 +52,10 @@
                 @if(config('adminlte.usermenu_image'))
                     <img @if ((Auth::user()->usertype == '1' || in_array(3,Auth::user()->role_id())) && isset(Auth::user()->siakad_file->path))
                     src="https://siakad.unja.ac.id/{{Auth::user()->SiakadUser->siakad_file->path}}"
-                    @elseif(isset(Auth::user()->kepeg_pegawai->biodata->file_foto))
-                        src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
+                    @elseif(Auth::user()->kepeg_pegawai)
+                @if (Auth::user()->kepeg_pegawai->biodata->file_foto)
+                src="https://simpeg.unja.ac.id/foto/{{Auth::user()->kepeg_pegawai->biodata->file_foto}}"
+                @endif
                     @else
                         src=""
                     @endif
