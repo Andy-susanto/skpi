@@ -60,7 +60,6 @@
                         src=""
                     @endif
                          class="img-circle elevation-2"
-                         alt="{{ strtoupper(Auth::user()->name) }}">
                 @endif
                 @if (Auth::user()->usertype == '1' || in_array( 3,Auth::user()->role_id() ) )
                 <span><i class="fa fa-user" aria-hidden="true"></i> {{strtoupper(Auth::user()->siakad_mhspt->mahasiswa->nama_mahasiswa) }}</span>
