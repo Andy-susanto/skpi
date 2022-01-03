@@ -3,13 +3,13 @@
 @section('title', 'Validasi Rekam Kegiatan')
 
 @section('content_header')
-    <h1 class="m-0 text-dark">Validasi Rekam Kegiatan</h1>
+    <h1 class="m-0 text-dark font-bold uppercase"><i class="fa fa-bookmark" aria-hidden="true"></i> Validasi Rekam Kegiatan</h1>
 @stop
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-white">
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
@@ -38,9 +38,9 @@
                         </div>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table table-stripped" id="table">
-                        <thead class="thead-dark">
+                <div class="card-body table-responsive">
+                    <table class="table table-striped table-hover drop-shadow-md shadow-md" id="table">
+                        <thead class="bg-gradient-to-r from-cyan-500 to-blue-500 text-white">
                             <tr>
                                 <th>#</th>
                                 <th>Nama Mahasiswa</th>
